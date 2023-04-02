@@ -6,7 +6,6 @@ import { MyComponent, LoginPage } from "@shared/simple";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <MyComponent />
       <LoginPage />
       <Component {...pageProps} />
     </>
