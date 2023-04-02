@@ -3,16 +3,14 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
-import { foo, bar, MyComponent } from "@shared/simple";
-
-console.log(foo);
-bar();
+import { MyComponent, LoginPage } from "@shared/simple";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <div className="App">
+      <LoginPage />
       <MyComponent />
       <div>
         <a href="https://vitejs.dev" target="_blank">
