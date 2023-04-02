@@ -10,7 +10,8 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "nuke": "find . -name \"node_modules\" -type d -exec rm -rf {} \\;"
   },
   "devDependencies": {
     "@omlet/cli": "^1.0.1-beta.19",
