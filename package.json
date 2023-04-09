@@ -12,7 +12,8 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "rm:node_modules": "find . -name node_modules -type d -prune -exec rm -rf '{}' +",
-    "nuke": "npm run rm:node_modules && rm package-lock.json"
+    "nuke": "npm run rm:node_modules && rm package-lock.json",
+    "reinstall": "npm run nuke && npm install"
   },
   "devDependencies": {
     "@omlet/cli": "^1.0.1-beta.19",
