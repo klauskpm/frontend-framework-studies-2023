@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function LoginPage() {
   return (
     <div className="flex min-h-full items-center justify-center px-4 py-20 sm:px-6 lg:px-8">
