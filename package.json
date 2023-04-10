@@ -18,12 +18,12 @@
   "devDependencies": {
     "@omlet/cli": "^1.0.1-beta.19",
     "eslint-config-custom": "*",
-    "prettier": "latest",
-    "prettier-plugin-tailwindcss": "latest",
+    "@config/prettier": "*",
     "turbo": "latest"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "packageManager": "npm@8.19.3"
+  "packageManager": "npm@8.19.3",
+  "prettier": "@config/prettier"
 }
