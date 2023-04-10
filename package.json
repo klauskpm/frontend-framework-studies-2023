@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@omlet/cli": "^1.0.1-beta.19",
+    "eslint-config-custom": "*",
     "prettier": "latest",
     "prettier-plugin-tailwindcss": "latest",
     "turbo": "latest"
