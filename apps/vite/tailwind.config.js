@@ -1,3 +1,3 @@
 module.exports = {
-  presets: [require("tailwind-config/tailwind.vite.js")],
+  presets: [require("@config/tailwind/vite.js")],
 };

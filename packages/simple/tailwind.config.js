@@ -1,3 +1,3 @@
 module.exports = {
-  presets: [require("./tailwind.base.js")],
+  presets: [require("@config/tailwind/base.js")],
 };

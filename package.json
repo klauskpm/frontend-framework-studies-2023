@@ -16,9 +16,10 @@
     "reinstall": "npm run nuke && npm install"
   },
   "devDependencies": {
+    "@config/prettier": "*",
+    "@config/tailwind": "*",
     "@omlet/cli": "^1.0.1-beta.19",
     "eslint-config-custom": "*",
-    "@config/prettier": "*",
     "turbo": "latest"
   },
   "engines": {
