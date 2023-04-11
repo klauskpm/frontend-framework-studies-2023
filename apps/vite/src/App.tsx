@@ -10,6 +10,13 @@ const supabase = createClient<Database>(
 
 type Country = Database["public"]["Tables"]["countries"]["Row"];
 
+function registerUser(email: string, password: string) {
+  return supabase.auth.signUp({
+    email,
+    password,
+  });
+}
+
 function App() {
   const [countries, setCountries] = useState<Country[]>([]);
 
@@ -23,9 +30,20 @@ function App() {
     setCountries(data);
   }
 
+  function onSignUp(formData: any) {
+    console.log("onSignUp", formData);
+    registerUser(formData.email, formData.password)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <>
-      <LoginPage />
+      <LoginPage onSignIn={() => {}} onSignUp={onSignUp} />
       <ul>
         {countries.map((country) => (
           <li key={country.name}>{country.name}</li>
