@@ -4,7 +4,10 @@ import { createClient } from "@supabase/supabase-js";
 import { Database } from "../supabase";
 
 const getURL = () => {
-  let url = import.meta.env.VITE_VERCEL_URL ?? "http://localhost:5173";
+  let url = 
+    import.meta.env.VITE_SITE_URL ??
+    import.meta.env.VITE_VERCEL_URL ??
+    "http://localhost:5173";
   // Make sure to include `https://` when not localhost.
   url = url.includes('http') ? url : `https://${url}`;
   // Make sure to including trailing `/`.
