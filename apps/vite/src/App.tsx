@@ -10,11 +10,12 @@ const supabase = createClient<Database>(
 
 type Country = Database["public"]["Tables"]["countries"]["Row"];
 
-function registerUser(email: string, password: string) {
-  return supabase.auth.signUp({
-    email,
-    password,
-  });
+async function registerUser(email: string) {
+  return supabase.auth.signInWithOtp({ email });
+}
+
+async function getUser() {
+  return supabase.auth.getUser();
 }
 
 function App() {
@@ -22,6 +23,12 @@ function App() {
 
   useEffect(() => {
     getCountries();
+  }, []);
+
+  useEffect(() => {
+    getUser().then((response) => {
+      console.log(response);
+    });
   }, []);
 
   async function getCountries() {
@@ -32,7 +39,7 @@ function App() {
 
   function onSignUp(formData: any) {
     console.log("onSignUp", formData);
-    registerUser(formData.email, formData.password)
+    registerUser(formData.email)
       .then((response) => {
         console.log(response);
       })
