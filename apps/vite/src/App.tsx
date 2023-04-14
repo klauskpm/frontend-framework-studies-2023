@@ -15,6 +15,8 @@ const getURL = () => {
   return url;
 };
 
+console.log('URL', getURL());
+
 function createSupabaseClient(key: string) {
   return createClient<Database>("https://eikzucowzxcedzyckglx.supabase.co", key);
 }
