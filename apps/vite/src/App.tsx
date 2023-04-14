@@ -3,11 +3,17 @@ import { LoginPage } from "@shared/simple";
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "../supabase";
 
+const isValidURL = () => {
+  const regex = /^https:\/\/ffs2023.*(-klauskpm){0,1}\.vercel\.app$/;
+  const url = location.origin;
+  return regex.test(url)
+}
+
 const getURL = () => {
-  let url = 
-    import.meta.env.VITE_SITE_URL ??
-    import.meta.env.VITE_VERCEL_URL ??
-    "http://localhost:5173";
+  let url = "http://localhost:5173";
+  if (!import.meta.env.DEV && isValidURL()) {
+    url = location.origin;
+  }
   // Make sure to include `https://` when not localhost.
   url = url.includes('http') ? url : `https://${url}`;
   // Make sure to including trailing `/`.
@@ -15,6 +21,7 @@ const getURL = () => {
   return url;
 };
 
+console.log('env', import.meta.env);
 console.log('URL', getURL());
 
 function createSupabaseClient(key: string) {
