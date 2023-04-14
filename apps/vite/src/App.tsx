@@ -37,8 +37,8 @@ function App() {
     setCountries(data);
   }
 
-  function onSignUp(formData: any) {
-    console.log("onSignUp", formData);
+  function onSubmit(formData: any) {
+    console.log("onSubmit", formData);
     registerUser(formData.email)
       .then((response) => {
         console.log(response);
@@ -50,7 +50,7 @@ function App() {
 
   return (
     <>
-      <LoginPage onSignIn={() => {}} onSignUp={onSignUp} />
+      <LoginPage onSubmit={onSubmit} />
       <ul>
         {countries.map((country) => (
           <li key={country.name}>{country.name}</li>

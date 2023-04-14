@@ -1,6 +1,5 @@
 export interface LoginPageProps {
-  onSignUp: (formData: any, event: any) => void;
-  onSignIn: (formData: any, event: any) => void;
+  onSubmit: (formData: any, event: any) => void;
 }
 
 const extractFormData = () => {
@@ -11,15 +10,10 @@ const extractFormData = () => {
   return data;
 };
 
-export default function LoginPage({ onSignUp, onSignIn }: LoginPageProps) {
-  const handleSignUp = (event: any) => {
+export default function LoginPage({ onSubmit }: LoginPageProps) {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
-    onSignUp(extractFormData(), event);
-  };
-
-  const handleSignIn = (event: any) => {
-    event.preventDefault();
-    onSignIn(extractFormData(), event);
+    onSubmit(extractFormData(), event);
   };
 
   return (
@@ -32,6 +26,7 @@ export default function LoginPage({ onSignUp, onSignIn }: LoginPageProps) {
           className="mx-12 mt-8 flex flex-col items-center space-y-4"
           name="loginForm"
           id="loginForm"
+          onSubmit={handleSubmit}
         >
           <label htmlFor="email-address" className="sr-only">
             Email address
@@ -45,34 +40,13 @@ export default function LoginPage({ onSignUp, onSignIn }: LoginPageProps) {
             className="bg-content input-bordered input w-full max-w-xs"
             placeholder="Email address"
           />
-          <label htmlFor="password" className="sr-only">
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            required
-            className="input-bordered input w-full max-w-xs"
-            placeholder="Password"
-          />
 
           <div className="flex w-full flex-row justify-between pt-4">
             <button
               type="submit"
-              className="btn-outline btn"
-              onClick={handleSignUp}
-            >
-              Register
-            </button>
-
-            <button
-              type="submit"
               className="btn-primary btn"
-              onClick={handleSignIn}
             >
-              Sign in
+              Email login link
             </button>
           </div>
         </form>

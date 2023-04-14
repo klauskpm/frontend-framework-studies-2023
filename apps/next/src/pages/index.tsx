@@ -11,7 +11,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <LoginPage onSignIn={(f) => f} onSignUp={(f) => f} />
+      <LoginPage onSubmit={(f) => f} />
     </>
   );
 }
