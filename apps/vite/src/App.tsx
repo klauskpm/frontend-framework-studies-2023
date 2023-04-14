@@ -3,15 +3,28 @@ import { LoginPage } from "@shared/simple";
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "../supabase";
 
-const supabase = createClient<Database>(
-  "https://eikzucowzxcedzyckglx.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpa3p1Y293enhjZWR6eWNrZ2x4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODExNjkxMzEsImV4cCI6MTk5Njc0NTEzMX0.8ZXPBCpPYL7TCcHJ7LNWbRPkH9QNtFhDDl9Azx-oJEU"
-);
+const getURL = () => {
+  let url = import.meta.env.VITE_VERCEL_URL ?? "http://localhost:5173";
+  // Make sure to include `https://` when not localhost.
+  url = url.includes('http') ? url : `https://${url}`;
+  // Make sure to including trailing `/`.
+  url = url.charAt(url.length - 1) === '/' ? url : `${url}/`;
+  return url;
+};
+
+function createSupabaseClient(key: string) {
+  return createClient<Database>("https://eikzucowzxcedzyckglx.supabase.co", key);
+}
+
+const supabase = createSupabaseClient(import.meta.env.VITE_SUPABASE_ANON_KEY);
 
 type Country = Database["public"]["Tables"]["countries"]["Row"];
 
 async function registerUser(email: string) {
-  return supabase.auth.signInWithOtp({ email });
+  return supabase.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: getURL() }
+  });
 }
 
 async function getUser() {
