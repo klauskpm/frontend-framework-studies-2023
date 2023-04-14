@@ -21,9 +21,11 @@ const supabase = createSupabaseClient(import.meta.env.VITE_SUPABASE_ANON_KEY);
 type Country = Database["public"]["Tables"]["countries"]["Row"];
 
 async function registerUser(email: string) {
+  const redirectUrl = getURL();
+  console.log(redirectUrl);
   return supabase.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: getURL() }
+    options: { emailRedirectTo: redirectUrl }
   });
 }
 
