@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { LoginPage } from "@shared/simple";
 import { registerUser } from "./auth";
 import { Country, getCountries } from "./countries";
-import { supabase } from "./supabaseClient";
+import { useSession } from "./useSession";
 import Account from "./Account";
 
 
 function App() {
   const [countries, setCountries] = useState<Country[]>([]);
-  const [session, setSession] = useState<any>(null);
+  const [session] = useSession();
 
   useEffect(() => {
     getCountries().then(({ data }) => {
@@ -16,18 +16,6 @@ function App() {
       setCountries(data);
     });
   }, []);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("getSession", session)
-      setSession(session)
-    })
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      console.log("onAuthStateChange", session)
-      setSession(session)
-    })
-  }, [])
 
   function onSubmit(formData: any) {
     console.log("onSubmit", formData);
