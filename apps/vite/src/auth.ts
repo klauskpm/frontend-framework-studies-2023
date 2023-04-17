@@ -18,12 +18,8 @@ const getURL = () => {
   return url;
 };
 
-console.log('env', import.meta.env);
-console.log('URL', getURL());
-
 export async function magicLoginUser(email: string) {
   const redirectUrl = getURL();
-  console.log(redirectUrl);
   return supabase.auth.signInWithOtp({
     email,
     options: { emailRedirectTo: redirectUrl },
