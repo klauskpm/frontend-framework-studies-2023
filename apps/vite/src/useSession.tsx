@@ -6,12 +6,10 @@ export function useSession(startingSession: any = null) {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("getSession", session);
       setSession(session);
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
-      console.log("onAuthStateChange", session);
       setSession(session);
     });
   }, []);
