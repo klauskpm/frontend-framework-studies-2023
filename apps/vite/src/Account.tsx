@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import { logoutUser } from './auth'
+import Avatar from './Avatar'
 
 export default function Account({ session }: any) {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState<string|null>(null)
   const [website, setWebsite] = useState<string|null>(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
+  const [avatar_url, setAvatarUrl] = useState<string|null>(null)
 
   useEffect(() => {
     async function getProfile() {
@@ -80,6 +81,15 @@ export default function Account({ session }: any) {
           onChange={(e) => setWebsite(e.target.value)}
         />
       </div>
+
+      <Avatar
+        url={avatar_url}
+        size={150}
+        onUpload={(event, url) => {
+          setAvatarUrl(url)
+          updateProfile(event)
+        }}
+      />
 
       <div>
         <button className="button block primary" type="submit" disabled={loading}>
