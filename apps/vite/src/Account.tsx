@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
+import { logoutUser } from './auth'
 
 export default function Account({ session }: any) {
   const [loading, setLoading] = useState(true)
@@ -87,7 +88,7 @@ export default function Account({ session }: any) {
       </div>
 
       <div>
-        <button className="button block" type="button" onClick={() => supabase.auth.signOut()}>
+        <button className="button block" type="button" onClick={() => logoutUser()}>
           Sign Out
         </button>
       </div>

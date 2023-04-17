@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { LoginPage } from "@shared/simple";
-import { registerUser } from "./auth";
+import { magicLoginUser } from "./auth";
 import { Country, getCountries } from "./countries";
 import { useSession } from "./useSession";
 import Account from "./Account";
@@ -18,14 +18,7 @@ function App() {
   }, []);
 
   function onSubmit(formData: any) {
-    console.log("onSubmit", formData);
-    registerUser(formData.email)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    magicLoginUser(formData.email);
   }
 
   return (

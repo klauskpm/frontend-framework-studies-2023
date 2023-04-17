@@ -21,13 +21,17 @@ const getURL = () => {
 console.log('env', import.meta.env);
 console.log('URL', getURL());
 
-export async function registerUser(email: string) {
+export async function magicLoginUser(email: string) {
   const redirectUrl = getURL();
   console.log(redirectUrl);
   return supabase.auth.signInWithOtp({
     email,
     options: { emailRedirectTo: redirectUrl },
   });
+}
+
+export async function logoutUser() {
+  return supabase.auth.signOut();
 }
 
 export async function getUser() {
