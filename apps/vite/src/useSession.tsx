@@ -9,8 +9,20 @@ export function useSession(startingSession: any = null) {
       setSession(session);
     });
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
+    supabase.auth.onAuthStateChange((event, newSession) => {
+      setSession((oldSession: any) => {
+        if (!newSession) return oldSession;
+
+        const isSignedInEvent = event === "SIGNED_IN";
+        const isAccessTokenNew = newSession.access_token != oldSession?.access_token;
+        const canSetWhenSignedIn = isSignedInEvent && (!oldSession || isAccessTokenNew);
+        const canSetNewSession = !isSignedInEvent || canSetWhenSignedIn;
+
+        if (canSetNewSession) {
+          return newSession;
+        }
+        return oldSession;
+      })  
     });
   }, []);
 
