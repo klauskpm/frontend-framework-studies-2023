@@ -17,39 +17,33 @@ export default function LoginPage({ onSubmit }: LoginPageProps) {
   };
 
   return (
-    <div className="flex min-h-full items-center justify-center px-4 py-20 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-2 rounded bg-base-100 p-6 shadow-md">
-        <div className="prose">
-          <h2 className="text-center">Sign in to your account</h2>
+    <div className="hero min-h-screen bg-base-200">
+      <div className="hero-content flex-col lg:flex-row-reverse">
+        <div className="text-center lg:text-left">
+          <h1 className="text-5xl font-bold">Login now!</h1>
+          <p className="py-6">
+            Type your email address and we'll send you a magic link.
+          </p>
         </div>
-        <form
-          className="mx-12 mt-8 flex flex-col items-center space-y-4"
-          name="loginForm"
-          id="loginForm"
-          onSubmit={handleSubmit}
-        >
-          <label htmlFor="email-address" className="sr-only">
-            Email address
-          </label>
-          <input
-            id="email-address"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            className="bg-content input-bordered input w-full max-w-xs"
-            placeholder="Email address"
-          />
-
-          <div className="flex w-full flex-row justify-between pt-4">
-            <button
-              type="submit"
-              className="btn-primary btn"
-            >
-              Email login link
-            </button>
+        <div className="card w-full max-w-sm flex-shrink-0 bg-base-100 shadow-2xl">
+          <div className="card-body">
+            <form id="loginForm" onSubmit={handleSubmit}>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="email"
+                  className="input-bordered input"
+                />
+              </div>
+              <div className="form-control mt-6">
+                <button className="btn-primary btn">Login with magic link</button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
