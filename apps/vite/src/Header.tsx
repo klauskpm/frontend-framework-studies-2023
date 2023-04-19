@@ -4,7 +4,7 @@ import { supabase } from "./supabaseClient";
 import { downloadImage } from "./helpers/downloadImage";
 
 export default function Header() {
-  const [avatar_url, setAvatarUrl] = useState<string>('');
+  const [avatar_url, setAvatarUrl] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [session] = useSession();
 
@@ -58,14 +58,16 @@ export default function Header() {
       </div>
       <div className="flex-none gap-2">
         <div className="dropdown-end dropdown">
-          <button tabIndex={0} className="btn-ghost btn-circle avatar btn">
+          <button className="btn-ghost btn-circle avatar btn">
             <div className="w-10 rounded-full">
-              <img src={avatar_url} />
+              {(loading || !avatar_url) ? (
+                <div className="h-10 w-10 animate-pulse rounded-full bg-base-content"></div>
+              ) : (
+                <img src={avatar_url} />
+              )}
             </div>
           </button>
-          <ul
-            className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow"
-          >
+          <ul className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow">
             <li>
               <a href="#" className="justify-between">
                 Profile
@@ -73,10 +75,10 @@ export default function Header() {
               </a>
             </li>
             <li>
-              <a  href="#">Settings</a>
+              <a href="#">Settings</a>
             </li>
             <li>
-              <a  href="#">Logout</a>
+              <a href="#">Logout</a>
             </li>
           </ul>
         </div>
