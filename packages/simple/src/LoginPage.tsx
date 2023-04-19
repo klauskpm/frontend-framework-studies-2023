@@ -33,6 +33,7 @@ export default function LoginPage({ onSubmit }: LoginPageProps) {
                   <span className="label-text">Email</span>
                 </label>
                 <input
+                  name="email"
                   type="text"
                   placeholder="email"
                   className="input-bordered input"
