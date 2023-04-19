@@ -11,6 +11,7 @@ export function useSession(startingSession: any = null) {
 
     supabase.auth.onAuthStateChange((event, newSession) => {
       setSession((oldSession: any) => {
+        if (event === "SIGNED_OUT") return null;
         if (!newSession) return oldSession;
 
         const isSignedInEvent = event === "SIGNED_IN";

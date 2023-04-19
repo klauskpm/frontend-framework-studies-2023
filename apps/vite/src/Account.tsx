@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
-import { logoutUser } from './auth'
 import Avatar from './Avatar'
 import Header from './Header'
 
@@ -97,12 +96,6 @@ export default function Account({ session }: any) {
         <div>
           <button className="button block primary" type="submit" disabled={loading}>
             {loading ? 'Loading ...' : 'Update'}
-          </button>
-        </div>
-
-        <div>
-          <button className="button block" type="button" onClick={() => logoutUser()}>
-            Sign Out
           </button>
         </div>
       </form>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "./useSession";
 import { supabase } from "./supabaseClient";
 import { downloadImage } from "./helpers/downloadImage";
+import { logoutUser } from "./auth";
 
 export default function Header() {
   const [avatar_url, setAvatarUrl] = useState<string>("");
@@ -78,7 +79,7 @@ export default function Header() {
               <a href="#">Settings</a>
             </li>
             <li>
-              <a href="#">Logout</a>
+              <a href="#" onClick={() => logoutUser()}>Logout</a>
             </li>
           </ul>
         </div>
