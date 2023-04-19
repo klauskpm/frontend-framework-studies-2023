@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
+import { downloadImage } from './helpers/downloadImage'
 
 // AvatarProps
 interface AvatarProps {
@@ -13,21 +14,8 @@ export default function Avatar({ url, size, onUpload }: AvatarProps) {
   const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
-    if (url) downloadImage(url)
+    if (url) downloadImage(url).then((imageURL: string) => setAvatarUrl(imageURL))
   }, [url])
-
-  async function downloadImage(path: any) {
-    try {
-      const { data, error } = await supabase.storage.from('avatars').download(path)
-      if (error) {
-        throw error
-      }
-      const url = URL.createObjectURL(data)
-      setAvatarUrl(url)
-    } catch (error: any) {
-      console.log('Error downloading image: ', error.message)
-    }
-  }
 
   async function uploadAvatar(event: any) {
     try {
