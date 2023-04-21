@@ -77,9 +77,6 @@ export default function Header() {
               </a>
             </li>
             <li>
-              <a href="#">Settings</a>
-            </li>
-            <li>
               <a href="#" onClick={() => logoutUser()}>Logout</a>
             </li>
           </ul>
