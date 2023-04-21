@@ -1,18 +1,6 @@
-// import { LoginPage } from "@shared/simple";
-import { magicLoginUser } from "../auth";
-// import { useSession } from "../useSession";
-// import Account from "../Account";
-// import Countries from "../Countries";
 import CommonPage from "../CommonPage";
-import { useSession } from "../SessionProvider";
 
-function Home() {  
-  const [session] = useSession();
-
-  function onSubmit(formData: any) {
-    magicLoginUser(formData.email);
-  }
-
+function Home() {
   return (
     <CommonPage>
       <div className="hero h-full bg-base-200">
@@ -24,10 +12,6 @@ function Home() {
         </div>
       </div>
     </CommonPage>
-    // <>
-    //   {!session ? <LoginPage onSubmit={onSubmit} /> : <Account session={session} />}
-    //   <Countries />
-    // </>
   );
 }
 

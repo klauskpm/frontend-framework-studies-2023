@@ -80,7 +80,7 @@ export default function Header() {
             <ul className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow">
               {session && (
                 <li>
-                  <a href="#" className="justify-between">
+                  <a href="/profile" className="justify-between">
                     Profile
                     <span className="badge">New</span>
                   </a>
