@@ -56,7 +56,7 @@ export default function Header() {
         </button>
       </div>
       <div className="flex-1">
-        <a className="btn-ghost btn text-xl normal-case" href="/">daisyUI</a>
+        <a className="btn-ghost btn text-xl normal-case" href="/">Klaus' weird home page</a>
       </div>
       <div className="flex-none gap-2">
         {!session && (
