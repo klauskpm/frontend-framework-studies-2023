@@ -63,7 +63,7 @@ export default function Profile() {
 
   return (
     <CommonPage>
-      <div className="flex flex-row justify-center py-8">
+      <div className="flex flex-row justify-center h-full items-center">
         <form onSubmit={updateProfile} className="card w-full max-w-sm bg-base-100 shadow-2xl max-h-fit">
           <div className="card-body">
               <div className="form-control">
