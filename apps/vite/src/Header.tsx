@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useSession } from "./useSession";
+
 import { supabase } from "./supabaseClient";
 import { downloadImage } from "./helpers/downloadImage";
 import { logoutUser } from "./auth";
+import { useSession } from "./SessionProvider";
 
 export default function Header() {
   const [avatar_url, setAvatarUrl] = useState<string>("");

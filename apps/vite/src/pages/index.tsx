@@ -1,9 +1,10 @@
 // import { LoginPage } from "@shared/simple";
 import { magicLoginUser } from "../auth";
-import { useSession } from "../useSession";
+// import { useSession } from "../useSession";
 // import Account from "../Account";
 // import Countries from "../Countries";
 import CommonPage from "../CommonPage";
+import { useSession } from "../SessionProvider";
 
 function Home() {  
   const [session] = useSession();
