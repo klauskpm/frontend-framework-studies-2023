@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+// Link
+import { Link } from "react-router-dom";
 
 import { supabase } from "./supabaseClient";
 import { downloadImage } from "./helpers/downloadImage";
@@ -56,13 +58,13 @@ export default function Header() {
         </button>
       </div>
       <div className="flex-1">
-        <a className="btn-ghost btn text-xl normal-case" href="/">Klaus' weird home page</a>
+        <Link className="btn-ghost btn text-xl normal-case" to="/">Klaus' weird home page</Link>
       </div>
       <div className="flex-none gap-2">
         {!session && (
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a href="/login">Login</a>
+              <Link to="/login">Login</Link>
             </li>
           </ul>
         )}
@@ -80,10 +82,10 @@ export default function Header() {
             <ul className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow">
               {session && (
                 <li>
-                  <a href="/profile" className="justify-between">
+                  <Link to="/profile" className="justify-between">
                     Profile
                     <span className="badge">New</span>
-                  </a>
+                  </Link>
                 </li>
               )}
               
