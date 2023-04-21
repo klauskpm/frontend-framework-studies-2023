@@ -56,31 +56,43 @@ export default function Header() {
         </button>
       </div>
       <div className="flex-1">
-        <a className="btn-ghost btn text-xl normal-case">daisyUI</a>
+        <a className="btn-ghost btn text-xl normal-case" href="/">daisyUI</a>
       </div>
       <div className="flex-none gap-2">
-        <div className="dropdown-end dropdown">
-          <button className="btn-ghost btn-circle avatar btn">
-            <div className="w-10 rounded-full">
-              {(loading || !avatar_url) ? (
-                <div className="h-10 w-10 animate-pulse rounded-full bg-base-content"></div>
-              ) : (
-                <img src={avatar_url} />
-              )}
-            </div>
-          </button>
-          <ul className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow">
+        {!session && (
+          <ul className="menu menu-horizontal px-1">
             <li>
-              <a href="#" className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" onClick={() => logoutUser()}>Logout</a>
+              <a href="/login">Login</a>
             </li>
           </ul>
-        </div>
+        )}
+        {session && (
+          <div className="dropdown-end dropdown">
+            <button className="btn-ghost btn-circle avatar btn">
+              <div className="w-10 rounded-full">
+                {(loading || !avatar_url) ? (
+                  <div className="h-10 w-10 animate-pulse rounded-full bg-base-content"></div>
+                ) : (
+                  <img src={avatar_url} />
+                )}
+              </div>
+            </button>
+            <ul className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow">
+              {session && (
+                <li>
+                  <a href="#" className="justify-between">
+                    Profile
+                    <span className="badge">New</span>
+                  </a>
+                </li>
+              )}
+              
+              <li>
+                <a href="#" onClick={() => logoutUser()}>Logout</a>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
