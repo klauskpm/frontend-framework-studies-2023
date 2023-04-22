@@ -6,7 +6,7 @@ import { downloadImage } from "./helpers/downloadImage";
 import { logoutUser } from "./auth";
 import { useSession } from "./SessionProvider";
 
-export default function Header() {
+export default function Header({ onClickSidebarButton }: any) {
   const [avatar_url, setAvatarUrl] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [session] = useSession();
@@ -40,24 +40,31 @@ export default function Header() {
   return (
     <div className="navbar bg-base-100">
       <div className="flex-none">
-        <button className="btn-ghost btn-square btn">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            className="inline-block h-5 w-5 stroke-current"
+        <label htmlFor="my-drawer-3">
+          <button
+            className="btn-ghost btn-square btn"
+            onClick={onClickSidebarButton}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              className="inline-block h-5 w-5 stroke-current"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </label>
       </div>
       <div className="flex-1">
-        <Link className="btn-ghost btn text-xl normal-case" to="/">Klaus' weird home page</Link>
+        <Link className="btn-ghost btn text-xl normal-case" to="/">
+          Klaus' weird home page
+        </Link>
       </div>
       <div className="flex-none gap-2">
         {!session && (
@@ -71,7 +78,7 @@ export default function Header() {
           <div className="dropdown-end dropdown">
             <button className="btn-ghost btn-circle avatar btn">
               <div className="w-10 rounded-full">
-                {(loading || !avatar_url) ? (
+                {loading || !avatar_url ? (
                   <div className="h-10 w-10 animate-pulse rounded-full bg-base-content"></div>
                 ) : (
                   <img src={avatar_url} />
@@ -87,9 +94,11 @@ export default function Header() {
                   </Link>
                 </li>
               )}
-              
+
               <li>
-                <a href="#" onClick={() => logoutUser()}>Logout</a>
+                <a href="#" onClick={() => logoutUser()}>
+                  Logout
+                </a>
               </li>
             </ul>
           </div>
