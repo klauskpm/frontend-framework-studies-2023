@@ -1,10 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import CommonPage from "./CommonPage";
+
 import Home from "./pages";
 import Login from "./pages/login";
 import Profile from "./pages/profile";
-import Countries from "./pages/Countries";
-import CommonPage from "./CommonPage";
+import Countries from "./pages/countries";
 
 const router = createBrowserRouter([
   {
