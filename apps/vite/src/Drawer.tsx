@@ -21,6 +21,9 @@ export default function Drawer({ children, toggleRef }: any) {
           <li>
             <Link to={"/countries"}>Countries</Link>
           </li>
+          <li>
+            <Link to={"/foods"}>Foods</Link>
+          </li>
         </ul>
       </div>
     </div>
