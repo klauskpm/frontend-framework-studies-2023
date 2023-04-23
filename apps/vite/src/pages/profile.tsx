@@ -46,8 +46,7 @@ export default function Profile() {
       id: user.id,
       username,
       website,
-      avatar_url,
-      updated_at: new Date(),
+      avatar_url
     };
 
     let { error } = await supabase.from("profiles").upsert(updates);
