@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages";
 import Login from "./pages/login";
 import Profile from "./pages/profile";
-import Countries from "./Countries";
+import Countries from "./pages/Countries";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },

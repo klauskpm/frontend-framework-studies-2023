@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Country, getCountries } from "./countries-data";
-import CommonPage from "./CommonPage";
+import { Country, getCountries } from "../countries-data";
+import CommonPage from "../CommonPage";
 
 export default function Countries() {
   const [countries, setCountries] = useState<Country[]>([]);
