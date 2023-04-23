@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Drawer({ children, toggleRef }: any) {
   return (
     <div className="drawer">
@@ -14,10 +16,10 @@ export default function Drawer({ children, toggleRef }: any) {
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
         <ul className="menu w-80 bg-base-100 p-4">
           <li>
-            <a>Sidebar Item 1</a>
+            <Link to={"/"}>Home</Link>
           </li>
           <li>
-            <a>Sidebar Item 2</a>
+            <Link to={"/countries"}>Countries</Link>
           </li>
         </ul>
       </div>
