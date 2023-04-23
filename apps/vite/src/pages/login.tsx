@@ -1,7 +1,6 @@
 import { LoginPage } from "@shared/simple";
 
 import { magicLoginUser } from "../auth";
-import CommonPage from "../CommonPage";
 
 function Login() {
   function onSubmit(formData: any) {
@@ -9,9 +8,7 @@ function Login() {
   }
 
   return (
-    <CommonPage>
-      <LoginPage onSubmit={onSubmit} />
-    </CommonPage>
+    <LoginPage onSubmit={onSubmit} />
   );
 }
 

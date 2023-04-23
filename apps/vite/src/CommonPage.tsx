@@ -1,15 +1,18 @@
 import { useRef } from "react";
 import Header from "./Header";
 import Drawer from "./Drawer";
+import { Outlet } from "react-router-dom";
 
-export default function CommonPage({ children }: any) {
+export default function CommonPage() {
   const drawerToggleRef = useRef<HTMLInputElement>(null);
   const openDrawer = () => drawerToggleRef.current?.click();
 
   return (
     <Drawer toggleRef={drawerToggleRef}>
       <Header onClickSidebarButton={openDrawer} />
-      <div className="grow">{children}</div>
+      <div className="grow">
+        <Outlet/>
+      </div>
     </Drawer>
   );
 }

@@ -4,15 +4,21 @@ import Home from "./pages";
 import Login from "./pages/login";
 import Profile from "./pages/profile";
 import Countries from "./pages/Countries";
+import CommonPage from "./CommonPage";
 
 const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
-  { path: 'login', element: <Login /> },
-  { path: 'profile', element: <Profile /> },
-  { path: 'countries', element: <Countries /> },
+  {
+    path: "/",
+    element: <CommonPage />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "login", element: <Login /> },
+      { path: "profile", element: <Profile /> },
+      { path: "countries", element: <Countries /> },
+    ],
+  },
 ]);
 
-
 export default function Routes() {
-    return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />;
 }

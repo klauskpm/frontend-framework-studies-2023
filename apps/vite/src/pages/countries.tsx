@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Country, getCountries } from "../countries-data";
-import CommonPage from "../CommonPage";
 
 export default function Countries() {
   const [countries, setCountries] = useState<Country[]>([]);
@@ -13,7 +12,7 @@ export default function Countries() {
     });
   }, []);
 
-  return <CommonPage>
+  return (
     <article className="prose">
       <h1>Countries page</h1>
       <ul>
@@ -22,5 +21,5 @@ export default function Countries() {
         ))}
       </ul>
     </article>
-  </CommonPage>;
+  );
 }
