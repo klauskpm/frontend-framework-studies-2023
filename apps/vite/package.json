@@ -4,9 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "npm run update-types",
     "dev": "vite --open",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "update-types": "npx supabase gen types typescript --project-id \"eikzucowzxcedzyckglx\" > supabase.ts"
   },
   "dependencies": {
     "@shared/simple": "*",
