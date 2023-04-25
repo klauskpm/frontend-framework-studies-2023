@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../supabaseClient";
-import { Database } from "../../supabase";
+import { supabase } from "../../supabaseClient";
+import { Database } from "../../../supabase";
 
 export type Food = Database["public"]["Tables"]["foods"]["Row"];
 
