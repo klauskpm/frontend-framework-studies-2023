@@ -47,7 +47,9 @@ export default function Foods() {
       <ul className="list-none">
         {foods.map((food: any) => (
           <li key={food.id} className="space-x-3 justify-items-center">
-            <span>{food.title}</span>
+            <Link to={`/foods/${food.id}`} className="link-primary link">
+              {food.title}
+            </Link>
             <button className="btn-error btn btn-sm" onClick={() => handleClickDelete(food.id)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

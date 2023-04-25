@@ -8,6 +8,7 @@ import Profile from "./pages/profile";
 import Countries from "./pages/countries";
 import Foods from "./pages/foods";
 import CreateFoods from "./pages/foods/create";
+import EditFood from "./pages/foods/[id]";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: "foods", children: [
         { path: "/foods", element: <Foods /> },
         { path: "/foods/create", element: <CreateFoods /> },
+        { path: "/foods/:id", element: <EditFood /> },
       ] },
     ],
   },
