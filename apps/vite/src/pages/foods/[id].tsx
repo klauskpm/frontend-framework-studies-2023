@@ -16,7 +16,7 @@ const updateFood = async (id: number, title: string) => {
   }
 };
 
-export async function getFood(id: number) {
+const getFood = async (id: number) => {
   return supabase.from("foods").select().eq("id", id).single();
 }
 
