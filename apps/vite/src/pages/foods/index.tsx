@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Database } from "../../../supabase";
 import { Link } from "react-router-dom";
 import * as Tabs from '@radix-ui/react-tabs';
+import { useVirtualizer } from '@tanstack/react-virtual';
 
 export type Food = Database["public"]["Tables"]["foods"]["Row"];
 
@@ -19,6 +20,52 @@ async function deleteFood(id: number) {
     return data;
   }
 }
+
+const VirtualList = ({ items }: any) => {
+  const parentRef = useRef(null);
+
+  const rowVirtualizer = useVirtualizer({
+    count: items.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 35,
+  });
+
+  return (
+    <div
+      ref={parentRef}
+      style={{
+        height: `400px`,
+        overflow: 'auto', // Make it scroll!
+      }}
+    >
+      <ul
+        style={{
+          height: `${rowVirtualizer.getTotalSize()}px`,
+          width: '100%',
+          position: 'relative',
+        }}
+      >
+        {rowVirtualizer.getVirtualItems().map((virtualRow) => (
+          <li
+            key={virtualRow.key}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: `${virtualRow.size}px`,
+              transform: `translateY(${virtualRow.start}px)`,
+            }}
+          >
+            <Link to={`/foods/${items[virtualRow.index].id}`} className="link-primary link">
+              {items[virtualRow.index].title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default function Foods() {
   const [foods, setFoods] = useState<Food[]>([]);
@@ -49,7 +96,7 @@ export default function Foods() {
 
       <Tabs.Root
         className="flex flex-col w-3/5"
-        defaultValue="table"
+        defaultValue="list"
       >
         <Tabs.List className="tabs" aria-label="Manage your account">
           <Tabs.Trigger
@@ -123,17 +170,7 @@ export default function Foods() {
           className="grow p-5 rounded-b-md outline-none"
           value="list"
         >
-          <div className="w-full">
-            <ul className="list-disc">
-              {multipleFoods.map((food, index) => (
-                <li key={`${food.id}_${index}`}>
-                <Link to={`/foods/${food.id}`} className="link-primary link">
-                  {food.title}
-                </Link>
-              </li>
-              ))}
-            </ul>
-          </div>
+          <VirtualList items={multipleFoods} />
         </Tabs.Content>
       </Tabs.Root>
       
