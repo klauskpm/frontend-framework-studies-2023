@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Database } from "../../../supabase";
 import { Link } from "react-router-dom";
@@ -22,6 +22,10 @@ async function deleteFood(id: number) {
 
 export default function Foods() {
   const [foods, setFoods] = useState<Food[]>([]);
+  const multipleFoods = useMemo(() => {
+    if (!foods.length) return [];
+    return Array.from({ length: 1000 }, (_, i) => foods[i%foods.length]);
+  }, [foods]);
 
   const handleClickDelete = (id: number) => {
     deleteFood(id).then(() => {
@@ -65,7 +69,7 @@ export default function Foods() {
           className="grow p-5 rounded-b-md outline-none"
           value="table"
         >
-          <div className="w-full overflow-x-auto">
+          <div className="w-full">
             <table className="table w-full">
               <thead>
                 <tr>
@@ -75,7 +79,7 @@ export default function Foods() {
               </thead>
               <tbody>
                 {foods.map((food: any) => (
-                  <tr>
+                  <tr key={food.id}>
                     <td>
                       <Link to={`/foods/${food.id}`} className="link-primary link">
                         {food.title}
@@ -119,6 +123,17 @@ export default function Foods() {
           className="grow p-5 rounded-b-md outline-none"
           value="list"
         >
+          <div className="w-full">
+            <ul className="list-disc">
+              {multipleFoods.map((food, index) => (
+                <li key={`${food.id}_${index}`}>
+                <Link to={`/foods/${food.id}`} className="link-primary link">
+                  {food.title}
+                </Link>
+              </li>
+              ))}
+            </ul>
+          </div>
         </Tabs.Content>
       </Tabs.Root>
       
