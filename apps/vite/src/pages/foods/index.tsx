@@ -8,7 +8,13 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 export type Food = Database["public"]["Tables"]["foods"]["Row"];
 
 async function getFoods() {
-  return supabase.from("foods").select().range(0, 4);
+  const countResponse = await supabase.from("foods").select('*', { count: 'exact', head: true });
+  const paginatedFoodsResponse = await supabase.from("foods").select('*').range(0, 4);
+  return {
+    data: paginatedFoodsResponse.data,
+    count: countResponse.count,
+    error: paginatedFoodsResponse.error && countResponse.error,
+  };
 }
 
 async function deleteFood(id: number) {
@@ -68,6 +74,7 @@ const VirtualList = ({ items }: any) => {
 };
 
 export default function Foods() {
+  const [count, setCount] = useState(0);
   const [foods, setFoods] = useState<Food[]>([]);
   const multipleFoods = useMemo(() => {
     if (!foods.length) return [];
@@ -81,9 +88,10 @@ export default function Foods() {
   };
 
   useEffect(() => {
-    getFoods().then(({ data }) => {
-      if (!data) return;
+    getFoods().then(({ data, count }) => {
+      if (!data || count === null) return;
       setFoods(data);
+      setCount(count);
     });
   }, []);
 
@@ -116,6 +124,7 @@ export default function Foods() {
           className="grow p-5 rounded-b-md outline-none"
           value="table"
         >
+          <div>Total: {count}</div>
           <div className="w-full">
             <table className="table w-full">
               <thead>
