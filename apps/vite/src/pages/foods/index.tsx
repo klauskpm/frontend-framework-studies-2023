@@ -104,7 +104,7 @@ export default function Foods() {
 
       <Tabs.Root
         className="flex flex-col w-3/5"
-        defaultValue="list"
+        defaultValue="table"
       >
         <Tabs.List className="tabs" aria-label="Manage your account">
           <Tabs.Trigger
