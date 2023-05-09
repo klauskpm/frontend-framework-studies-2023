@@ -8,7 +8,7 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 export type Food = Database["public"]["Tables"]["foods"]["Row"];
 
 async function getFoods() {
-  return supabase.from("foods").select();
+  return supabase.from("foods").select().range(0, 4);
 }
 
 async function deleteFood(id: number) {
