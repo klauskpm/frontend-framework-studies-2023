@@ -173,7 +173,7 @@ export default function Foods() {
                 </tr>
               </tfoot>
             </table>
-            <Pagination count={count} currentPage={0} itemsPerPage={4} />
+            <Pagination count={count} itemsPerPage={4} />
           </div>
         </Tabs.Content>
         <Tabs.Content
@@ -192,7 +192,7 @@ function Pagination(props: any) {
   const items = useMemo(() => new Array(Math.ceil(count/itemsPerPage)).fill(0), [count, itemsPerPage]);
   return <div className="btn-group">
     {items.map((_, i) => {
-      const isActive = i === currentPage;
+      const isActive = (i === currentPage) || (i === 0 && !currentPage);
       return <button key={i} className={`btn ${isActive ? 'btn-active' : ''}`}>{i + 1}</button>
     })}
   </div>;
