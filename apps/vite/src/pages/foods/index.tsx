@@ -76,6 +76,13 @@ const VirtualList = ({ items }: any) => {
 export default function Foods() {
   const [count, setCount] = useState(0);
   const [foods, setFoods] = useState<Food[]>([]);
+  const [page, setPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
+
   const multipleFoods = useMemo(() => {
     if (!foods.length) return [];
     return Array.from({ length: 1000 }, (_, i) => foods[i%foods.length]);
@@ -173,7 +180,12 @@ export default function Foods() {
                 </tr>
               </tfoot>
             </table>
-            <Pagination count={count} currentPage={22} itemsPerPage={4} />
+            <Pagination
+              count={count}
+              currentPage={page}
+              itemsPerPage={itemsPerPage}
+              onClick={handlePageChange}
+            />
           </div>
         </Tabs.Content>
         <Tabs.Content
@@ -188,7 +200,7 @@ export default function Foods() {
   );
 }
 function Pagination(props: any) {
-  const { count, currentPage, itemsPerPage } = props;
+  const { count, currentPage, itemsPerPage, onClick } = props;
   const pages = new Array(Math.ceil(count/itemsPerPage)).fill(0);
 
   const firstPage = 0;
@@ -200,7 +212,13 @@ function Pagination(props: any) {
   return <div className="btn-group">
     {pages.map((_, i) => {
       const isActive = (i === safeCurrentPage) || (i === 0 && !safeCurrentPage);
-      return <button key={i} className={`btn ${isActive ? 'btn-active' : ''}`}>{i + 1}</button>
+      return <button
+        key={i}
+        className={`btn ${isActive ? 'btn-active' : ''}`}
+        onClick={() => onClick(i)}
+        >
+          {i + 1}
+        </button>
     })}
   </div>;
 }
