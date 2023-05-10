@@ -191,9 +191,11 @@ function Pagination(props: any) {
   const { count, currentPage, itemsPerPage } = props;
   const pages = new Array(Math.ceil(count/itemsPerPage)).fill(0);
 
-  const isOverLastPage = currentPage > pages.length - 1;
-  const isUnderFirstPage = currentPage < 0;
-  const safeCurrentPage = isOverLastPage ? pages.length - 1 : (isUnderFirstPage ? 0 : currentPage);
+  const firstPage = 0;
+  const lastPage = pages.length - 1;
+  const isOverLastPage = currentPage > lastPage;
+  const isUnderFirstPage = currentPage < firstPage;
+  const safeCurrentPage = isOverLastPage ? lastPage: (isUnderFirstPage ? firstPage : currentPage);
 
   return <div className="btn-group">
     {pages.map((_, i) => {
