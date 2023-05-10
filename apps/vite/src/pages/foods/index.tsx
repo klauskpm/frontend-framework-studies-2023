@@ -7,9 +7,11 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 
 export type Food = Database["public"]["Tables"]["foods"]["Row"];
 
-async function getFoods() {
+async function getFoods({ page, itemsPerPage }: { page: number, itemsPerPage: number}) {
+  const initialItem = page * itemsPerPage;
+  const finalItem = initialItem + itemsPerPage - 1;
   const countResponse = await supabase.from("foods").select('*', { count: 'exact', head: true });
-  const paginatedFoodsResponse = await supabase.from("foods").select('*').range(0, 4);
+  const paginatedFoodsResponse = await supabase.from("foods").select('*').range(initialItem, finalItem);
   return {
     data: paginatedFoodsResponse.data,
     count: countResponse.count,
@@ -95,12 +97,12 @@ export default function Foods() {
   };
 
   useEffect(() => {
-    getFoods().then(({ data, count }) => {
+    getFoods({ page, itemsPerPage }).then(({ data, count }) => {
       if (!data || count === null) return;
       setFoods(data);
       setCount(count);
     });
-  }, []);
+  }, [page, itemsPerPage]);
 
   return (
     <div>
