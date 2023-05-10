@@ -79,7 +79,7 @@ export default function Foods() {
   const [count, setCount] = useState(0);
   const [foods, setFoods] = useState<Food[]>([]);
   const [page, setPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(5);
 
   const handlePageChange = (page: number) => {
     setPage(page);
