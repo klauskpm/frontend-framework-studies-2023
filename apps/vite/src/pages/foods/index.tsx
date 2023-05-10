@@ -173,12 +173,7 @@ export default function Foods() {
                 </tr>
               </tfoot>
             </table>
-            <div className="btn-group">
-              <button className="btn btn-active">1</button>
-              <button className="btn">2</button>
-              <button className="btn">3</button>
-              <button className="btn">4</button>
-            </div>
+            <Pagination />
           </div>
         </Tabs.Content>
         <Tabs.Content
@@ -192,3 +187,12 @@ export default function Foods() {
     </div>
   );
 }
+function Pagination() {
+  return <div className="btn-group">
+    <button className="btn">1</button>
+    <button className="btn btn-active">2</button>
+    <button className="btn">3</button>
+    <button className="btn">4</button>
+  </div>;
+}
+
