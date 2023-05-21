@@ -11,7 +11,8 @@ async function getFoods({ page, itemsPerPage }: { page: number, itemsPerPage: nu
   const initialItem = page * itemsPerPage;
   const finalItem = initialItem + itemsPerPage - 1;
   const countResponse = await supabase.from("foods").select('*', { count: 'exact', head: true });
-  const paginatedFoodsResponse = await supabase.from("foods").select('*').range(initialItem, finalItem);
+  const paginatedFoodsResponse = await supabase.from("foods").select('*').order('id').range(initialItem, finalItem);
+
   return {
     data: paginatedFoodsResponse.data,
     count: countResponse.count,
@@ -139,6 +140,8 @@ export default function Foods() {
               <thead>
                 <tr>
                   <th>Title</th>
+                  <th>Price</th>
+                  <th>Available quantity</th>
                   <th></th>
                 </tr>
               </thead>
@@ -150,6 +153,8 @@ export default function Foods() {
                         {food.title}
                       </Link>
                     </td>
+                    <td>{food.price}</td>
+                    <td>{food.quantity}</td>
                     <td>
                       <button
                         className="btn-error btn-sm btn"
@@ -177,8 +182,10 @@ export default function Foods() {
               </tbody>
               <tfoot>
                 <tr>
-                  <td>Title</td>
-                  <td></td>
+                  <th>Title</th>
+                  <th>Price</th>
+                  <th>Available quantity</th>
+                  <th></th>
                 </tr>
               </tfoot>
             </table>

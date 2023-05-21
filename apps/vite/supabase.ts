@@ -29,6 +29,8 @@ export interface Database {
           description: string | null
           id: number
           image_url: string | null
+          price: number
+          quantity: number
           title: string
         }
         Insert: {
@@ -36,6 +38,8 @@ export interface Database {
           description?: string | null
           id?: number
           image_url?: string | null
+          price?: number
+          quantity?: number
           title: string
         }
         Update: {
@@ -43,6 +47,8 @@ export interface Database {
           description?: string | null
           id?: number
           image_url?: string | null
+          price?: number
+          quantity?: number
           title?: string
         }
       }
