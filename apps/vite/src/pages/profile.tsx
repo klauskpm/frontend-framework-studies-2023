@@ -1,7 +1,20 @@
 import { useState, useEffect } from "react";
+import { redirect } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import Avatar from "../Avatar";
 import { useSession } from "../SessionProvider";
+
+export const profileLoader = async () => {
+  const session = await supabase.auth.getSession().then(({ data }) => {
+    return data?.session;
+  });
+
+  if (!!session?.user) {
+    return null;
+  }
+
+  return redirect("/login");
+};
 
 export default function Profile() {
   const [session] = useSession();

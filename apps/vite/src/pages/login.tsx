@@ -20,8 +20,9 @@ export const loginLoader = async () => {
   });
 
   if (!session?.user) {
-    return;
+    return null;
   }
+
   return redirect("/");
 };
 

@@ -4,7 +4,7 @@ import CommonPage from "./CommonPage";
 
 import Home from "./pages";
 import Login, { loginLoader } from "./pages/login";
-import Profile from "./pages/profile";
+import Profile, { profileLoader } from "./pages/profile";
 import Foods from "./pages/foods";
 import CreateFoods from "./pages/foods/create";
 import EditFood from "./pages/foods/[id]";
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "login", element: <Login />, loader: loginLoader },
-      { path: "profile", element: <Profile /> },
+      { path: "profile", element: <Profile />, loader: profileLoader },
       { path: "foods", children: [
         { path: "/foods", element: <Foods /> },
         { path: "/foods/create", element: <CreateFoods /> },
