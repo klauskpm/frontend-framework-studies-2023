@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CommonPage from "./CommonPage";
 
 import Home from "./pages";
-import Login from "./pages/login";
+import Login, { loginLoader } from "./pages/login";
 import Profile from "./pages/profile";
 import Foods from "./pages/foods";
 import CreateFoods from "./pages/foods/create";
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <CommonPage />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "login", element: <Login /> },
+      { path: "login", element: <Login />, loader: loginLoader },
       { path: "profile", element: <Profile /> },
       { path: "foods", children: [
         { path: "/foods", element: <Foods /> },
