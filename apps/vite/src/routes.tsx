@@ -5,7 +5,6 @@ import CommonPage from "./CommonPage";
 import Home from "./pages";
 import Login from "./pages/login";
 import Profile from "./pages/profile";
-import Countries from "./pages/countries";
 import Foods from "./pages/foods";
 import CreateFoods from "./pages/foods/create";
 import EditFood from "./pages/foods/[id]";
@@ -18,7 +17,6 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "login", element: <Login /> },
       { path: "profile", element: <Profile /> },
-      { path: "countries", element: <Countries /> },
       { path: "foods", children: [
         { path: "/foods", element: <Foods /> },
         { path: "/foods/create", element: <CreateFoods /> },
