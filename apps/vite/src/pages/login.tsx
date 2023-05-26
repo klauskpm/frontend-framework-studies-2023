@@ -4,7 +4,6 @@ import { LoginPage } from "@shared/simple";
 import { magicLoginUser } from "../auth";
 import { supabase } from "../supabaseClient";
 import { useSession } from "../SessionProvider";
-import { useEffect } from "react";
 
 function Login() {
   const [session] = useSession();
@@ -14,11 +13,10 @@ function Login() {
     magicLoginUser(formData.email);
   }
 
-  useEffect(() => {
-    if (session?.user) {
-      navigate("/");
-    }
-  }, [session, navigate]);
+  if (!!session?.user) {
+    navigate("/");
+    return null;
+  }
 
   return (
     <LoginPage onSubmit={onSubmit} />
