@@ -4,6 +4,7 @@ import { Database } from "../../../supabase";
 import { Link } from "react-router-dom";
 import * as Tabs from '@radix-ui/react-tabs';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { useSession } from "../../SessionProvider";
 
 export type Food = Database["public"]["Tables"]["foods"]["Row"];
 type SelectOptions = { head?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; } | undefined;
@@ -142,6 +143,7 @@ export default function Foods() {
 }
 
 function Table({ handleClickDelete }: any) {
+  const [session] = useSession();
   const [count, setCount] = useState(0);
   const [foods, setFoods] = useState<Food[]>([]);
   const [page, setPage] = useState(0);
@@ -185,6 +187,7 @@ function Table({ handleClickDelete }: any) {
                 <td>
                   <button
                     className="btn-error btn-sm btn"
+                    disabled={!session?.user}
                     onClick={() => handleClickDelete(food.id)}
                   >
                     <svg
