@@ -83,7 +83,6 @@ const VirtualList = ({ items }: any) => {
 };
 
 export default function Foods() {
-  const [count, setCount] = useState(0);
   const [foods, setFoods] = useState<Food[]>([]);
   const [page, setPage] = useState(0);
   const [itemsPerPage] = useState(5);
@@ -104,12 +103,11 @@ export default function Foods() {
   };
 
   useEffect(() => {
-    getPaginatedFoods({ page, itemsPerPage }).then(({ data, count }) => {
-      if (!data || count === null) return;
+    getFoods().then(({ data }) => {
+      if (!data) return;
       setFoods(data);
-      setCount(count);
     });
-  }, [page, itemsPerPage]);
+  }, []);
 
   return (
     <div>
@@ -141,8 +139,6 @@ export default function Foods() {
           value="table"
         >
           <Table
-            foods={foods}
-            count={count}
             page={page}
             itemsPerPage={itemsPerPage}
             handlePageChange={handlePageChange}
@@ -162,7 +158,17 @@ export default function Foods() {
 }
 
 function Table(props: any) {
-  const { foods, count, page, itemsPerPage, handlePageChange, handleClickDelete } = props;
+  const { page, itemsPerPage, handlePageChange, handleClickDelete } = props;
+  const [count, setCount] = useState(0);
+  const [foods, setFoods] = useState<Food[]>([]);
+
+  useEffect(() => {
+    getPaginatedFoods({ page, itemsPerPage }).then(({ data, count }) => {
+      if (!data || count === null) return;
+      setFoods(data);
+      setCount(count);
+    });
+  }, [page, itemsPerPage]);
 
   return (
     <>
