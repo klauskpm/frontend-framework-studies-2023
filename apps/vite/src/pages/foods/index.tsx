@@ -84,21 +84,6 @@ const VirtualList = ({ items }: any) => {
 };
 
 export default function Foods() {
-  const [foods, setFoods] = useState<Food[]>([]);
-
-  const handleClickDelete = (id: number) => {
-    deleteFood(id).then(() => {
-      setFoods(foods.filter((food) => food.id !== id));
-    });
-  };
-
-  useEffect(() => {
-    getFoods().then(({ data }) => {
-      if (!data) return;
-      setFoods(data);
-    });
-  }, []);
-
   return (
     <div>
       <h1>Foods</h1>
@@ -128,7 +113,7 @@ export default function Foods() {
           className="grow p-5 rounded-b-md outline-none"
           value="table"
         >
-          <Table handleClickDelete={handleClickDelete} />
+          <Table />
         </Tabs.Content>
         <Tabs.Content
           className="grow p-5 rounded-b-md outline-none"
@@ -142,7 +127,7 @@ export default function Foods() {
   );
 }
 
-function Table({ handleClickDelete }: any) {
+function Table() {
   const [session] = useSession();
   const [count, setCount] = useState(0);
   const [foods, setFoods] = useState<Food[]>([]);
@@ -151,6 +136,12 @@ function Table({ handleClickDelete }: any) {
 
   const handlePageChange = (page: number) => {
     setPage(page);
+  };
+
+  const handleClickDelete = (id: number) => {
+    deleteFood(id).then(() => {
+      setFoods(foods.filter((food) => food.id !== id));
+    });
   };
 
   useEffect(() => {
