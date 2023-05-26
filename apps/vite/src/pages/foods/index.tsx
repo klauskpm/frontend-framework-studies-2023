@@ -6,12 +6,18 @@ import * as Tabs from '@radix-ui/react-tabs';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 export type Food = Database["public"]["Tables"]["foods"]["Row"];
+type SelectOptions = { head?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; } | undefined;
 
-async function getFoods({ page, itemsPerPage }: { page: number, itemsPerPage: number}) {
+
+function getFoods(options?: SelectOptions) {
+  return supabase.from("foods").select("*", options);
+}
+
+async function getPaginatedFoods({ page, itemsPerPage }: { page: number, itemsPerPage: number}) {
   const initialItem = page * itemsPerPage;
   const finalItem = initialItem + itemsPerPage - 1;
-  const countResponse = await supabase.from("foods").select('*', { count: 'exact', head: true });
-  const paginatedFoodsResponse = await supabase.from("foods").select('*').order('id').range(initialItem, finalItem);
+  const countResponse = await getFoods({ count: 'exact', head: true });
+  const paginatedFoodsResponse = await getFoods().order('id').range(initialItem, finalItem);
 
   return {
     data: paginatedFoodsResponse.data,
@@ -98,7 +104,7 @@ export default function Foods() {
   };
 
   useEffect(() => {
-    getFoods({ page, itemsPerPage }).then(({ data, count }) => {
+    getPaginatedFoods({ page, itemsPerPage }).then(({ data, count }) => {
       if (!data || count === null) return;
       setFoods(data);
       setCount(count);
