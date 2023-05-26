@@ -85,11 +85,6 @@ const VirtualList = ({ items }: any) => {
 export default function Foods() {
   const [foods, setFoods] = useState<Food[]>([]);
 
-  const multipleFoods = useMemo(() => {
-    if (!foods.length) return [];
-    return Array.from({ length: 1000 }, (_, i) => foods[i%foods.length]);
-  }, [foods]);
-
   const handleClickDelete = (id: number) => {
     deleteFood(id).then(() => {
       setFoods(foods.filter((food) => food.id !== id));
@@ -138,7 +133,7 @@ export default function Foods() {
           className="grow p-5 rounded-b-md outline-none"
           value="list"
         >
-          <VirtualList items={multipleFoods} />
+          <VirtualFoodList />
         </Tabs.Content>
       </Tabs.Root>
       
@@ -256,3 +251,20 @@ function Pagination(props: any) {
   </div>;
 }
 
+function VirtualFoodList() {
+  const [foods, setFoods] = useState<Food[]>([]);
+
+  const multipleFoods = useMemo(() => {
+    if (!foods.length) return [];
+    return Array.from({ length: 1000 }, (_, i) => foods[i%foods.length]);
+  }, [foods]);
+
+  useEffect(() => {
+    getFoods().then(({ data }) => {
+      if (!data) return;
+      setFoods(data);
+    });
+  }, []);
+
+  return <VirtualList items={multipleFoods} />;
+}
