@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { redirect } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import Avatar from "../Avatar";
 import { useSession } from "../SessionProvider";
@@ -22,6 +22,7 @@ export default function Profile() {
   const [username, setUsername] = useState<string | null>(null);
   const [website, setWebsite] = useState<string | null>(null);
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getProfile() {
@@ -71,6 +72,11 @@ export default function Profile() {
   }
 
   if (!session && loading) return <div>Loading...</div>;
+
+  if (!session?.user) {
+    navigate("/login");
+    return null;
+  };
 
   return (
     <div className="flex h-full flex-row items-center justify-center">
