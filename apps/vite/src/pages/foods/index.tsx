@@ -113,7 +113,7 @@ export default function Foods() {
           className="grow p-5 rounded-b-md outline-none"
           value="table"
         >
-          <Table />
+          <FoodsTable />
         </Tabs.Content>
         <Tabs.Content
           className="grow p-5 rounded-b-md outline-none"
@@ -127,7 +127,7 @@ export default function Foods() {
   );
 }
 
-function Table() {
+function FoodsTable() {
   const [session] = useSession();
   const [count, setCount] = useState(0);
   const [foods, setFoods] = useState<Food[]>([]);
