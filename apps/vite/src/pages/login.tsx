@@ -1,13 +1,24 @@
-import { redirect } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { LoginPage } from "@shared/simple";
 
 import { magicLoginUser } from "../auth";
 import { supabase } from "../supabaseClient";
+import { useSession } from "../SessionProvider";
+import { useEffect } from "react";
 
 function Login() {
+  const [session] = useSession();
+  const navigate = useNavigate();
+
   function onSubmit(formData: any) {
     magicLoginUser(formData.email);
   }
+
+  useEffect(() => {
+    if (session?.user) {
+      navigate("/");
+    }
+  }, [session, navigate]);
 
   return (
     <LoginPage onSubmit={onSubmit} />
