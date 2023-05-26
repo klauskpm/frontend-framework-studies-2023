@@ -84,12 +84,6 @@ const VirtualList = ({ items }: any) => {
 
 export default function Foods() {
   const [foods, setFoods] = useState<Food[]>([]);
-  const [page, setPage] = useState(0);
-  const [itemsPerPage] = useState(5);
-
-  const handlePageChange = (page: number) => {
-    setPage(page);
-  };
 
   const multipleFoods = useMemo(() => {
     if (!foods.length) return [];
@@ -138,12 +132,7 @@ export default function Foods() {
           className="grow p-5 rounded-b-md outline-none"
           value="table"
         >
-          <Table
-            page={page}
-            itemsPerPage={itemsPerPage}
-            handlePageChange={handlePageChange}
-            handleClickDelete={handleClickDelete}
-          />
+          <Table handleClickDelete={handleClickDelete} />
         </Tabs.Content>
         <Tabs.Content
           className="grow p-5 rounded-b-md outline-none"
@@ -157,10 +146,15 @@ export default function Foods() {
   );
 }
 
-function Table(props: any) {
-  const { page, itemsPerPage, handlePageChange, handleClickDelete } = props;
+function Table({ handleClickDelete }: any) {
   const [count, setCount] = useState(0);
   const [foods, setFoods] = useState<Food[]>([]);
+  const [page, setPage] = useState(0);
+  const [itemsPerPage] = useState(5);
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
 
   useEffect(() => {
     getPaginatedFoods({ page, itemsPerPage }).then(({ data, count }) => {
