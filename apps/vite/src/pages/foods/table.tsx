@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSession } from "../../SessionProvider";
 import { Food, deleteFood, getPaginatedFoods } from "../../data/foods";
+import PaginationButtons from "../../components/PaginationButtons";
 
 export default function FoodTable() {
     const [session] = useSession();
@@ -86,7 +87,7 @@ export default function FoodTable() {
               </tr>
             </tfoot>
           </table>
-          <Pagination
+          <PaginationButtons
             count={count}
             currentPage={page}
             itemsPerPage={itemsPerPage}
@@ -97,26 +98,3 @@ export default function FoodTable() {
     );
   }
   
-  function Pagination(props: any) {
-    const { count, currentPage, itemsPerPage, onClick } = props;
-    const pages = new Array(Math.ceil(count/itemsPerPage)).fill(0);
-  
-    const firstPage = 0;
-    const lastPage = pages.length - 1;
-    const isOverLastPage = currentPage > lastPage;
-    const isUnderFirstPage = currentPage < firstPage;
-    const safeCurrentPage = isOverLastPage ? lastPage: (isUnderFirstPage ? firstPage : currentPage);
-  
-    return <div className="btn-group">
-      {pages.map((_, i) => {
-        const isActive = (i === safeCurrentPage) || (i === 0 && !safeCurrentPage);
-        return <button
-          key={i}
-          className={`btn ${isActive ? 'btn-active' : ''}`}
-          onClick={() => onClick(i)}
-          >
-            {i + 1}
-          </button>
-      })}
-    </div>;
-  }
