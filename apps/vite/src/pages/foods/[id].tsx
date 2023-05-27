@@ -42,7 +42,7 @@ export default function EditFood() {
       title: titleRef.current.value,
       price: priceRef.current.value,
       quantity: quantityRef.current.value
-    }
+    };
     updateFood(Number(id), fields);
   };
 
