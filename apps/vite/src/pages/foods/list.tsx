@@ -1,15 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { supabase } from "../../supabaseClient";
-import { Database } from "../../../supabase";
 import { Link } from "react-router-dom";
 import { useVirtualizer } from '@tanstack/react-virtual';
-
-export type Food = Database["public"]["Tables"]["foods"]["Row"];
-type SelectOptions = { head?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; } | undefined;
-
-function getFoods(options?: SelectOptions) {
-    return supabase.from("foods").select("*", options);
-  }
+import { Food, getFoods } from "../../data/foods";
 
 const VirtualList = ({ items }: any) => {
     const parentRef = useRef(null);

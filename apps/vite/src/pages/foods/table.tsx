@@ -1,39 +1,7 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient";
-import { Database } from "../../../supabase";
 import { Link } from "react-router-dom";
 import { useSession } from "../../SessionProvider";
-
-export type Food = Database["public"]["Tables"]["foods"]["Row"];
-type SelectOptions = { head?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; } | undefined;
-
-
-function getFoods(options?: SelectOptions) {
-  return supabase.from("foods").select("*", options);
-}
-
-async function getPaginatedFoods({ page, itemsPerPage }: { page: number, itemsPerPage: number}) {
-  const initialItem = page * itemsPerPage;
-  const finalItem = initialItem + itemsPerPage - 1;
-  const countResponse = await getFoods({ count: 'exact', head: true });
-  const paginatedFoodsResponse = await getFoods().order('id').range(initialItem, finalItem);
-
-  return {
-    data: paginatedFoodsResponse.data,
-    count: countResponse.count,
-    error: paginatedFoodsResponse.error && countResponse.error,
-  };
-}
-
-async function deleteFood(id: number) {
-  const { data, error } = await supabase.from("foods").delete().eq("id", id);
-
-  if (error) {
-    throw error;
-  } else {
-    return data;
-  }
-}
+import { Food, deleteFood, getPaginatedFoods } from "../../data/foods";
 
 export default function FoodTable() {
     const [session] = useSession();
