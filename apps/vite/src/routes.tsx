@@ -7,7 +7,7 @@ import Login, { loginLoader } from "./pages/login";
 import Profile, { profileLoader } from "./pages/profile";
 import Foods from "./pages/foods";
 import CreateFoods from "./pages/foods/create";
-import EditFood from "./pages/foods/[id]";
+import EditFood, { foodLoader } from "./pages/foods/[id]";
 import FoodTable from "./pages/foods/table";
 import FoodList from "./pages/foods/list";
 
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         { path: "list", element: <FoodList /> },
       ]},
       { path: "foods/create", element: <CreateFoods /> },
-      { path: "foods/:id", element: <EditFood /> },
+      { path: "foods/:id", element: <EditFood />, loader: foodLoader },
     ],
   },
 ]);
