@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSession } from "../../SessionProvider";
-import { Food, deleteFood, getPaginatedFoods } from "../../data/foods";
+import { Food, deleteFood, getPaginatedFoods } from "../../features/foods/data/foods";
 import PaginationButtons from "../../components/PaginationButtons";
 
 export default function FoodTable() {

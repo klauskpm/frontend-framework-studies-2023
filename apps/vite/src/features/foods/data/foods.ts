@@ -1,5 +1,5 @@
-import { supabase } from "../supabaseClient";
-import { Database } from "../../supabase";
+import { supabase } from "../../../supabaseClient";
+import { Database } from "../../../../supabase";
 
 export type Food = Database["public"]["Tables"]["foods"]["Row"];
 export type SelectOptions = { head?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; } | undefined;
