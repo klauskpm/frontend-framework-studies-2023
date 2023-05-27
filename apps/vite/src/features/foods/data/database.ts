@@ -9,6 +9,10 @@ export function getFoods(options?: SelectOptions) {
   return supabase.from("foods").select("*", options);
 }
 
+export function getFood (id: number) {
+  return getFoods().eq("id", id).single();
+}
+
 export async function getPaginatedFoods({ page, itemsPerPage }: { page: number, itemsPerPage: number}) {
   const initialItem = page * itemsPerPage;
   const finalItem = initialItem + itemsPerPage - 1;

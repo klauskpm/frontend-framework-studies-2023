@@ -1,13 +1,26 @@
 import { useParams } from "react-router-dom";
 import FoodForm from "../../features/foods/components/FoodForm";
 import Card from "../../components/Card";
-import { updateFood } from "../../features/foods/data/database";
+import { Food, getFood, updateFood } from "../../features/foods/data/database";
+import { useEffect, useState } from "react";
 
 export default function EditFood() {
+  const [isLoading, setLoading] = useState(true);
+  const [food, setFood] = useState<Food|null>(null);
   const { id } = useParams<{ id: string }>();
   const handleSubmit = (fields: any) => {
     updateFood(Number(id), fields);
   };
+
+  useEffect(() => {
+    if (!id) return;
+    getFood(Number(id)).then(({ data }) => {
+      if (!data) return;
+      console.log('data', data)
+      setFood(data);
+      setLoading(false);
+    });
+  }, [id]);
 
   return (
     <div className="m-8">
@@ -17,7 +30,8 @@ export default function EditFood() {
           <FoodForm
             onSubmit={handleSubmit}
             buttonText="Update food"
-            id={id}
+            food={food}
+            isLoading={isLoading}
           />
         </div>
       </Card>

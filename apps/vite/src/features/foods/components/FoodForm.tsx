@@ -1,11 +1,7 @@
-import { FormEvent, useEffect, useRef } from "react";
-import { supabase } from "../../../supabaseClient";
+import { FormEvent, useRef } from "react";
+import { FoodFormSkeleton } from "./FoodFormSkeleton";
 
-const getFood = async (id: number) => {
-    return supabase.from("foods").select().eq("id", id).single();
-  }
-
-export default function FoodForm({ onSubmit, buttonText, id }: any) {
+export default function FoodForm({ onSubmit, buttonText, food, isLoading }: any) {
     const titleRef = useRef<any>();
     const priceRef = useRef<any>();
     const quantityRef = useRef<any>();
@@ -20,15 +16,7 @@ export default function FoodForm({ onSubmit, buttonText, id }: any) {
       onSubmit(fields);
     };
 
-    useEffect(() => {
-        if (!id) return;
-        getFood(Number(id)).then(({ data }) => {
-          if (!data) return;
-          titleRef.current.value = data.title;
-          priceRef.current.value = data.price;
-          quantityRef.current.value = data.quantity;
-        });
-      }, [id]);
+    if (isLoading) return <FoodFormSkeleton />;
   
     return (
       <form className="space-y-4" onSubmit={handleSubmit}>
@@ -41,6 +29,7 @@ export default function FoodForm({ onSubmit, buttonText, id }: any) {
             id="title"
             className="input-bordered input"
             ref={titleRef}
+            defaultValue={food?.title}
           />
         </div>
         <div className="form-control">
@@ -52,6 +41,7 @@ export default function FoodForm({ onSubmit, buttonText, id }: any) {
             id="price"
             className="input-bordered input"
             ref={priceRef}
+            defaultValue={food?.price}
           />
         </div>
         <div className="form-control">
@@ -63,6 +53,7 @@ export default function FoodForm({ onSubmit, buttonText, id }: any) {
             id="quantity"
             className="input-bordered input"
             ref={quantityRef}
+            defaultValue={food?.quantity}
           />
         </div>
         <div>
