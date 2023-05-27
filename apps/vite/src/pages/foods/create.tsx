@@ -1,15 +1,6 @@
-import { supabase } from "../../supabaseClient";
 import Card from "../../components/Card";
 import FoodForm from "../../features/foods/components/FoodForm";
-
-const createFood = async (fields: any) => {
-    const { data, error } = await supabase.from("foods").insert([fields]);
-    if (error) {
-        console.warn(error);
-    } else if (data) {
-        console.log(data);
-    }
-};
+import { createFood } from "../../features/foods/data/create-foods";
 
 export default function CreateFoods() {
   return (

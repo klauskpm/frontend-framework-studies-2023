@@ -1,11 +1,13 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import * as Tabs from '@radix-ui/react-tabs';
 import { useEffect } from "react";
+import { useSession } from "../../SessionProvider";
 
 
 export default function Foods() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [session] = useSession();
   const defaultTab = "table";
 
   useEffect(() => {
@@ -21,9 +23,11 @@ export default function Foods() {
   return (
     <div>
       <h1>Foods</h1>
-      <Link to={"/foods/create"} className="link-primary link" role="button">
-        Create new food
-      </Link>
+      {session?.user && (
+        <Link to={"/foods/create"} className="link-primary link">
+          Create new food
+        </Link>
+      )}
 
       <Tabs.Root
         className="flex flex-col w-3/5"

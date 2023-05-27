@@ -1,20 +1,7 @@
-import { supabase } from "../../supabaseClient";
 import { useParams } from "react-router-dom";
 import FoodForm from "../../features/foods/components/FoodForm";
 import Card from "../../components/Card";
-
-const updateFood = async (id: number, fields: any) => {
-  const { data, error } = await supabase
-    .from("foods")
-    .update(fields)
-    .eq("id", id);
-
-  if (error) {
-    console.warn(error);
-  } else if (data) {
-    console.log(data);
-  }
-};
+import { updateFood } from "../../features/foods/data/update-food";
 
 export default function EditFood() {
   const { id } = useParams<{ id: string }>();
