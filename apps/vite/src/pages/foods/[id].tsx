@@ -1,8 +1,10 @@
-import { useParams } from "react-router-dom";
-import FoodForm from "../../features/foods/components/FoodForm";
-import Card from "../../components/Card";
-import { Food, getFood, updateFood } from "../../features/foods/data/database";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import Card from "../../components/Card";
+import FoodForm from "../../features/foods/components/FoodForm";
+import { Food, getFood, updateFood } from "../../features/foods/data/database";
+import { FoodFormSkeleton } from "../../features/foods/components/FoodFormSkeleton";
 
 export default function EditFood() {
   const [isLoading, setLoading] = useState(true);
@@ -27,12 +29,15 @@ export default function EditFood() {
       <h2 className="text-3xl font-bold mb-4">Edit food</h2>
       <Card>
         <div className="card-body">
-          <FoodForm
-            onSubmit={handleSubmit}
-            buttonText="Update food"
-            food={food}
-            isLoading={isLoading}
-          />
+          {isLoading && (<FoodFormSkeleton />)}
+          {!isLoading && (
+            <FoodForm
+              onSubmit={handleSubmit}
+              buttonText="Update food"
+              food={food}
+              isLoading={isLoading}
+            />
+          )}
         </div>
       </Card>
     </div>

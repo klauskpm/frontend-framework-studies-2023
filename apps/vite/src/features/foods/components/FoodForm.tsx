@@ -1,7 +1,6 @@
 import { FormEvent, useRef } from "react";
-import { FoodFormSkeleton } from "./FoodFormSkeleton";
 
-export default function FoodForm({ onSubmit, buttonText, food, isLoading }: any) {
+export default function FoodForm({ onSubmit, buttonText, food }: any) {
     const titleRef = useRef<any>();
     const priceRef = useRef<any>();
     const quantityRef = useRef<any>();
@@ -15,8 +14,6 @@ export default function FoodForm({ onSubmit, buttonText, food, isLoading }: any)
       };
       onSubmit(fields);
     };
-
-    if (isLoading) return <FoodFormSkeleton />;
   
     return (
       <form className="space-y-4" onSubmit={handleSubmit}>
