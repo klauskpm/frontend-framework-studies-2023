@@ -1,6 +1,6 @@
 export default function Card({ children }: any) {
     return (
-        <div className="card max-h-fit w-full max-w-sm bg-base-100 shadow-2xl border border-accent/40">
+        <div className="card max-h-fit w-full bg-base-100 border-4 border-accent">
             {children}
         </div>
     )
