@@ -31,7 +31,6 @@ export default function FoodTable() {
   
     return (
       <>
-        <div>Total: {count}</div>
         <div className="w-full">
           <table className="table w-full">
             <thead>
@@ -87,14 +86,30 @@ export default function FoodTable() {
               </tr>
             </tfoot>
           </table>
-          <PaginationButtons
+          <TablePagination
             count={count}
-            currentPage={page}
             itemsPerPage={itemsPerPage}
-            onClick={handlePageChange}
+            onClick={handleClickDelete}
+            page={page}
+            handlePageChange={handlePageChange}
           />
         </div>
       </>
     );
   }
   
+  function TablePagination(props: any) {
+    const { count, itemsPerPage, page, handlePageChange } = props;
+
+    return (
+      <div>
+        <div>Total: {count}</div>
+        <PaginationButtons
+          count={count}
+          currentPage={page}
+          itemsPerPage={itemsPerPage}
+          onClick={handlePageChange}
+        />
+      </div>
+    )
+  }
