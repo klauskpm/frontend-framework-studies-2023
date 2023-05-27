@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Food, getFoods } from "../../features/foods/data/foods";
+import { Food, getFoods } from "../../features/foods/data/database";
 import VirtualList from "../../components/VirtualList";
 
 export default function FoodList() {

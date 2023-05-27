@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import FoodForm from "../../features/foods/components/FoodForm";
 import Card from "../../components/Card";
-import { updateFood } from "../../features/foods/data/update-food";
+import { updateFood } from "../../features/foods/data/database";
 
 export default function EditFood() {
   const { id } = useParams<{ id: string }>();

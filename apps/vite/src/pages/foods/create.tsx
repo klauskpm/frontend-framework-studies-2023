@@ -1,6 +1,6 @@
 import Card from "../../components/Card";
 import FoodForm from "../../features/foods/components/FoodForm";
-import { createFood } from "../../features/foods/data/create-foods";
+import { createFood } from "../../features/foods/data/database";
 
 export default function CreateFoods() {
   return (
