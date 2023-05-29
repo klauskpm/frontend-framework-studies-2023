@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { redirect, useNavigate } from "react-router-dom";
-import { supabase } from "../features/supabase/supabaseClient";
+
 import Avatar from "../components/Avatar";
 import { useSession } from "../SessionProvider";
 import Card from "../components/Card";
+import { supabase } from "../features/supabase/supabaseClient";
+import { getProfile, updateProfile } from "../features/profiles/data/database";
 
 export const profileLoader = async () => {
   const session = await supabase.auth.getSession().then(({ data }) => {
@@ -24,18 +26,14 @@ export default function Profile() {
   const [website, setWebsite] = useState<string | null>(null);
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
   const navigate = useNavigate();
+  const user = session?.user;
 
   useEffect(() => {
-    async function getProfile() {
-      setLoading(true);
-      const { user } = session;
+    if (!user) return;
 
-      let { data, error } = await supabase
-        .from("profiles")
-        .select(`username, website, avatar_url`)
-        .eq("id", user.id)
-        .single();
+    setLoading(true);
 
+    getProfile(user.id).then(({ data, error }) => {
       if (error) {
         console.warn(error);
       } else if (data) {
@@ -43,34 +41,40 @@ export default function Profile() {
         setWebsite(data.website);
         setAvatarUrl(data.avatar_url);
       }
-
       setLoading(false);
-    }
+    });
+  }, [user]);
 
-    if (!session) return;
-    getProfile();
-  }, [session]);
-
-  async function updateProfile(event: any) {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     setLoading(true);
-    const { user } = session;
 
-    const updates = {
-      id: user.id,
+    const fields = {
       username,
       website,
       avatar_url
     };
 
-    let { error } = await supabase.from("profiles").upsert(updates);
+    const { error } = await updateProfile(user.id, fields);
 
     if (error) {
       alert(error.message);
     }
     setLoading(false);
   }
+
+  const handleUploadAvatar = async (event: InputEvent, avatar_url: string) => {
+    event.preventDefault();
+    
+    const { error } = await updateProfile(user.id, { avatar_url });
+
+    if (error) {
+      alert(error.message);
+    }
+
+    setAvatarUrl(avatar_url);
+  };
 
   if (!session && loading) return <div>Loading...</div>;
 
@@ -83,15 +87,12 @@ export default function Profile() {
     <div className="m-8 max-w-md">
       <Card>
         <div className="card-body">
-          <form onSubmit={updateProfile} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
               <div className="form-control items-center">
                 <Avatar
                   url={avatar_url}
                   size={150}
-                  onUpload={(event, url) => {
-                    setAvatarUrl(url);
-                    updateProfile(event);
-                  }}
+                  onUpload={handleUploadAvatar}
                 />
               </div>
               <div className="form-control">
