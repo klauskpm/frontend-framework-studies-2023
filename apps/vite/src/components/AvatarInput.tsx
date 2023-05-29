@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../features/supabase/supabaseClient'
 import { downloadImage } from '../helpers/downloadImage'
+import Avatar from './Avatar'
 
 // AvatarProps
-interface AvatarProps {
+interface AvatarInputProps {
     url: string|null
     size: number
     onUpload: (event: any, filePath: string) => void
 }
 
-export default function Avatar({ url, size, onUpload }: AvatarProps) {
+export default function AvatarInput({ url, size, onUpload }: AvatarInputProps) {
   const [avatarUrl, setAvatarUrl] = useState<string|null>(null)
   const [uploading, setUploading] = useState(false)
 
@@ -47,12 +48,7 @@ export default function Avatar({ url, size, onUpload }: AvatarProps) {
   return (
     <div>
       {avatarUrl ? (
-        <img
-          src={avatarUrl}
-          alt="Avatar"
-          className="avatar image"
-          style={{ height: size, width: size }}
-        />
+        <Avatar size="big" avatarUrl={avatarUrl} />
       ) : (
         <div className="avatar no-image" style={{ height: size, width: size }} />
       )}

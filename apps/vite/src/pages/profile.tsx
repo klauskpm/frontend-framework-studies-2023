@@ -1,7 +1,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 
-import Avatar from "../components/AvatarInput";
+import AvatarInput from "../components/AvatarInput";
 import { useSession } from "../SessionProvider";
 import Card from "../components/Card";
 import { supabase } from "../features/supabase/supabaseClient";
@@ -89,7 +89,7 @@ export default function Profile() {
         <div className="card-body">
           <form onSubmit={handleSubmit} className="space-y-4">
               <div className="form-control items-center">
-                <Avatar
+                <AvatarInput
                   url={avatar_url}
                   size={150}
                   onUpload={handleUploadAvatar}

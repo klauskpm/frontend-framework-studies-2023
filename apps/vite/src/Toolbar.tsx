@@ -5,6 +5,7 @@ import { supabase } from "./features/supabase/supabaseClient";
 import { downloadImage } from "./helpers/downloadImage";
 import { logoutUser } from "./auth";
 import { useSession } from "./SessionProvider";
+import Avatar from "./components/Avatar";
 
 export default function Header({ onClickSidebarButton }: any) {
   const [avatar_url, setAvatarUrl] = useState<string>("");
@@ -76,14 +77,8 @@ export default function Header({ onClickSidebarButton }: any) {
         )}
         {session && (
           <div className="dropdown-end dropdown">
-            <button className="btn-ghost btn-circle avatar btn">
-              <div className="w-10 rounded-full">
-                {loading || !avatar_url ? (
-                  <div className="h-10 w-10 animate-pulse rounded-full bg-base-content"></div>
-                ) : (
-                  <img src={avatar_url} />
-                )}
-              </div>
+            <button className="btn-circle btn">
+              <Avatar size="small" loading={loading} avatarUrl={avatar_url} />
             </button>
             <ul className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow">
               {session && (
