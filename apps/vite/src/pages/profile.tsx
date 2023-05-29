@@ -3,6 +3,7 @@ import { redirect, useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import Avatar from "../Avatar";
 import { useSession } from "../SessionProvider";
+import Card from "../components/Card";
 
 export const profileLoader = async () => {
   const session = await supabase.auth.getSession().then(({ data }) => {
@@ -79,70 +80,70 @@ export default function Profile() {
   };
 
   return (
-    <div className="flex h-full flex-row items-center justify-center">
-      <form
-        onSubmit={updateProfile}
-        className="card max-h-fit w-full max-w-sm bg-base-100 shadow-2xl"
-      >
+    <div className="m-8 max-w-md">
+      <Card>
         <div className="card-body">
-          <div className="form-control">
-            <label className="label" htmlFor="email">
-              <span className="label-text">Email</span>
-            </label>
-            <input
-              type="text"
-              id="email"
-              value={session.user.email}
-              disabled
-              className="input-bordered input"
-            />
-          </div>
-          <div className="form-control">
-            <label className="label" htmlFor="username">
-              <span className="label-text">Username</span>
-            </label>
-            <input
-              id="username"
-              type="text"
-              className="input-bordered input"
-              required
-              value={username || ""}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="form-control">
-            <label className="label" htmlFor="webstie">
-              <span className="label-text">Website</span>
-            </label>
-            <input
-              id="website"
-              type="url"
-              className="input-bordered input"
-              value={website || ""}
-              onChange={(e) => setWebsite(e.target.value)}
-            />
-          </div>
+          <form onSubmit={updateProfile} className="space-y-4">
+              <div className="form-control items-center">
+                <Avatar
+                  url={avatar_url}
+                  size={150}
+                  onUpload={(event, url) => {
+                    setAvatarUrl(url);
+                    updateProfile(event);
+                  }}
+                />
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="email">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  type="text"
+                  id="email"
+                  value={session.user.email}
+                  disabled
+                  className="input-bordered input"
+                />
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="username">
+                  <span className="label-text">Username</span>
+                </label>
+                <input
+                  id="username"
+                  type="text"
+                  className="input-bordered input"
+                  required
+                  value={username || ""}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="webstie">
+                  <span className="label-text">Website</span>
+                </label>
+                <input
+                  id="website"
+                  type="url"
+                  className="input-bordered input"
+                  value={website || ""}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </div>
 
-          <Avatar
-            url={avatar_url}
-            size={150}
-            onUpload={(event, url) => {
-              setAvatarUrl(url);
-              updateProfile(event);
-            }}
-          />
-
-          <div className="form-control mt-6">
-            <button
-              className="btn-primary btn"
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? "Loading ..." : "Update"}
-            </button>
-          </div>
+              <div className="mt-6">
+                <button
+                  className="btn-primary btn"
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading ? "Loading ..." : "Update"}
+                </button>
+              </div>
+          </form>
         </div>
-      </form>
+      </Card>
     </div>
   );
 }
