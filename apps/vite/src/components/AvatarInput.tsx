@@ -1,22 +1,15 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useRef } from 'react'
 
 import Avatar from './Avatar'
-import { downloadImage } from '../features/profiles/data/downloadImage'
 
-// AvatarProps
 interface AvatarInputProps {
-    url: string|null
+    avatarUrl: string | null
     onChange: (file: File) => void,
     isUploading?: boolean
 }
 
-export default function AvatarInput({ url, onChange, isUploading = false }: AvatarInputProps) {
-  const [avatarUrl, setAvatarUrl] = useState<string|null>(null)
+export default function AvatarInput({ avatarUrl, onChange, isUploading = false }: AvatarInputProps) {
   const fileRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (url) downloadImage(url).then((imageURL: string) => setAvatarUrl(imageURL))
-  }, [url])
 
   async function handleChange(event: ChangeEvent<HTMLInputElement>) {
     event.preventDefault();

@@ -5,8 +5,12 @@ import { useSession } from "../SessionProvider";
 import AvatarInput from "../components/AvatarInput";
 import Card from "../components/Card";
 import { supabase } from "../features/supabase/supabaseClient";
-import { getProfile, updateProfile } from "../features/profiles/data/database";
-import { uploadAvatar } from "../features/profiles/data/storage";
+import {
+  getProfile,
+  updateProfile,
+  Profile as ProfileType
+} from "../features/profiles/data/database";
+import { downloadImage, uploadAvatar } from "../features/profiles/data/storage";
 
 export const profileLoader = async () => {
   const session = await supabase.auth.getSession().then(({ data }) => {
@@ -20,15 +24,22 @@ export const profileLoader = async () => {
   return redirect("/login");
 };
 
+type ChangeableProfile = Pick<ProfileType, 'username' | 'website' | 'avatar_url'>;
+
 export default function Profile() {
   const [session] = useSession();
   const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState<string | null>(null);
-  const [website, setWebsite] = useState<string | null>(null);
-  const [avatar_url, setAvatarUrl] = useState<string | null>(null);
+  const [profile, setProfile] = useState<ChangeableProfile>();
   const [isUploading, setUploading] = useState<boolean>(false);
   const navigate = useNavigate();
   const user = session?.user;
+
+  const [avatarUrl, setAvatarUrl] = useState<string|null>(null)
+
+  useEffect(() => {
+    if (!profile?.avatar_url) return;
+    downloadImage(profile.avatar_url).then((imageURL: string) => setAvatarUrl(imageURL))
+  }, [profile?.avatar_url]);
 
   useEffect(() => {
     if (!user) return;
@@ -39,9 +50,11 @@ export default function Profile() {
       if (error) {
         console.warn(error);
       } else if (data) {
-        setUsername(data.username);
-        setWebsite(data.website);
-        setAvatarUrl(data.avatar_url);
+        setProfile({
+          username: data.username,
+          website: data.website,
+          avatar_url: data.avatar_url
+        });
       }
       setLoading(false);
     });
@@ -49,13 +62,13 @@ export default function Profile() {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    if (!profile) return;
 
     setLoading(true);
 
     const fields = {
-      username,
-      website,
-      avatar_url
+      username: profile.username,
+      website: profile.website
     };
 
     const { error } = await updateProfile(user.id, fields);
@@ -66,21 +79,14 @@ export default function Profile() {
     setLoading(false);
   }
 
-  const handleUploadAvatar = async (avatar_url: string) => {
-    const { error } = await updateProfile(user.id, { avatar_url });
+  const handleUploadAvatar = async (filePath: string) => {
+    const { error } = await updateProfile(user.id, { avatar_url: filePath });
 
     if (error) {
       alert(error.message);
     }
 
-    setAvatarUrl(avatar_url);
-  };
-
-  if (!session && loading) return <div>Loading...</div>;
-
-  if (!session?.user) {
-    navigate("/login");
-    return null;
+    handleFieldChange({ avatar_url: filePath });
   };
 
   const handleImageChange = async (file: File) => {
@@ -99,7 +105,20 @@ export default function Profile() {
     } finally {
       setUploading(false)
     }
-  }
+  };
+
+  const handleFieldChange = (fields: any) => {
+    setProfile((currentProfile) => {
+      return { ...currentProfile, ...fields };
+    })
+  };
+
+  if (!session && loading) return <div>Loading...</div>;
+
+  if (!session?.user) {
+    navigate("/login");
+    return null;
+  };
 
   return (
     <div className="m-8 max-w-md">
@@ -108,7 +127,7 @@ export default function Profile() {
           <form onSubmit={handleSubmit} className="space-y-4">
               <div className="form-control items-center">
                 <AvatarInput
-                  url={avatar_url}
+                  avatarUrl={avatarUrl}
                   onChange={handleImageChange}
                   isUploading={isUploading}
                 />
@@ -134,8 +153,8 @@ export default function Profile() {
                   type="text"
                   className="input-bordered input"
                   required
-                  value={username || ""}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={profile?.username || ""}
+                  onChange={(e) => handleFieldChange({ username: e.target.value })}
                 />
               </div>
               <div className="form-control">
@@ -146,8 +165,8 @@ export default function Profile() {
                   id="website"
                   type="url"
                   className="input-bordered input"
-                  value={website || ""}
-                  onChange={(e) => setWebsite(e.target.value)}
+                  value={profile?.website || ""}
+                  onChange={(e) => handleFieldChange({ website: e.target.value })}
                 />
               </div>
 
