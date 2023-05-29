@@ -8,7 +8,7 @@
     "dev": "vite --open",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "update-types": "npx supabase gen types typescript --project-id \"eikzucowzxcedzyckglx\" > ./src/features/supabase/types.ts"
+    "update-types": "npx supabase gen types typescript --project-id \"eikzucowzxcedzyckglx\" > ./src/features/supabase/generated-types.ts"
   },
   "dependencies": {
     "@radix-ui/react-tabs": "1.0.3",

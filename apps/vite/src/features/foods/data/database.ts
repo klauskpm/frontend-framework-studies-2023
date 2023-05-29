@@ -1,8 +1,8 @@
 import { supabase } from "../../supabase/supabaseClient";
-import { Database } from "../../supabase/types";
+import { Database } from "../../supabase/generated-types";
+import { SelectOptions } from "../../supabase/types";
 
 export type Food = Database["public"]["Tables"]["foods"]["Row"];
-export type SelectOptions = { head?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; } | undefined;
 
 
 export function getFoods(options?: SelectOptions) {
