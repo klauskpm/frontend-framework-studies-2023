@@ -2,7 +2,7 @@ import { redirect, useNavigate } from "react-router-dom";
 import { LoginPage } from "@shared/simple";
 
 import { magicLoginUser } from "../auth";
-import { supabase } from "../supabaseClient";
+import { supabase } from "../features/supabase/supabaseClient";
 import { useSession } from "../SessionProvider";
 
 function Login() {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { supabase } from "./supabaseClient";
+import { supabase } from "./features/supabase/supabaseClient";
 import { downloadImage } from "./helpers/downloadImage";
 import { logoutUser } from "./auth";
 import { useSession } from "./SessionProvider";

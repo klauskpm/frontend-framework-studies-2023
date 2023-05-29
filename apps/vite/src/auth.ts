@@ -1,4 +1,4 @@
-import { supabase } from "./supabaseClient";
+import { supabase } from "./features/supabase/supabaseClient";
 
 const isValidURL = () => {
   const regex = /^https:\/\/ffs2023.*(-klauskpm){0,1}\.vercel\.app$/;

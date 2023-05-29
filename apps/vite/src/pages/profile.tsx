@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { redirect, useNavigate } from "react-router-dom";
-import { supabase } from "../supabaseClient";
+import { supabase } from "../features/supabase/supabaseClient";
 import Avatar from "../components/Avatar";
 import { useSession } from "../SessionProvider";
 import Card from "../components/Card";
