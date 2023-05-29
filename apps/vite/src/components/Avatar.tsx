@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { supabase } from './supabaseClient'
-import { downloadImage } from './helpers/downloadImage'
+import { supabase } from '../supabaseClient'
+import { downloadImage } from '../helpers/downloadImage'
 
 // AvatarProps
 interface AvatarProps {
