@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
-import { supabase } from '../features/supabase/supabaseClient'
-import { downloadImage } from '../helpers/downloadImage'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
+
 import Avatar from './Avatar'
+import { downloadImage } from '../helpers/downloadImage'
+import { uploadAvatar } from '../features/profiles/data/storage'
 
 // AvatarProps
 interface AvatarInputProps {
@@ -18,7 +19,7 @@ export default function AvatarInput({ url, onUpload }: AvatarInputProps) {
     if (url) downloadImage(url).then((imageURL: string) => setAvatarUrl(imageURL))
   }, [url])
 
-  async function uploadAvatar(event: any) {
+  async function handleChange(event: ChangeEvent<HTMLInputElement>) {
     try {
       setUploading(true)
 
@@ -26,12 +27,7 @@ export default function AvatarInput({ url, onUpload }: AvatarInputProps) {
         throw new Error('You must select an image to upload.')
       }
 
-      const file = event.target.files[0]
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${Math.random()}.${fileExt}`
-      const filePath = `${fileName}`
-
-      let { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file)
+      let { error: uploadError, filePath } = await uploadAvatar(event.target.files[0])
 
       if (uploadError) {
         throw uploadError
@@ -62,7 +58,7 @@ export default function AvatarInput({ url, onUpload }: AvatarInputProps) {
         type="file"
         id="single"
         accept="image/*"
-        onChange={uploadAvatar}
+        onChange={handleChange}
         disabled={uploading}
         ref={fileRef}
       />
