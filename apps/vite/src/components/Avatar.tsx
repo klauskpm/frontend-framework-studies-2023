@@ -2,7 +2,7 @@ import { RoundedSkeleton } from "./RoundedSkeleton";
 
 interface AvatarProps {
     loading?: boolean;
-    avatarUrl: string;
+    avatarUrl?: string | null;
     size?: "small" | "medium" | "big"
 }
 
@@ -14,8 +14,9 @@ const sizeMap = {
 
 export default function Avatar({ loading = false, avatarUrl = "", size = "medium" }: AvatarProps) {
     const [width, height] = sizeMap[size];
+    const placeholderCssClass = !avatarUrl ? "placeholder" : ""
     return (
-        <div className="avatar">
+        <div className={`avatar ${placeholderCssClass}`}>
             <div className={`${width} rounded-full`}>
                 {loading || !avatarUrl ? (
                     <RoundedSkeleton className={`${height} ${width}`}/>

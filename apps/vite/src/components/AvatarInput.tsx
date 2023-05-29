@@ -6,11 +6,10 @@ import Avatar from './Avatar'
 // AvatarProps
 interface AvatarInputProps {
     url: string|null
-    size: number
     onUpload: (event: any, filePath: string) => void
 }
 
-export default function AvatarInput({ url, size, onUpload }: AvatarInputProps) {
+export default function AvatarInput({ url, onUpload }: AvatarInputProps) {
   const [avatarUrl, setAvatarUrl] = useState<string|null>(null)
   const [uploading, setUploading] = useState(false)
 
@@ -47,27 +46,17 @@ export default function AvatarInput({ url, size, onUpload }: AvatarInputProps) {
 
   return (
     <div>
-      {avatarUrl ? (
+      <label className='btn btn-secondary btn-circle w-40 h-40' role='button' tabIndex={0}>
         <Avatar size="big" avatarUrl={avatarUrl} />
-      ) : (
-        <div className="avatar no-image" style={{ height: size, width: size }} />
-      )}
-      <div style={{ width: size }}>
-        <label className="button primary block" htmlFor="single">
-          {uploading ? 'Uploading ...' : 'Upload'}
-        </label>
         <input
-          style={{
-            visibility: 'hidden',
-            position: 'absolute',
-          }}
+          className='hidden'
           type="file"
           id="single"
           accept="image/*"
           onChange={uploadAvatar}
           disabled={uploading}
         />
-      </div>
+      </label>
     </div>
   )
 }

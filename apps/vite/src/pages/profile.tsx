@@ -91,7 +91,6 @@ export default function Profile() {
               <div className="form-control items-center">
                 <AvatarInput
                   url={avatar_url}
-                  size={150}
                   onUpload={handleUploadAvatar}
                 />
               </div>
