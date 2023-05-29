@@ -1,7 +1,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 
-import Avatar from "../components/Avatar";
+import Avatar from "../components/AvatarInput";
 import { useSession } from "../SessionProvider";
 import Card from "../components/Card";
 import { supabase } from "../features/supabase/supabaseClient";
