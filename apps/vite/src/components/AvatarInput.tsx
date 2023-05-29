@@ -2,17 +2,16 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import Avatar from './Avatar'
 import { downloadImage } from '../helpers/downloadImage'
-import { uploadAvatar } from '../features/profiles/data/storage'
 
 // AvatarProps
 interface AvatarInputProps {
     url: string|null
-    onUpload: (event: any, filePath: string) => void
+    onChange: (file: File) => void,
+    isUploading?: boolean
 }
 
-export default function AvatarInput({ url, onUpload }: AvatarInputProps) {
+export default function AvatarInput({ url, onChange, isUploading = false }: AvatarInputProps) {
   const [avatarUrl, setAvatarUrl] = useState<string|null>(null)
-  const [uploading, setUploading] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -20,25 +19,12 @@ export default function AvatarInput({ url, onUpload }: AvatarInputProps) {
   }, [url])
 
   async function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    try {
-      setUploading(true)
-
-      if (!event.target.files || event.target.files.length === 0) {
-        throw new Error('You must select an image to upload.')
-      }
-
-      let { error: uploadError, filePath } = await uploadAvatar(event.target.files[0])
-
-      if (uploadError) {
-        throw uploadError
-      }
-
-      onUpload(event, filePath)
-    } catch (error: any) {
-      alert(error.message)
-    } finally {
-      setUploading(false)
+    event.preventDefault();
+    if (!event.target.files || event.target.files.length === 0) {
+      throw new Error('You must select an image to upload.')
     }
+
+    onChange(event.target.files[0]);
   }
 
   const handleClick = () => {
@@ -59,7 +45,7 @@ export default function AvatarInput({ url, onUpload }: AvatarInputProps) {
         id="single"
         accept="image/*"
         onChange={handleChange}
-        disabled={uploading}
+        disabled={isUploading}
         ref={fileRef}
       />
     </div>

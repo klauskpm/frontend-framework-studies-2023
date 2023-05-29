@@ -1,11 +1,12 @@
 import { useState, useEffect, FormEvent } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 
-import AvatarInput from "../components/AvatarInput";
 import { useSession } from "../SessionProvider";
+import AvatarInput from "../components/AvatarInput";
 import Card from "../components/Card";
 import { supabase } from "../features/supabase/supabaseClient";
 import { getProfile, updateProfile } from "../features/profiles/data/database";
+import { uploadAvatar } from "../features/profiles/data/storage";
 
 export const profileLoader = async () => {
   const session = await supabase.auth.getSession().then(({ data }) => {
@@ -25,6 +26,7 @@ export default function Profile() {
   const [username, setUsername] = useState<string | null>(null);
   const [website, setWebsite] = useState<string | null>(null);
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
+  const [isUploading, setUploading] = useState<boolean>(false);
   const navigate = useNavigate();
   const user = session?.user;
 
@@ -64,9 +66,7 @@ export default function Profile() {
     setLoading(false);
   }
 
-  const handleUploadAvatar = async (event: InputEvent, avatar_url: string) => {
-    event.preventDefault();
-    
+  const handleUploadAvatar = async (avatar_url: string) => {
     const { error } = await updateProfile(user.id, { avatar_url });
 
     if (error) {
@@ -83,6 +83,24 @@ export default function Profile() {
     return null;
   };
 
+  const handleImageChange = async (file: File) => {
+    try {
+      setUploading(true)
+
+      let { error: uploadError, filePath } = await uploadAvatar(file)
+
+      if (uploadError) {
+        throw uploadError
+      }
+
+      handleUploadAvatar(filePath)
+    } catch (error: any) {
+      alert(error.message)
+    } finally {
+      setUploading(false)
+    }
+  }
+
   return (
     <div className="m-8 max-w-md">
       <Card>
@@ -91,7 +109,8 @@ export default function Profile() {
               <div className="form-control items-center">
                 <AvatarInput
                   url={avatar_url}
-                  onUpload={handleUploadAvatar}
+                  onChange={handleImageChange}
+                  isUploading={isUploading}
                 />
               </div>
               <div className="form-control">
