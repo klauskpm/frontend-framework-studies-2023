@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { supabase } from '../features/supabase/supabaseClient'
 import { downloadImage } from '../helpers/downloadImage'
 import Avatar from './Avatar'
@@ -12,6 +12,7 @@ interface AvatarInputProps {
 export default function AvatarInput({ url, onUpload }: AvatarInputProps) {
   const [avatarUrl, setAvatarUrl] = useState<string|null>(null)
   const [uploading, setUploading] = useState(false)
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (url) downloadImage(url).then((imageURL: string) => setAvatarUrl(imageURL))
@@ -44,19 +45,27 @@ export default function AvatarInput({ url, onUpload }: AvatarInputProps) {
     }
   }
 
+  const handleClick = () => {
+    fileRef?.current?.click();
+  };
+
   return (
     <div>
-      <label className='btn btn-secondary btn-circle w-40 h-40' role='button' tabIndex={0}>
+      <button
+        className='btn btn-secondary btn-circle w-40 h-40'
+        type="button"
+        onClick={handleClick}>
         <Avatar size="big" avatarUrl={avatarUrl} />
-        <input
-          className='hidden'
-          type="file"
-          id="single"
-          accept="image/*"
-          onChange={uploadAvatar}
-          disabled={uploading}
-        />
-      </label>
+      </button>
+      <input
+        className='hidden'
+        type="file"
+        id="single"
+        accept="image/*"
+        onChange={uploadAvatar}
+        disabled={uploading}
+        ref={fileRef}
+      />
     </div>
   )
 }
