@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { supabase } from "./features/supabase/supabaseClient";
-import { downloadImage } from "./helpers/downloadImage";
+import { downloadImage } from "./features/profiles/data/downloadImage";
 import { logoutUser } from "./auth";
 import { useSession } from "./SessionProvider";
 import Avatar from "./components/Avatar";

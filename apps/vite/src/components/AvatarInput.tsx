@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import Avatar from './Avatar'
-import { downloadImage } from '../helpers/downloadImage'
+import { downloadImage } from '../features/profiles/data/downloadImage'
 
 // AvatarProps
 interface AvatarInputProps {

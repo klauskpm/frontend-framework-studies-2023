@@ -1,4 +1,4 @@
-import { supabase } from "../features/supabase/supabaseClient";
+import { supabase } from "../../supabase/supabaseClient";
 
 export async function downloadImage(path: any): Promise<string> {
   try {
