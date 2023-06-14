@@ -37,6 +37,7 @@ export interface Database {
           quantity?: number
           title?: string
         }
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -63,6 +64,14 @@ export interface Database {
           username?: string | null
           website?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
