@@ -26,17 +26,17 @@ export async function getPaginatedFoods({ page, itemsPerPage }: { page: number, 
   };
 }
 
-export function createFood(fields: any) {
+export async function createFood(fields: any) {
   return supabase.from("foods").insert([fields]);
-};
+}
 
-export function updateFood(id: number, fields: any) {
+export async function updateFood(id: number, fields: any) {
   return supabase
     .from("foods")
     .update(fields)
     .eq("id", id);
-};
+}
 
-export function deleteFood(id: number) {
+export async function deleteFood(id: number) {
   return supabase.from("foods").delete().eq("id", id);
 }
