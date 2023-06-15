@@ -1,16 +1,16 @@
 export interface LoginPageProps {
   onSubmit: (formData: any, event: any) => void;
+  sent: boolean;
 }
 
 const extractFormData = () => {
   const form = document.getElementById("loginForm") as HTMLFormElement;
   if (!form) return {};
   const formData = new FormData(form);
-  const data = Object.fromEntries(formData.entries());
-  return data;
+  return Object.fromEntries(formData.entries());
 };
 
-export default function LoginPage({ onSubmit }: LoginPageProps) {
+export default function LoginPage({ onSubmit, sent }: LoginPageProps) {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     onSubmit(extractFormData(), event);
@@ -24,6 +24,11 @@ export default function LoginPage({ onSubmit }: LoginPageProps) {
           <p className="py-6">
             Type your email address and we'll send you a magic link.
           </p>
+          {sent && (
+            <p className="text-sm text-gray-500">
+              If you don't receive an email, check your spam folder.
+            </p>
+          )}
         </div>
         <div className="card w-full max-w-sm flex-shrink-0 bg-base-100 shadow-2xl">
           <div className="card-body">

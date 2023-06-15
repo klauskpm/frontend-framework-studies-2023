@@ -1,3 +1,4 @@
+import {useState} from "react";
 import { redirect, useNavigate } from "react-router-dom";
 import { LoginPage } from "@shared/simple";
 
@@ -8,9 +9,11 @@ import { useSession } from "../SessionProvider";
 function Login() {
   const [session] = useSession();
   const navigate = useNavigate();
+  const [sent, setSent] = useState(true);
 
-  function onSubmit(formData: any) {
-    magicLoginUser(formData.email);
+  async function onSubmit(formData: any) {
+    await magicLoginUser(formData.email);
+    setSent(true);
   }
 
   if (!!session?.user) {
@@ -19,7 +22,7 @@ function Login() {
   }
 
   return (
-    <LoginPage onSubmit={onSubmit} />
+    <LoginPage onSubmit={onSubmit} sent={sent} />
   );
 }
 
