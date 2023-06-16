@@ -1,7 +1,6 @@
 export interface LoginPageProps {
   onSubmit: (formData: any, event: any) => void;
   sent: boolean;
-  error?: string;
 }
 
 const extractFormData = () => {
@@ -11,7 +10,7 @@ const extractFormData = () => {
   return Object.fromEntries(formData.entries());
 };
 
-export default function LoginPage({ onSubmit, sent, error }: LoginPageProps) {
+export default function LoginPage({ onSubmit, sent }: LoginPageProps) {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     onSubmit(extractFormData(), event);
@@ -48,13 +47,7 @@ export default function LoginPage({ onSubmit, sent, error }: LoginPageProps) {
                         type="text"
                         placeholder="email"
                         className="input-bordered input data-[error=true]:input-error"
-                        data-error={!!error}
                     />
-                    {error && (
-                      <label className="label">
-                        <span className="label-text-alt text-error">{error}</span>
-                      </label>
-                    )}
                   </div>
                   <div className="form-control mt-6">
                     <button className="btn-primary btn">Login with magic link</button>
