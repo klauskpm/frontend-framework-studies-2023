@@ -9,11 +9,18 @@ import { useSession } from "../SessionProvider";
 function Login() {
   const [session] = useSession();
   const navigate = useNavigate();
-  const [sent, setSent] = useState(true);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string>();
 
   async function onSubmit(formData: any) {
-    await magicLoginUser(formData.email);
     setSent(true);
+    await magicLoginUser(formData.email)
+        .then((response) => {
+          if (response?.error) {
+            setSent(false);
+            setError(response.error.message);
+          }
+        });
   }
 
   if (!!session?.user) {
@@ -22,7 +29,7 @@ function Login() {
   }
 
   return (
-    <LoginPage onSubmit={onSubmit} sent={sent} />
+    <LoginPage onSubmit={onSubmit} sent={sent} error={error} />
   );
 }
 
