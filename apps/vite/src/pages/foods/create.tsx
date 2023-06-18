@@ -1,14 +1,18 @@
+import {useState} from "react";
+
 import Card from "../../components/Card";
 import FoodForm from "../../features/foods/components/FoodForm";
 import {createFood} from "../../features/foods/data/database";
-import {useState} from "react";
+import ToastSuccess from "../../components/ToastSuccess";
 
 export default function CreateFoods() {
     const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
     const handleSubmit = async (fields: any) => {
         setLoading(true);
         await createFood(fields);
         setLoading(false);
+        setMessage("Food created successfully");
     };
 
   return (
@@ -17,6 +21,7 @@ export default function CreateFoods() {
       <Card>
         <div className="card-body">
           <FoodForm onSubmit={handleSubmit} buttonText="Create food" loading={loading} />
+          <ToastSuccess open={!!message} message={message} onClose={() => setMessage("")} />
         </div>
       </Card>
     </div>

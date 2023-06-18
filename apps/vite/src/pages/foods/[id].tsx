@@ -1,18 +1,21 @@
-import { useLoaderData, useParams } from "react-router-dom";
+import {useState} from "react";
+import {useLoaderData, useParams} from "react-router-dom";
 
 import Card from "../../components/Card";
 import FoodForm from "../../features/foods/components/FoodForm";
-import { Food, getFood, updateFood } from "../../features/foods/data/database";
-import {useState} from "react";
+import {Food, getFood, updateFood} from "../../features/foods/data/database";
+import ToastSuccess from "../../components/ToastSuccess";
 
 export default function EditFood() {
   const food = useLoaderData() as Food | null;
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const handleSubmit = async (fields: any) => {
     setLoading(true);
     await updateFood(Number(id), fields);
     setLoading(false);
+    setMessage("Food updated successfully");
   };
 
   return (
@@ -26,6 +29,7 @@ export default function EditFood() {
             food={food}
             loading={loading}
           />
+          <ToastSuccess open={!!message} message={message} onClose={() => setMessage("")} />
         </div>
       </Card>
     </div>
