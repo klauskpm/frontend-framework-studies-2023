@@ -1,6 +1,7 @@
 export interface LoginPageProps {
   onSubmit: (formData: any, event: any) => void;
   sent: boolean;
+  loading: boolean;
 }
 
 const extractFormData = () => {
@@ -10,7 +11,7 @@ const extractFormData = () => {
   return Object.fromEntries(formData.entries());
 };
 
-export default function LoginPage({ onSubmit, sent }: LoginPageProps) {
+export default function LoginPage({ onSubmit, sent, loading }: LoginPageProps) {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     onSubmit(extractFormData(), event);
@@ -47,10 +48,13 @@ export default function LoginPage({ onSubmit, sent }: LoginPageProps) {
                         type="text"
                         placeholder="email"
                         className="input-bordered input data-[error=true]:input-error"
+                        disabled={loading}
                     />
                   </div>
                   <div className="form-control mt-6">
-                    <button className="btn-primary btn">Login with magic link</button>
+                    <button className="btn-primary btn data-[loading=true]:loading" data-loading={loading}>
+                      {loading ? "Sending..." : "Send magic link"}
+                    </button>
                   </div>
                 </form>
               </div>

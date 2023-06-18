@@ -11,17 +11,22 @@ import ToastAlert from "../components/ToastError";
 function Login() {
   const [session] = useSession();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string>("");
 
   async function onSubmit(formData: any) {
-    setSent(true);
+    setError("");
+    setLoading(true);
+
     await magicLoginUser(formData.email)
         .then((response) => {
+          setLoading(false);
           if (response?.error) {
-            setSent(false);
             setError(response.error.message);
+            return;
           }
+          setSent(true);
         });
   }
 
@@ -32,7 +37,7 @@ function Login() {
 
   return (
     <>
-        <LoginPage onSubmit={onSubmit} sent={sent} />
+        <LoginPage onSubmit={onSubmit} sent={sent} loading={loading} />
         <ToastAlert open={!!error} errorMessage={error} onClose={() => setError("")} />
     </>
   );
