@@ -7,7 +7,6 @@ import {magicLoginUser} from "../auth";
 import {supabase} from "../features/supabase/supabaseClient";
 import {useSession} from "../SessionProvider";
 import ToastAlert from "../components/ToastError";
-import ToastProvider from "../components/ToastProvider";
 
 function Login() {
   const [session] = useSession();
@@ -32,10 +31,10 @@ function Login() {
   }
 
   return (
-    <ToastProvider>
-      <LoginPage onSubmit={onSubmit} sent={sent} />
-      <ToastAlert open={!!error} errorMessage={error} onClose={() => setError("")} />
-    </ToastProvider>
+    <>
+        <LoginPage onSubmit={onSubmit} sent={sent} />
+        <ToastAlert open={!!error} errorMessage={error} onClose={() => setError("")} />
+    </>
   );
 }
 
