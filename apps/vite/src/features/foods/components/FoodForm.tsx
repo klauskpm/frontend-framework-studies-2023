@@ -1,6 +1,6 @@
 import { FormEvent, useRef } from "react";
 
-export default function FoodForm({ onSubmit, buttonText, food }: any) {
+export default function FoodForm({ onSubmit, buttonText, food, loading }: any) {
     const titleRef = useRef<any>();
     const priceRef = useRef<any>();
     const quantityRef = useRef<any>();
@@ -54,8 +54,8 @@ export default function FoodForm({ onSubmit, buttonText, food }: any) {
           />
         </div>
         <div>
-          <button type="submit" className="btn-primary btn">
-            {buttonText}
+          <button type="submit" className="btn-primary btn data-[loading=true]:loading" disabled={loading} data-loading={loading}>
+            {loading ? "Loading..." : buttonText}
           </button>
         </div>
       </form>

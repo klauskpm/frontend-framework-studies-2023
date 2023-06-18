@@ -3,12 +3,16 @@ import { useLoaderData, useParams } from "react-router-dom";
 import Card from "../../components/Card";
 import FoodForm from "../../features/foods/components/FoodForm";
 import { Food, getFood, updateFood } from "../../features/foods/data/database";
+import {useState} from "react";
 
 export default function EditFood() {
   const food = useLoaderData() as Food | null;
   const { id } = useParams<{ id: string }>();
-  const handleSubmit = (fields: any) => {
-    updateFood(Number(id), fields);
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async (fields: any) => {
+    setLoading(true);
+    await updateFood(Number(id), fields);
+    setLoading(false);
   };
 
   return (
@@ -20,6 +24,7 @@ export default function EditFood() {
             onSubmit={handleSubmit}
             buttonText="Update food"
             food={food}
+            loading={loading}
           />
         </div>
       </Card>
