@@ -2,14 +2,14 @@ import * as Toast from "@radix-ui/react-toast";
 
 interface ToastSuccessProps {
   open: boolean;
-  onClose?: Function;
+  onClose?: () => void;
   message: string;
   duration?: number;
 }
 
 export default function ToastSuccess({
   open,
-  onClose = () => {},
+  onClose = () => null,
   message,
   duration = 5000,
   ...props

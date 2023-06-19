@@ -1,14 +1,21 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { supabase } from "./features/supabase/supabaseClient";
 
 type SessionContextType = {
   session: any;
-  setSession: Function;
+  setSession: Dispatch<any>;
 };
 
 const initialSessionContext: SessionContextType = {
   session: null,
-  setSession: () => {},
+  setSession: () => null,
 };
 
 const SessionContext = createContext<SessionContextType>(initialSessionContext);

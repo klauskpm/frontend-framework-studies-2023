@@ -16,8 +16,9 @@ export const profileLoader = async () => {
   const session = await supabase.auth.getSession().then(({ data }) => {
     return data?.session;
   });
+  const hasUser = !!session?.user;
 
-  if (!!session?.user) {
+  if (hasUser) {
     return null;
   }
 
@@ -98,7 +99,7 @@ export default function Profile() {
     try {
       setUploading(true);
 
-      let { error: uploadError, filePath } = await uploadAvatar(file);
+      const { error: uploadError, filePath } = await uploadAvatar(file);
 
       if (uploadError) {
         throw uploadError;

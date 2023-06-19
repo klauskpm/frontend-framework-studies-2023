@@ -2,14 +2,14 @@ import * as Toast from "@radix-ui/react-toast";
 
 interface ToastAlertProps {
   open: boolean;
-  onClose?: Function;
+  onClose?: () => void;
   errorMessage: string;
   duration?: number;
 }
 
 export default function ToastAlert({
   open,
-  onClose = () => {},
+  onClose = () => null,
   errorMessage,
   duration = 5000,
   ...props

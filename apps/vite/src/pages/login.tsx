@@ -28,8 +28,9 @@ function Login() {
       setSent(true);
     });
   }
+  const hasUser = !!session?.user;
 
-  if (!!session?.user) {
+  if (hasUser) {
     navigate("/");
     return null;
   }
