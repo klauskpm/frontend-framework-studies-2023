@@ -19,10 +19,14 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "login", element: <Login />, loader: loginLoader },
       { path: "profile", element: <Profile />, loader: profileLoader },
-      { path: "foods", element: <Foods />, children: [
-        { path: "table", element: <FoodTable /> },
-        { path: "list", element: <FoodList /> },
-      ]},
+      {
+        path: "foods",
+        element: <Foods />,
+        children: [
+          { path: "table", element: <FoodTable /> },
+          { path: "list", element: <FoodList /> },
+        ],
+      },
       { path: "foods/create", element: <CreateFoods /> },
       { path: "foods/:id", element: <EditFood />, loader: foodLoader },
     ],

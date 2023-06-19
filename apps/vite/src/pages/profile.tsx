@@ -8,7 +8,7 @@ import { supabase } from "../features/supabase/supabaseClient";
 import {
   getProfile,
   updateProfile,
-  Profile as ProfileType
+  Profile as ProfileType,
 } from "../features/profiles/data/database";
 import { downloadImage, uploadAvatar } from "../features/profiles/data/storage";
 
@@ -24,7 +24,10 @@ export const profileLoader = async () => {
   return redirect("/login");
 };
 
-type ChangeableProfile = Pick<ProfileType, 'username' | 'website' | 'avatar_url'>;
+type ChangeableProfile = Pick<
+  ProfileType,
+  "username" | "website" | "avatar_url"
+>;
 
 export default function Profile() {
   const [session] = useSession();
@@ -34,11 +37,13 @@ export default function Profile() {
   const navigate = useNavigate();
   const user = session?.user;
 
-  const [avatarUrl, setAvatarUrl] = useState<string|null>(null)
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (!profile?.avatar_url) return;
-    downloadImage(profile.avatar_url).then((imageURL: string) => setAvatarUrl(imageURL))
+    downloadImage(profile.avatar_url).then((imageURL: string) =>
+      setAvatarUrl(imageURL)
+    );
   }, [profile?.avatar_url]);
 
   useEffect(() => {
@@ -53,7 +58,7 @@ export default function Profile() {
         setProfile({
           username: data.username,
           website: data.website,
-          avatar_url: data.avatar_url
+          avatar_url: data.avatar_url,
         });
       }
       setLoading(false);
@@ -68,7 +73,7 @@ export default function Profile() {
 
     const fields = {
       username: profile.username,
-      website: profile.website
+      website: profile.website,
     };
 
     const { error } = await updateProfile(user.id, fields);
@@ -77,7 +82,7 @@ export default function Profile() {
       alert(error.message);
     }
     setLoading(false);
-  }
+  };
 
   const handleUploadAvatar = async (filePath: string) => {
     const { error } = await updateProfile(user.id, { avatar_url: filePath });
@@ -91,26 +96,26 @@ export default function Profile() {
 
   const handleImageChange = async (file: File) => {
     try {
-      setUploading(true)
+      setUploading(true);
 
-      let { error: uploadError, filePath } = await uploadAvatar(file)
+      let { error: uploadError, filePath } = await uploadAvatar(file);
 
       if (uploadError) {
-        throw uploadError
+        throw uploadError;
       }
 
-      handleUploadAvatar(filePath)
+      handleUploadAvatar(filePath);
     } catch (error: any) {
-      alert(error.message)
+      alert(error.message);
     } finally {
-      setUploading(false)
+      setUploading(false);
     }
   };
 
   const handleFieldChange = (fields: any) => {
     setProfile((currentProfile) => {
       return { ...currentProfile, ...fields };
-    })
+    });
   };
 
   if (!session && loading) return <div>Loading...</div>;
@@ -118,67 +123,69 @@ export default function Profile() {
   if (!session?.user) {
     navigate("/login");
     return null;
-  };
+  }
 
   return (
     <div className="m-8 max-w-md">
       <Card>
         <div className="card-body">
           <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="form-control items-center">
-                <AvatarInput
-                  avatarUrl={avatarUrl}
-                  onChange={handleImageChange}
-                  isUploading={isUploading}
-                />
-              </div>
-              <div className="form-control">
-                <label className="label" htmlFor="email">
-                  <span className="label-text">Email</span>
-                </label>
-                <input
-                  type="text"
-                  id="email"
-                  value={session.user.email}
-                  disabled
-                  className="input-bordered input"
-                />
-              </div>
-              <div className="form-control">
-                <label className="label" htmlFor="username">
-                  <span className="label-text">Username</span>
-                </label>
-                <input
-                  id="username"
-                  type="text"
-                  className="input-bordered input"
-                  required
-                  value={profile?.username || ""}
-                  onChange={(e) => handleFieldChange({ username: e.target.value })}
-                />
-              </div>
-              <div className="form-control">
-                <label className="label" htmlFor="webstie">
-                  <span className="label-text">Website</span>
-                </label>
-                <input
-                  id="website"
-                  type="url"
-                  className="input-bordered input"
-                  value={profile?.website || ""}
-                  onChange={(e) => handleFieldChange({ website: e.target.value })}
-                />
-              </div>
+            <div className="form-control items-center">
+              <AvatarInput
+                avatarUrl={avatarUrl}
+                onChange={handleImageChange}
+                isUploading={isUploading}
+              />
+            </div>
+            <div className="form-control">
+              <label className="label" htmlFor="email">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="text"
+                id="email"
+                value={session.user.email}
+                disabled
+                className="input-bordered input"
+              />
+            </div>
+            <div className="form-control">
+              <label className="label" htmlFor="username">
+                <span className="label-text">Username</span>
+              </label>
+              <input
+                id="username"
+                type="text"
+                className="input-bordered input"
+                required
+                value={profile?.username || ""}
+                onChange={(e) =>
+                  handleFieldChange({ username: e.target.value })
+                }
+              />
+            </div>
+            <div className="form-control">
+              <label className="label" htmlFor="webstie">
+                <span className="label-text">Website</span>
+              </label>
+              <input
+                id="website"
+                type="url"
+                className="input-bordered input"
+                value={profile?.website || ""}
+                onChange={(e) => handleFieldChange({ website: e.target.value })}
+              />
+            </div>
 
-              <div className="mt-6">
-                <button
-                  className="btn-primary btn"
-                  type="submit"
-                  disabled={loading}
-                >
-                  {loading ? "Loading ..." : "Update"}
-                </button>
-              </div>
+            <div className="mt-6">
+              <button
+                className="btn-primary btn"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? "Loading ..." : "Update"}
+              </button>
+            </div>
           </form>
         </div>
       </Card>

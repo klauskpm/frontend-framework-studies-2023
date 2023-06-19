@@ -1,9 +1,9 @@
-import {useState} from "react";
-import {useLoaderData, useParams} from "react-router-dom";
+import { useState } from "react";
+import { useLoaderData, useParams } from "react-router-dom";
 
 import Card from "../../components/Card";
 import FoodForm from "../../features/foods/components/FoodForm";
-import {Food, getFood, updateFood} from "../../features/foods/data/database";
+import { Food, getFood, updateFood } from "../../features/foods/data/database";
 import ToastSuccess from "../../components/ToastSuccess";
 
 export default function EditFood() {
@@ -20,7 +20,7 @@ export default function EditFood() {
 
   return (
     <div className="m-8">
-      <h2 className="text-3xl font-bold mb-4">Edit food</h2>
+      <h2 className="mb-4 text-3xl font-bold">Edit food</h2>
       <Card>
         <div className="card-body">
           <FoodForm
@@ -29,16 +29,20 @@ export default function EditFood() {
             food={food}
             loading={loading}
           />
-          <ToastSuccess open={!!message} message={message} onClose={() => setMessage("")} />
+          <ToastSuccess
+            open={!!message}
+            message={message}
+            onClose={() => setMessage("")}
+          />
         </div>
       </Card>
     </div>
   );
 }
 
-export const foodLoader = async ({ params }: any): Promise<Food|null> => {
+export const foodLoader = async ({ params }: any): Promise<Food | null> => {
   const { id } = params;
   const { data } = await getFood(Number(id));
 
   return data;
-}
+};

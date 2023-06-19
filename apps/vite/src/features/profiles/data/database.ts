@@ -5,16 +5,13 @@ import { SelectOptions } from "../../supabase/types";
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
 export function getProfiles(options?: SelectOptions) {
-    return supabase.from("profiles").select("*", options);
+  return supabase.from("profiles").select("*", options);
 }
 
 export function getProfile(id: number) {
-    return getProfiles().eq("id", id).single();
+  return getProfiles().eq("id", id).single();
 }
 
 export function updateProfile(id: number, fields: any) {
-    return supabase
-      .from("profiles")
-      .update(fields)
-      .eq("id", id);
-};
+  return supabase.from("profiles").update(fields).eq("id", id);
+}

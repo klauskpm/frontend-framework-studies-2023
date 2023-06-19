@@ -1,1 +1,6 @@
-export type SelectOptions = { head?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; } | undefined;
+export type SelectOptions =
+  | {
+      head?: boolean | undefined;
+      count?: "exact" | "planned" | "estimated" | undefined;
+    }
+  | undefined;

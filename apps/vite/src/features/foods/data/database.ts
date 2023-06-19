@@ -4,20 +4,27 @@ import { SelectOptions } from "../../supabase/types";
 
 export type Food = Database["public"]["Tables"]["foods"]["Row"];
 
-
 export function getFoods(options?: SelectOptions) {
   return supabase.from("foods").select("*", options);
 }
 
-export function getFood (id: number) {
+export function getFood(id: number) {
   return getFoods().eq("id", id).single();
 }
 
-export async function getPaginatedFoods({ page, itemsPerPage }: { page: number, itemsPerPage: number}) {
+export async function getPaginatedFoods({
+  page,
+  itemsPerPage,
+}: {
+  page: number;
+  itemsPerPage: number;
+}) {
   const initialItem = page * itemsPerPage;
   const finalItem = initialItem + itemsPerPage - 1;
-  const countResponse = await getFoods({ count: 'exact', head: true });
-  const paginatedFoodsResponse = await getFoods().order('id').range(initialItem, finalItem);
+  const countResponse = await getFoods({ count: "exact", head: true });
+  const paginatedFoodsResponse = await getFoods()
+    .order("id")
+    .range(initialItem, finalItem);
 
   return {
     data: paginatedFoodsResponse.data,
@@ -31,10 +38,7 @@ export async function createFood(fields: any) {
 }
 
 export async function updateFood(id: number, fields: any) {
-  return supabase
-    .from("foods")
-    .update(fields)
-    .eq("id", id);
+  return supabase.from("foods").update(fields).eq("id", id);
 }
 
 export async function deleteFood(id: number) {

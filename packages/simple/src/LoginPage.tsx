@@ -23,9 +23,7 @@ export default function LoginPage({ onSubmit, sent, loading }: LoginPageProps) {
         {sent && (
           <div className="text-center">
             <h1 className="text-5xl font-bold">Check your email!</h1>
-            <p className="py-6">
-              We've sent you a magic link to login.
-            </p>
+            <p className="py-6">We've sent you a magic link to login.</p>
           </div>
         )}
         {!sent && (
@@ -44,15 +42,18 @@ export default function LoginPage({ onSubmit, sent, loading }: LoginPageProps) {
                       <span className="label-text">Email</span>
                     </label>
                     <input
-                        name="email"
-                        type="text"
-                        placeholder="email"
-                        className="input-bordered input data-[error=true]:input-error"
-                        disabled={loading}
+                      name="email"
+                      type="text"
+                      placeholder="email"
+                      className="input-bordered input data-[error=true]:input-error"
+                      disabled={loading}
                     />
                   </div>
                   <div className="form-control mt-6">
-                    <button className="btn-primary btn data-[loading=true]:loading" data-loading={loading}>
+                    <button
+                      className="btn-primary btn data-[loading=true]:loading"
+                      data-loading={loading}
+                    >
                       {loading ? "Sending..." : "Send magic link"}
                     </button>
                   </div>

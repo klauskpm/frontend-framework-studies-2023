@@ -11,7 +11,7 @@ export default function CommonPage() {
     <Drawer toggleRef={drawerToggleRef}>
       <Header onClickSidebarButton={openDrawer} />
       <div className="grow">
-        <Outlet/>
+        <Outlet />
       </div>
     </Drawer>
   );
