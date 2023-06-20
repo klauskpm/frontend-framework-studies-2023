@@ -7,7 +7,7 @@ export default function Foods() {
   const navigate = useNavigate();
   const location = useLocation();
   const [session] = useSession();
-  const defaultTab = "table";
+  const defaultTab = "graph";
 
   useEffect(() => {
     if (location.pathname === "/foods") {
@@ -46,6 +46,12 @@ export default function Foods() {
           >
             List
           </Tabs.Trigger>
+          <Tabs.Trigger
+            className="tab-bordered tab data-[state=active]:tab-active"
+            value="graph"
+          >
+            Graph
+          </Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content
           className="grow rounded-b-md p-5 outline-none"
@@ -56,6 +62,12 @@ export default function Foods() {
         <Tabs.Content
           className="grow rounded-b-md p-5 outline-none"
           value="list"
+        >
+          <Outlet />
+        </Tabs.Content>
+        <Tabs.Content
+          className="grow rounded-b-md p-5 outline-none"
+          value="graph"
         >
           <Outlet />
         </Tabs.Content>
