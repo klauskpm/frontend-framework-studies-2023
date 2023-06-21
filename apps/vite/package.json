@@ -19,7 +19,6 @@
     "chart.js": "^4.3.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
-    "react-charts": "^3.0.0-beta.54",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0"
   },
