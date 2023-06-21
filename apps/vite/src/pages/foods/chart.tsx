@@ -10,6 +10,7 @@ import {
 } from "chart.js";
 
 import Card from "../../components/Card";
+import colors from "tailwindcss/colors";
 
 ChartJS.register(
   CategoryScale,
@@ -38,7 +39,7 @@ const data = {
     {
       label: "Prices",
       data: [12, 13],
-      backgroundColor: "red",
+      backgroundColor: colors.cyan[500],
     },
   ],
 };
