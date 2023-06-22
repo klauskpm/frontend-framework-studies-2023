@@ -11,6 +11,8 @@ import {
 
 import Card from "../../components/Card";
 import colors from "tailwindcss/colors";
+import { useEffect, useMemo, useState } from "react";
+import { Food, getFoods } from "../../features/foods/data/database";
 
 ChartJS.register(
   CategoryScale,
@@ -31,20 +33,26 @@ const options = {
   },
 };
 
-const labels = ["Naan", "Roti"];
-
-const data = {
-  labels,
-  datasets: [
-    {
-      label: "Prices",
-      data: [12, 13],
-      backgroundColor: colors.cyan[500],
-    },
-  ],
-};
-
 export default function FoodChart() {
+  const [foods, setFoods] = useState<Food[]>([]);
+
+  useEffect(() => {
+    getFoods().then(({ data }) => {
+      if (!data) return;
+      setFoods(data);
+    });
+  }, []);
+
+  const data = useMemo(() => {
+    const labels: string[] = foods.map((food) => food.title);
+    const dataset = {
+      label: "Prices",
+      backgroundColor: colors.cyan[500],
+      data: foods.map((food) => food.price),
+    };
+    return { labels, datasets: [dataset] };
+  }, [foods]);
+
   return (
     <Card>
       <div className="rounded-xl bg-white">
