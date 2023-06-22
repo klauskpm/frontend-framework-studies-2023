@@ -20,8 +20,8 @@ export default function Foods() {
   };
 
   return (
-    <div>
-      <h1>Foods</h1>
+    <div className="m-8">
+      <h2 className="mb-4 text-3xl font-bold">Foods</h2>
       {session?.user && (
         <Link to={"/foods/create"} className="link-primary link">
           Create new food
