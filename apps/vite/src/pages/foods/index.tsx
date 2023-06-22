@@ -14,7 +14,7 @@ export default function Foods() {
     if (location.pathname === "/foods") {
       navigate(`/foods/${defaultTab}`);
     }
-  }, [location]);
+  }, [location, navigate]);
 
   const handleChangeTab = (value: string) => {
     navigate(`/foods/${value}`);
