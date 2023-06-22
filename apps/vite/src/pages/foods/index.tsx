@@ -2,12 +2,13 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import * as Tabs from "@radix-ui/react-tabs";
 import { useEffect } from "react";
 import { useSession } from "../../SessionProvider";
+import Card from "../../components/Card";
 
 export default function Foods() {
   const navigate = useNavigate();
   const location = useLocation();
   const [session] = useSession();
-  const defaultTab = "graph";
+  const defaultTab = "table";
 
   useEffect(() => {
     if (location.pathname === "/foods") {
@@ -21,19 +22,20 @@ export default function Foods() {
 
   return (
     <div className="m-8">
-      <h2 className="mb-4 text-3xl font-bold">Foods</h2>
-      {session?.user && (
-        <Link to={"/foods/create"} className="link-primary link">
-          Create new food
-        </Link>
-      )}
-
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-3xl font-bold">Foods</h2>
+        {session?.user && (
+          <Link to={"/foods/create"} className="link-primary link">
+            Add a new food
+          </Link>
+        )}
+      </div>
       <Tabs.Root
         className="flex w-3/5 flex-col"
         defaultValue={defaultTab}
         onValueChange={handleChangeTab}
       >
-        <Tabs.List className="tabs" aria-label="Manage your account">
+        <Tabs.List className="tabs mb-4" aria-label="Manage your account">
           <Tabs.Trigger
             className="tab-bordered tab data-[state=active]:tab-active"
             value="table"
@@ -53,23 +55,20 @@ export default function Foods() {
             Graph
           </Tabs.Trigger>
         </Tabs.List>
-        <Tabs.Content
-          className="grow rounded-b-md p-5 outline-none"
-          value="table"
-        >
-          <Outlet />
+        <Tabs.Content className="grow rounded-b-md outline-none" value="table">
+          <Card>
+            <Outlet />
+          </Card>
         </Tabs.Content>
-        <Tabs.Content
-          className="grow rounded-b-md p-5 outline-none"
-          value="list"
-        >
-          <Outlet />
+        <Tabs.Content className="grow rounded-b-md outline-none" value="list">
+          <Card>
+            <Outlet />
+          </Card>
         </Tabs.Content>
-        <Tabs.Content
-          className="grow rounded-b-md p-5 outline-none"
-          value="graph"
-        >
-          <Outlet />
+        <Tabs.Content className="grow rounded-b-md outline-none" value="graph">
+          <Card>
+            <Outlet />
+          </Card>
         </Tabs.Content>
       </Tabs.Root>
     </div>

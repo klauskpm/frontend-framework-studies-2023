@@ -81,22 +81,16 @@ export default function FoodTable() {
               </tr>
             ))}
           </tbody>
-          <tfoot>
-            <tr>
-              <th>Title</th>
-              <th>Price</th>
-              <th>Available quantity</th>
-              <th></th>
-            </tr>
-          </tfoot>
         </table>
-        <TablePagination
-          count={count}
-          itemsPerPage={itemsPerPage}
-          onClick={handleClickDelete}
-          page={page}
-          handlePageChange={handlePageChange}
-        />
+        <div className="px-4 py-2">
+          <TablePagination
+            count={count}
+            itemsPerPage={itemsPerPage}
+            onClick={handleClickDelete}
+            page={page}
+            handlePageChange={handlePageChange}
+          />
+        </div>
       </div>
     </>
   );
@@ -106,7 +100,7 @@ function TablePagination(props: any) {
   const { count, itemsPerPage, page, handlePageChange } = props;
 
   return (
-    <div>
+    <div className="flex items-center space-x-4">
       <div>Total: {count}</div>
       <PaginationButtons
         count={count}

@@ -10,7 +10,7 @@ import CreateFoods from "./pages/foods/create";
 import EditFood, { foodLoader } from "./pages/foods/[id]";
 import FoodTable from "./pages/foods/table";
 import FoodList from "./pages/foods/list";
-import FoodChart from "./pages/foods/chart";
+import FoodGraph from "./pages/foods/graph";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         children: [
           { path: "table", element: <FoodTable /> },
           { path: "list", element: <FoodList /> },
-          { path: "graph", element: <FoodChart /> },
+          { path: "graph", element: <FoodGraph /> },
         ],
       },
       { path: "foods/create", element: <CreateFoods /> },

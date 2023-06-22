@@ -9,7 +9,6 @@ import {
   Legend,
 } from "chart.js";
 
-import Card from "../../components/Card";
 import colors from "tailwindcss/colors";
 import { useEffect, useMemo, useState } from "react";
 import { Food, getFoods } from "../../features/foods/data/database";
@@ -33,7 +32,7 @@ const options = {
   },
 };
 
-export default function FoodChart() {
+export default function FoodGraph() {
   const [foods, setFoods] = useState<Food[]>([]);
 
   useEffect(() => {
@@ -54,10 +53,8 @@ export default function FoodChart() {
   }, [foods]);
 
   return (
-    <Card>
-      <div className="rounded-xl bg-white">
-        <Bar options={options} data={data} />
-      </div>
-    </Card>
+    <div className="rounded-xl bg-white">
+      <Bar options={options} data={data} />
+    </div>
   );
 }

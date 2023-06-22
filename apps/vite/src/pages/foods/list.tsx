@@ -17,5 +17,9 @@ export default function FoodList() {
     });
   }, []);
 
-  return <VirtualList items={multipleFoods} />;
+  return (
+    <div className="px-4 py-2">
+      <VirtualList items={multipleFoods} />
+    </div>
+  );
 }
