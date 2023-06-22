@@ -21,8 +21,8 @@ export default function Foods() {
   };
 
   return (
-    <div className="m-8">
-      <div className="mb-4 flex items-center justify-between">
+    <div className="m-8 w-3/5">
+      <div className="mb-4 flex items-end justify-between">
         <h2 className="text-3xl font-bold">Foods</h2>
         {session?.user && (
           <Link to={"/foods/create"} className="link-primary link">
@@ -31,7 +31,7 @@ export default function Foods() {
         )}
       </div>
       <Tabs.Root
-        className="flex w-3/5 flex-col"
+        className="flex flex-col"
         defaultValue={defaultTab}
         onValueChange={handleChangeTab}
       >
