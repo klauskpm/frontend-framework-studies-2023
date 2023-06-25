@@ -18,7 +18,7 @@ export default function Header({ onClickSidebarButton }: any) {
       setLoading(true);
       const { user } = session;
 
-      let { data, error } = await supabase
+      const { data, error } = await supabase
         .from("profiles")
         .select(`username, website, avatar_url`)
         .eq("id", user.id)
