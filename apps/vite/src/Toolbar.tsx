@@ -85,10 +85,15 @@ export default function Header({ onClickSidebarButton }: any) {
                 <li>
                   <Link to="/profile" className="justify-between">
                     Profile
-                    <span className="badge">New</span>
                   </Link>
                 </li>
               )}
+              <li>
+                <Link to="/feature-flags" className="justify-between">
+                  Feature Flags
+                  <span className="badge">New</span>
+                </Link>
+              </li>
 
               <li>
                 <a href="#" onClick={() => logoutUser()}>

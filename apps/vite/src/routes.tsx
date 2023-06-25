@@ -11,6 +11,7 @@ import EditFood, { foodLoader } from "./pages/foods/[id]";
 import FoodTable from "./pages/foods/table";
 import FoodList from "./pages/foods/list";
 import FoodGraph from "./pages/foods/graph";
+import FeatureFlags from "./pages/feature-flags";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "login", element: <Login />, loader: loginLoader },
       { path: "profile", element: <Profile />, loader: profileLoader },
+      { path: "feature-flags", element: <FeatureFlags /> },
       {
         path: "foods",
         element: <Foods />,
