@@ -1,23 +1,22 @@
 import { useEffect } from "react";
+import { useDVCClient } from "@devcycle/devcycle-react-sdk";
+
 import { useSession } from "../SessionProvider";
 
 export default function FeatureFlags() {
+  const dvcClient = useDVCClient();
   const [session] = useSession();
   const user = session?.user;
 
   useEffect(() => {
-    const iframe = document.querySelector(
-      "iframe[data-dvc-widget='dvc-iframe']"
-    ) as HTMLIFrameElement;
-    window.addEventListener(
-      "message",
-      function (e) {
-        const t = e.data;
-        "DVC.optIn.updateHeight" === t.type && (iframe.style.height = t.height);
-      },
-      !1
-    );
-  }, []);
+    if (!user) return;
+    function iframeMessage() {
+      dvcClient.identifyUser({ user_id: user.id }).then();
+    }
+    window.addEventListener("message", iframeMessage, !1);
+
+    return () => window.removeEventListener("message", iframeMessage);
+  }, [user, dvcClient]);
 
   return (
     <iframe

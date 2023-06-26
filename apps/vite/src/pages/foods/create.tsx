@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useVariableValue } from "@devcycle/devcycle-react-sdk";
+import { useNavigate } from "react-router-dom";
 
 import Card from "../../components/Card";
 import FoodForm from "../../features/foods/components/FoodForm";
@@ -6,14 +8,22 @@ import { createFood } from "../../features/foods/data/database";
 import ToastSuccess from "../../components/ToastSuccess";
 
 export default function CreateFoods() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const canSeeFoods = useVariableValue("foods", false);
   const handleSubmit = async (fields: any) => {
     setLoading(true);
     await createFood(fields);
     setLoading(false);
     setMessage("Food created successfully");
   };
+
+  if (!canSeeFoods) {
+    navigate("/");
+    return null;
+  }
 
   return (
     <div className="m-8">

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { useVariableValue } from "@devcycle/devcycle-react-sdk";
 
 import Card from "../../components/Card";
 import FoodForm from "../../features/foods/components/FoodForm";
@@ -7,16 +8,24 @@ import { Food, getFood, updateFood } from "../../features/foods/data/database";
 import ToastSuccess from "../../components/ToastSuccess";
 
 export default function EditFood() {
+  const navigate = useNavigate();
   const food = useLoaderData() as Food | null;
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const canSeeFoods = useVariableValue("foods", false);
+
   const handleSubmit = async (fields: any) => {
     setLoading(true);
     await updateFood(Number(id), fields);
     setLoading(false);
     setMessage("Food updated successfully");
   };
+
+  if (!canSeeFoods) {
+    navigate("/");
+    return null;
+  }
 
   return (
     <div className="m-8">

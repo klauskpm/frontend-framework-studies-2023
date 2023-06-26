@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useVariableValue } from "@devcycle/devcycle-react-sdk";
+
 import { useSession } from "../../SessionProvider";
 import {
   Food,
@@ -15,11 +17,15 @@ export default function FoodTable() {
   const [page, setPage] = useState(0);
   const [itemsPerPage] = useState(5);
 
+  const canCreateEditFood = useVariableValue("food-create-edit", false);
+  const canDeleteFood = useVariableValue("food-delete", false);
+
   const handlePageChange = (page: number) => {
     setPage(page);
   };
 
   const handleClickDelete = (id: number) => {
+    if (!canDeleteFood) return;
     deleteFood(id).then(() => {
       setFoods(foods.filter((food) => food.id !== id));
     });
@@ -49,16 +55,22 @@ export default function FoodTable() {
             {foods.map((food: any) => (
               <tr key={food.id}>
                 <td>
-                  <Link to={`/foods/${food.id}`} className="link-primary link">
-                    {food.title}
-                  </Link>
+                  {canCreateEditFood && (
+                    <Link
+                      to={`/foods/${food.id}`}
+                      className="link-primary link"
+                    >
+                      {food.title}
+                    </Link>
+                  )}
+                  {!canCreateEditFood && food.title}
                 </td>
                 <td>{food.price}</td>
                 <td>{food.quantity}</td>
                 <td>
                   <button
                     className="btn-error btn-sm btn"
-                    disabled={!session?.user}
+                    disabled={!session?.user || !canDeleteFood}
                     onClick={() => handleClickDelete(food.id)}
                   >
                     <svg
