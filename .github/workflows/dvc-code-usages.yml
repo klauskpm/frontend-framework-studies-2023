@@ -13,7 +13,7 @@ jobs:
       - name: DevCycle Feature Flag Code Usages
         uses: DevCycleHQ/feature-flag-code-usage-action@v1.1.0
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.DVC_PAT }}
           client-id: ${{ secrets.DVC_CLIENT_ID }}
           client-secret: ${{ secrets.DVC_CLIENT_SECRET }}
           project-key: my-first-project
