@@ -12,7 +12,6 @@ export default function Foods() {
   const [session] = useSession();
 
   const canSeeFoods = useVariableValue("foods", false);
-  const canCreateEditFood = useVariableValue("food-create-edit", false);
   const canSeeFoodList = useVariableValue("food-list", false);
   const canSeeFoodGraph = useVariableValue("food-graph", false);
   const canSeeFoodTable = useVariableValue("food-table", false);
@@ -35,10 +34,10 @@ export default function Foods() {
   }
 
   return (
-    <div className="m-8 w-3/5">
+    (<div className="m-8 w-3/5">
       <div className="mb-4 flex items-end justify-between">
         <h2 className="text-3xl font-bold">Foods</h2>
-        {session?.user && canCreateEditFood && (
+        {session?.user && (
           <Link to={"/foods/create"} className="link-primary link">
             Add a new food
           </Link>
@@ -103,6 +102,6 @@ export default function Foods() {
           </Tabs.Content>
         )}
       </Tabs.Root>
-    </div>
+    </div>)
   );
 }
