@@ -31,7 +31,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
+          token: ${{ secrets.DVC_PAT }}
           title: Remove unused feature flag `${{ inputs.flagName }}`
-          body: |
-            This pull request removes the unused feature flag.
+          body: This pull request removes the unused feature flag.
           branch: remove-feature-flag-${{ inputs.flagName }}
