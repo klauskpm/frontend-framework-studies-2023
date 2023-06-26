@@ -1,22 +1,8 @@
-import { useEffect } from "react";
-import { useDVCClient } from "@devcycle/devcycle-react-sdk";
-
 import { useSession } from "../SessionProvider";
 
 export default function FeatureFlags() {
-  const dvcClient = useDVCClient();
   const [session] = useSession();
   const user = session?.user;
-
-  useEffect(() => {
-    if (!user) return;
-    function iframeMessage() {
-      dvcClient.identifyUser({ user_id: user.id }).then();
-    }
-    window.addEventListener("message", iframeMessage, !1);
-
-    return () => window.removeEventListener("message", iframeMessage);
-  }, [user, dvcClient]);
 
   return (
     <iframe
