@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import { LoginPage } from "@shared/simple";
+import { LoginPage } from "@shared/react-ui";
 
 export default function Home() {
   return (

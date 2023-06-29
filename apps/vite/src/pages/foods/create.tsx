@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useVariableValue } from "@devcycle/devcycle-react-sdk";
 import { useNavigate } from "react-router-dom";
 
-import { Card, ToastSuccess } from "@shared/simple";
+import { Card, ToastSuccess } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
 import { createFood } from "../../features/foods/data/database";
 

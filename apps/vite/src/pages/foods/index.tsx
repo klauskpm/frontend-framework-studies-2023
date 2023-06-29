@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useVariableValue } from "@devcycle/devcycle-react-sdk";
 
 import { useSession } from "../../SessionProvider";
-import { Card } from "@shared/simple";
+import { Card } from "@shared/react-ui";
 
 export default function Foods() {
   const navigate = useNavigate();

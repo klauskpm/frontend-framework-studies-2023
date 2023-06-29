@@ -5,7 +5,7 @@ import { supabase } from "./features/supabase/supabaseClient";
 import { downloadImage } from "./features/profiles/data/storage";
 import { logoutUser } from "./auth";
 import { useSession } from "./SessionProvider";
-import { Avatar } from "@shared/simple";
+import { Avatar } from "@shared/react-ui";
 
 export default function Header({ onClickSidebarButton }: any) {
   const [avatar_url, setAvatarUrl] = useState<string>("");

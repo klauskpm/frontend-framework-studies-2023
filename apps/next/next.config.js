@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@shared/simple"],
+  transpilePackages: ["@shared/react-ui"],
   reactStrictMode: true,
 };
 

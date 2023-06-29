@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Food, getFoods } from "../../features/foods/data/database";
-import { VirtualList } from "@shared/simple";
+import { VirtualList } from "@shared/react-ui";
 
 export default function FoodList() {
   const [foods, setFoods] = useState<Food[]>([]);

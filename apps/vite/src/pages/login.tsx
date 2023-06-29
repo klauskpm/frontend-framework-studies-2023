@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 
-import { LoginPage } from "@shared/simple";
+import { LoginPage } from "@shared/react-ui";
 
 import { magicLoginUser } from "../auth";
 import { supabase } from "../features/supabase/supabaseClient";
 import { useSession } from "../SessionProvider";
-import { ToastError } from "@shared/simple";
+import { ToastError } from "@shared/react-ui";
 
 function Login() {
   const [session] = useSession();

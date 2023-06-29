@@ -9,7 +9,7 @@ import {
   updateProfile,
 } from "../features/profiles/data/database";
 import { downloadImage, uploadAvatar } from "../features/profiles/data/storage";
-import { AvatarInput, Card } from "@shared/simple";
+import { AvatarInput, Card } from "@shared/react-ui";
 
 export const profileLoader = async () => {
   const session = await supabase.auth.getSession().then(({ data }) => {
