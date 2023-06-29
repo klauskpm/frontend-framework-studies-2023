@@ -11,7 +11,6 @@ export default function Foods() {
   const location = useLocation();
   const [session] = useSession();
 
-  const canSeeFoods = useVariableValue("foods", false);
   const canCreateEditFood = useVariableValue("food-create-edit", false);
   const canSeeFoodList = useVariableValue("food-list", false);
   const canSeeFoodGraph = useVariableValue("food-graph", false);
@@ -24,10 +23,6 @@ export default function Foods() {
       navigate(`/foods/${defaultTab}`);
     }
   }, [location, navigate]);
-
-  useEffect(() => {
-    !canSeeFoods && navigate("/");
-  }, [canSeeFoods, navigate]);
 
   const handleChangeTab = (value: string) => {
     navigate(`/foods/${value}`);
