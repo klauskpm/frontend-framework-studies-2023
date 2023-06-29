@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import Routes from "./routes";
 import SessionProvider from "./SessionProvider";
-import ToastProvider from "./components/ToastProvider";
+import { ToastProvider } from "@shared/simple";
 import FeatureFlagsProvider from "./FeatureFlagsProvider";
 import { DVCProvider } from "@devcycle/devcycle-react-sdk";
 

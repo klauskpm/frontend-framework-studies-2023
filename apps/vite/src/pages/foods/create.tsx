@@ -2,10 +2,9 @@ import { useState } from "react";
 import { useVariableValue } from "@devcycle/devcycle-react-sdk";
 import { useNavigate } from "react-router-dom";
 
-import Card from "../../components/Card";
+import { Card, ToastSuccess } from "@shared/simple";
 import FoodForm from "../../features/foods/components/FoodForm";
 import { createFood } from "../../features/foods/data/database";
-import ToastSuccess from "../../components/ToastSuccess";
 
 export default function CreateFoods() {
   const navigate = useNavigate();

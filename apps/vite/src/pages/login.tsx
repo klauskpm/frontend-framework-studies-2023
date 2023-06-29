@@ -6,7 +6,7 @@ import { LoginPage } from "@shared/simple";
 import { magicLoginUser } from "../auth";
 import { supabase } from "../features/supabase/supabaseClient";
 import { useSession } from "../SessionProvider";
-import ToastAlert from "../components/ToastError";
+import { ToastError } from "@shared/simple";
 
 function Login() {
   const [session] = useSession();
@@ -38,7 +38,7 @@ function Login() {
   return (
     <>
       <LoginPage onSubmit={onSubmit} sent={sent} loading={loading} />
-      <ToastAlert
+      <ToastError
         open={!!error}
         errorMessage={error}
         onClose={() => setError("")}

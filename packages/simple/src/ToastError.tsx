@@ -1,19 +1,19 @@
 import * as Toast from "@radix-ui/react-toast";
 
-interface ToastAlertProps {
+interface ToastErrorProps {
   open: boolean;
   onClose?: () => void;
   errorMessage: string;
   duration?: number;
 }
 
-export default function ToastAlert({
+export default function ToastError({
   open,
   onClose = () => null,
   errorMessage,
   duration = 5000,
   ...props
-}: ToastAlertProps) {
+}: ToastErrorProps) {
   return (
     <Toast.Root
       open={open}

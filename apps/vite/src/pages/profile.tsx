@@ -1,16 +1,15 @@
-import { useState, useEffect, FormEvent } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 
 import { useSession } from "../SessionProvider";
-import AvatarInput from "../components/AvatarInput";
-import Card from "../components/Card";
 import { supabase } from "../features/supabase/supabaseClient";
 import {
   getProfile,
-  updateProfile,
   Profile as ProfileType,
+  updateProfile,
 } from "../features/profiles/data/database";
 import { downloadImage, uploadAvatar } from "../features/profiles/data/storage";
+import { AvatarInput, Card } from "@shared/simple";
 
 export const profileLoader = async () => {
   const session = await supabase.auth.getSession().then(({ data }) => {

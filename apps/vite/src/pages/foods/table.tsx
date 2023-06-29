@@ -8,7 +8,7 @@ import {
   deleteFood,
   getPaginatedFoods,
 } from "../../features/foods/data/database";
-import PaginationButtons from "../../components/PaginationButtons";
+import { PaginationButtons } from "@shared/simple";
 
 export default function FoodTable() {
   const [session] = useSession();
