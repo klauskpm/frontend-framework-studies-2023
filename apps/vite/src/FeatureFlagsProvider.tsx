@@ -2,7 +2,6 @@ import { ReactElement, ReactNode, useEffect } from "react";
 import {
   useDVCClient,
   useIsDVCInitialized,
-  withDVCProvider,
 } from "@devcycle/devcycle-react-sdk";
 import { useSession } from "./SessionProvider";
 
@@ -10,7 +9,9 @@ interface FeatureFlagsProviderProps {
   children: ReactNode | ReactElement;
 }
 
-function FeatureFlagsProvider({ children }: FeatureFlagsProviderProps) {
+export default function FeatureFlagsProvider({
+  children,
+}: FeatureFlagsProviderProps) {
   const dvcClient = useDVCClient();
   const [session] = useSession();
   const user = session?.user;
@@ -24,12 +25,5 @@ function FeatureFlagsProvider({ children }: FeatureFlagsProviderProps) {
 
   if (!dvcReady) return <div>Loading</div>;
 
-  return children;
+  return <>{children}</>;
 }
-
-export default withDVCProvider({
-  sdkKey: import.meta.env.VITE_DVC_SDK_KEY,
-  user: { isAnonymous: true },
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-})(FeatureFlagsProvider);

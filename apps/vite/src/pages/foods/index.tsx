@@ -25,14 +25,13 @@ export default function Foods() {
     }
   }, [location, navigate]);
 
+  useEffect(() => {
+    !canSeeFoods && navigate("/");
+  }, [canSeeFoods, navigate]);
+
   const handleChangeTab = (value: string) => {
     navigate(`/foods/${value}`);
   };
-
-  if (!canSeeFoods) {
-    navigate("/");
-    return null;
-  }
 
   return (
     <div className="m-8 w-3/5">
