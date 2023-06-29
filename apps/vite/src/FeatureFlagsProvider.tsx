@@ -1,5 +1,9 @@
 import { ReactElement, ReactNode, useEffect } from "react";
-import { useDVCClient, withDVCProvider } from "@devcycle/devcycle-react-sdk";
+import {
+  useDVCClient,
+  useIsDVCInitialized,
+  withDVCProvider,
+} from "@devcycle/devcycle-react-sdk";
 import { useSession } from "./SessionProvider";
 
 interface FeatureFlagsProviderProps {
@@ -15,6 +19,10 @@ function FeatureFlagsProvider({ children }: FeatureFlagsProviderProps) {
     if (!user?.id) return;
     dvcClient.identifyUser({ user_id: user.id }).then();
   }, [user, dvcClient]);
+
+  const dvcReady = useIsDVCInitialized();
+
+  if (!dvcReady) return <div>Loading</div>;
 
   return children;
 }
