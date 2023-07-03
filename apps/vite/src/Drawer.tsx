@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
-import { useVariableValue } from "@devcycle/devcycle-react-sdk";
+import { useDVCClient, useVariableValue } from "@devcycle/devcycle-react-sdk";
 
 export default function Drawer({ children, toggleRef }: any) {
   const canSeeFoods = useVariableValue("foods", false);
+  const dvcClient = useDVCClient();
+
+  const identifyUser = () => {
+    dvcClient.identifyUser({ user_id: "AAAA" }).then();
+  };
 
   return (
     <div className="drawer">
@@ -18,6 +23,11 @@ export default function Drawer({ children, toggleRef }: any) {
       <div className="drawer-side">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
         <ul className="menu w-80 bg-base-100 p-4">
+          <li>
+            <button onClick={identifyUser} className="btn-primary btn">
+              Identify User
+            </button>
+          </li>
           <li>
             <Link to={"/"}>Home</Link>
           </li>
