@@ -1,43 +1,6 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { supabase } from "./features/supabase/supabaseClient";
-import { downloadImage } from "./features/profiles/data/storage";
-import { logoutUser } from "./auth";
-import { useSession } from "./SessionProvider";
-import { Avatar } from "@shared/react-ui";
-
 export default function Header({ onClickSidebarButton }: any) {
-  const [avatar_url, setAvatarUrl] = useState<string>("");
-  const [loading, setLoading] = useState(true);
-  const [session] = useSession();
-
-  useEffect(() => {
-    async function getProfile() {
-      if (!session) return;
-      setLoading(true);
-      const { user } = session;
-
-      const { data, error } = await supabase
-        .from("profiles")
-        .select(`username, website, avatar_url`)
-        .eq("id", user.id)
-        .single();
-
-      if (error) {
-        console.warn(error);
-      } else if (data) {
-        downloadImage(data.avatar_url).then((imageURL: string) =>
-          setAvatarUrl(imageURL)
-        );
-      }
-
-      setLoading(false);
-    }
-
-    getProfile();
-  }, [session]);
-
   return (
     <div className="navbar bg-base-100">
       <div className="flex-none">
@@ -68,41 +31,22 @@ export default function Header({ onClickSidebarButton }: any) {
         </Link>
       </div>
       <div className="flex-none gap-2">
-        {!session && (
-          <ul className="menu menu-horizontal px-1">
+        <div className="dropdown-end dropdown">
+          <button className="btn">Links</button>
+          <ul className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow">
             <li>
-              <Link to="/login">Login</Link>
+              <Link to="/foods" className="justify-between">
+                Foods
+              </Link>
+            </li>
+            <li>
+              <Link to="/feature-flags" className="justify-between">
+                Feature Flags
+                <span className="badge">New</span>
+              </Link>
             </li>
           </ul>
-        )}
-        {session && (
-          <div className="dropdown-end dropdown">
-            <button className="btn-circle btn">
-              <Avatar size="small" loading={loading} avatarUrl={avatar_url} />
-            </button>
-            <ul className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow">
-              {session && (
-                <li>
-                  <Link to="/profile" className="justify-between">
-                    Profile
-                  </Link>
-                </li>
-              )}
-              <li>
-                <Link to="/feature-flags" className="justify-between">
-                  Feature Flags
-                  <span className="badge">New</span>
-                </Link>
-              </li>
-
-              <li>
-                <a href="#" onClick={() => logoutUser()}>
-                  Logout
-                </a>
-              </li>
-            </ul>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );
