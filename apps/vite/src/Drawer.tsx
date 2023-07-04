@@ -3,8 +3,12 @@ import { useDVCClient, useVariableValue } from "@devcycle/devcycle-react-sdk";
 import { identifiedUserId } from "../identified-user.";
 
 export default function Drawer({ children, toggleRef }: any) {
-  const canSeeFoods = useVariableValue("foods", false);
   const dvcClient = useDVCClient();
+  const canSeeFoods = useVariableValue("foods", false);
+
+  console.group("Drawer component");
+  console.log("canSeeFoods", canSeeFoods);
+  console.groupEnd();
 
   const identifyUser = () => {
     dvcClient.identifyUser({ user_id: identifiedUserId }).then();
