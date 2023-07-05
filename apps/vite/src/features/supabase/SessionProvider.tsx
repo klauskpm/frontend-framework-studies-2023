@@ -9,8 +9,10 @@ export default function SessionProvider({ children }: any) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
     });
+  }, []);
 
-    supabase.auth.onAuthStateChange((event, newSession) => {
+  useEffect(() => {
+    const { data } = supabase.auth.onAuthStateChange((event, newSession) => {
       setSession((oldSession: any) => {
         if (event === "SIGNED_OUT") return null;
         if (!newSession) return oldSession;
@@ -28,12 +30,11 @@ export default function SessionProvider({ children }: any) {
         return oldSession;
       });
     });
+
+    return () => data.subscription.unsubscribe();
   }, []);
 
-  const contextValue = useMemo(
-    () => ({ session, setSession }),
-    [session, setSession]
-  );
+  const contextValue = useMemo(() => ({ session }), [session]);
 
   return (
     <SessionContext.Provider value={contextValue}>
