@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 
 import "./index.css";
 import Routes from "./routes";
-import SessionProvider from "./SessionProvider";
+import SessionProvider from "./features/supabase/SessionProvider";
 import { ToastProvider } from "@shared/react-ui";
 import FeatureFlagsProvider from "./FeatureFlagsProvider";
 import { DVCProvider } from "@devcycle/devcycle-react-sdk";

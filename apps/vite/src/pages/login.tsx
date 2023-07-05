@@ -5,7 +5,7 @@ import { LoginPage } from "@shared/react-ui";
 
 import { magicLoginUser } from "../auth";
 import { supabase } from "../features/supabase/supabaseClient";
-import { useSession } from "../SessionProvider";
+import { useSession } from "../features/supabase/SessionProvider";
 import { ToastError } from "@shared/react-ui";
 
 function Login() {

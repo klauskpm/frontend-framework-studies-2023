@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { supabase } from "./features/supabase/supabaseClient";
 import { downloadImage } from "./features/profiles/data/storage";
 import { logoutUser } from "./auth";
-import { useSession } from "./SessionProvider";
+import { useSession } from "./features/supabase/SessionProvider";
 import { Avatar } from "@shared/react-ui";
 
 export default function Header({ onClickSidebarButton }: any) {

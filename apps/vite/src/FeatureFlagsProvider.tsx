@@ -3,7 +3,7 @@ import {
   useDVCClient,
   useIsDVCInitialized,
 } from "@devcycle/devcycle-react-sdk";
-import { useSession } from "./SessionProvider";
+import { useSession } from "./features/supabase/SessionProvider";
 
 interface FeatureFlagsProviderProps {
   children: ReactNode | ReactElement;

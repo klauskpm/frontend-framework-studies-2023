@@ -1,4 +1,4 @@
-import { useSession } from "../SessionProvider";
+import { useSession } from "../features/supabase/SessionProvider";
 
 export default function FeatureFlags() {
   const [session] = useSession();

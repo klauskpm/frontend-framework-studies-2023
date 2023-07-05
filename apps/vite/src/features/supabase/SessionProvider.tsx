@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { supabase } from "./features/supabase/supabaseClient";
+import { supabase } from "./supabaseClient";
 
 type SessionContextType = {
   session: any;
