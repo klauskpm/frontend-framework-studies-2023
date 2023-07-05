@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { initialSessionContext, SessionContext } from "./sessionContext";
 
-export const useOldSession = () => {
+export const useSession = () => {
   const context = useContext(SessionContext);
-  const { session, setSession } = context;
+  const { session } = context;
 
   if (context === initialSessionContext) {
-    throw new Error("useOldSession must be used within a SessionProvider");
+    throw new Error("useSession must be used within a SessionProvider");
   }
 
-  return [session, setSession];
+  return { session };
 };

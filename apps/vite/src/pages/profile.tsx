@@ -1,7 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 
-import { useOldSession } from "../features/supabase/useOldSession";
 import { supabase } from "../features/supabase/supabaseClient";
 import {
   getProfile,
@@ -10,6 +9,7 @@ import {
 } from "../features/profiles/data/database";
 import { downloadImage, uploadAvatar } from "../features/profiles/data/storage";
 import { AvatarInput, Card } from "@shared/react-ui";
+import { useSession } from "../features/supabase/useSession";
 
 export const profileLoader = async () => {
   const session = await supabase.auth.getSession().then(({ data }) => {
@@ -30,7 +30,7 @@ type ChangeableProfile = Pick<
 >;
 
 export default function Profile() {
-  const [session] = useOldSession();
+  const { session } = useSession();
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<ChangeableProfile>();
   const [isUploading, setUploading] = useState<boolean>(false);

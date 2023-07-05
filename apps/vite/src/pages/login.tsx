@@ -5,11 +5,11 @@ import { LoginPage } from "@shared/react-ui";
 
 import { magicLoginUser } from "../auth";
 import { supabase } from "../features/supabase/supabaseClient";
-import { useOldSession } from "../features/supabase/useOldSession";
 import { ToastError } from "@shared/react-ui";
+import { useSession } from "../features/supabase/useSession";
 
 function Login() {
-  const [session] = useOldSession();
+  const { session } = useSession();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);

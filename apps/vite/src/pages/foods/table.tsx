@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useVariableValue } from "@devcycle/devcycle-react-sdk";
 
-import { useOldSession } from "../../features/supabase/useOldSession";
 import {
   Food,
   deleteFood,
   getPaginatedFoods,
 } from "../../features/foods/data/database";
 import { PaginationButtons } from "@shared/react-ui";
+import { useSession } from "../../features/supabase/useSession";
 
 export default function FoodTable() {
-  const [session] = useOldSession();
+  const { session } = useSession();
   const [count, setCount] = useState(0);
   const [foods, setFoods] = useState<Food[]>([]);
   const [page, setPage] = useState(0);
