@@ -1,35 +1,6 @@
-import {
-  createContext,
-  Dispatch,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useEffect, useMemo, useState } from "react";
 import { supabase } from "./supabaseClient";
-
-type SessionContextType = {
-  session: any;
-  setSession: Dispatch<any>;
-};
-
-const initialSessionContext: SessionContextType = {
-  session: null,
-  setSession: () => null,
-};
-
-const SessionContext = createContext<SessionContextType>(initialSessionContext);
-
-export const useSession = () => {
-  const context = useContext(SessionContext);
-  const { session, setSession } = context;
-
-  if (context === initialSessionContext) {
-    throw new Error("useSession must be used within a SessionProvider");
-  }
-
-  return [session, setSession];
-};
+import { SessionContext } from "./sessionContext";
 
 export default function SessionProvider({ children }: any) {
   const [session, setSession] = useState<any>(null);

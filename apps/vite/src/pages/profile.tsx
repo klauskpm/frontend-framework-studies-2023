@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 
-import { useSession } from "../features/supabase/SessionProvider";
+import { useSession } from "../features/supabase/useSession";
 import { supabase } from "../features/supabase/supabaseClient";
 import {
   getProfile,
