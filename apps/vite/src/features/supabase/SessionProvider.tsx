@@ -13,16 +13,16 @@ export default function SessionProvider({ children }: any) {
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event, newSession) => {
-      setSession((oldSession: any) => {
-        if (event === "SIGNED_OUT") return null;
-        if (!newSession) return oldSession;
+      if (event === "SIGNED_OUT") return setSession(null);
+      if (!newSession) return;
 
-        const isSignedInEvent = event === "SIGNED_IN";
-        const isAccessTokenNew =
+      setSession((oldSession: any) => {
+        const isEventSignedIn = event === "SIGNED_IN";
+        const hasNewSession =
+          !!newSession?.access_token &&
           newSession.access_token != oldSession?.access_token;
-        const canSetWhenSignedIn =
-          isSignedInEvent && (!oldSession || isAccessTokenNew);
-        const canSetNewSession = !isSignedInEvent || canSetWhenSignedIn;
+        const isNewSession = isEventSignedIn && hasNewSession;
+        const canSetNewSession = !isEventSignedIn || isNewSession;
 
         if (canSetNewSession) {
           return newSession;
