@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 
-import { useSession } from "../features/supabase/useSession";
+import { useOldSession } from "../features/supabase/useOldSession";
 import { supabase } from "../features/supabase/supabaseClient";
 import {
   getProfile,
@@ -30,7 +30,7 @@ type ChangeableProfile = Pick<
 >;
 
 export default function Profile() {
-  const [session] = useSession();
+  const [session] = useOldSession();
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<ChangeableProfile>();
   const [isUploading, setUploading] = useState<boolean>(false);

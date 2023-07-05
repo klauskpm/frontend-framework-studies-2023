@@ -3,13 +3,13 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { useEffect } from "react";
 import { useVariableValue } from "@devcycle/devcycle-react-sdk";
 
-import { useSession } from "../../features/supabase/useSession";
+import { useOldSession } from "../../features/supabase/useOldSession";
 import { Card } from "@shared/react-ui";
 
 export default function Foods() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [session] = useSession();
+  const [session] = useOldSession();
 
   const canCreateEditFood = useVariableValue("food-create-edit", false);
   const canSeeFoodList = useVariableValue("food-list", false);

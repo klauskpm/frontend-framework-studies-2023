@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { supabase } from "./features/supabase/supabaseClient";
 import { downloadImage } from "./features/profiles/data/storage";
 import { logoutUser } from "./auth";
-import { useSession } from "./features/supabase/useSession";
+import { useOldSession } from "./features/supabase/useOldSession";
 import { Avatar } from "@shared/react-ui";
 
 export default function Header({ onClickSidebarButton }: any) {
   const [avatar_url, setAvatarUrl] = useState<string>("");
   const [loading, setLoading] = useState(true);
-  const [session] = useSession();
+  const [session] = useOldSession();
 
   useEffect(() => {
     async function getProfile() {

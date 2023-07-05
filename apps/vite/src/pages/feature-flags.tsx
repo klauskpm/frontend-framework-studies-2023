@@ -1,7 +1,7 @@
-import { useSession } from "../features/supabase/useSession";
+import { useOldSession } from "../features/supabase/useOldSession";
 
 export default function FeatureFlags() {
-  const [session] = useSession();
+  const [session] = useOldSession();
   const user = session?.user;
 
   return (

@@ -3,7 +3,7 @@ import {
   useDVCClient,
   useIsDVCInitialized,
 } from "@devcycle/devcycle-react-sdk";
-import { useSession } from "./features/supabase/useSession";
+import { useOldSession } from "./features/supabase/useOldSession";
 
 interface FeatureFlagsProviderProps {
   children: ReactNode | ReactElement;
@@ -13,7 +13,7 @@ export default function FeatureFlagsProvider({
   children,
 }: FeatureFlagsProviderProps) {
   const dvcClient = useDVCClient();
-  const [session] = useSession();
+  const [session] = useOldSession();
   const user = session?.user;
 
   useEffect(() => {
