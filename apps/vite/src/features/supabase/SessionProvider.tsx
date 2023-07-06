@@ -4,10 +4,12 @@ import { SessionContext } from "./sessionContext";
 
 export default function SessionProvider({ children }: any) {
   const [session, setSession] = useState<any>(null);
+  const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
+      setFetched(true);
     });
   }, []);
 
@@ -29,12 +31,16 @@ export default function SessionProvider({ children }: any) {
         }
         return oldSession;
       });
+      setFetched(true);
     });
 
     return () => data.subscription.unsubscribe();
   }, []);
 
-  const contextValue = useMemo(() => ({ session }), [session]);
+  const contextValue = useMemo(
+    () => ({ session, fetched }),
+    [session, fetched]
+  );
 
   return (
     <SessionContext.Provider value={contextValue}>

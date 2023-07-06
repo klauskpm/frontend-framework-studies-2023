@@ -1,12 +1,8 @@
 import { createContext } from "react";
 
-export type SessionContextType = {
+export interface SessionContextType {
   session: any;
-};
+  fetched: boolean;
+}
 
-export const initialSessionContext: SessionContextType = {
-  session: null,
-};
-export const SessionContext = createContext<SessionContextType>(
-  initialSessionContext
-);
+export const SessionContext = createContext<SessionContextType | null>(null);
