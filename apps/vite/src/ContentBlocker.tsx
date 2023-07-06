@@ -9,11 +9,11 @@ interface FeatureFlagsProviderProps {
   children: ReactNode | ReactElement;
 }
 
-export default function FeatureFlagsProvider({
+export default function ContentBlocker({
   children,
 }: FeatureFlagsProviderProps) {
   const dvcClient = useDVCClient();
-  const { session } = useSession();
+  const { session, fetched } = useSession();
   const user = session?.user;
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function FeatureFlagsProvider({
 
   const dvcReady = useIsDVCInitialized();
 
-  if (!dvcReady) return <div>Loading</div>;
+  if (!dvcReady || !fetched) return <div>Loading</div>;
 
   return <>{children}</>;
 }
