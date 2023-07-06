@@ -7,7 +7,7 @@ import {
   deleteFood,
   getPaginatedFoods,
 } from "../../features/foods/data/database";
-import { PaginationButtons } from "@shared/react-ui";
+import { Card, PaginationButtons } from "@shared/react-ui";
 import { useSession } from "../../features/supabase/useSession";
 
 export default function FoodTable() {
@@ -40,8 +40,8 @@ export default function FoodTable() {
   }, [page, itemsPerPage]);
 
   return (
-    <>
-      <div className="w-full">
+    <div className="space-y-4">
+      <Card>
         <table className="table w-full">
           <thead>
             <tr>
@@ -94,17 +94,17 @@ export default function FoodTable() {
             ))}
           </tbody>
         </table>
-        <div className="px-4 py-2">
-          <TablePagination
-            count={count}
-            itemsPerPage={itemsPerPage}
-            onClick={handleClickDelete}
-            page={page}
-            handlePageChange={handlePageChange}
-          />
-        </div>
-      </div>
-    </>
+      </Card>
+      <Card>
+        <TablePagination
+          count={count}
+          itemsPerPage={itemsPerPage}
+          onClick={handleClickDelete}
+          page={page}
+          handlePageChange={handlePageChange}
+        />
+      </Card>
+    </div>
   );
 }
 
@@ -112,7 +112,7 @@ function TablePagination(props: any) {
   const { count, itemsPerPage, page, handlePageChange } = props;
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-8 p-4">
       <div>Total: {count}</div>
       <PaginationButtons
         count={count}

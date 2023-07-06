@@ -81,9 +81,7 @@ export default function Foods() {
             className="grow rounded-b-md outline-none"
             value="table"
           >
-            <Card>
-              <Outlet />
-            </Card>
+            <Outlet />
           </Tabs.Content>
         )}
         {canSeeFoodList && (
