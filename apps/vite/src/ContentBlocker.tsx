@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useEffect } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import {
   useDVCClient,
   useIsDVCInitialized,
@@ -12,7 +12,9 @@ interface FeatureFlagsProviderProps {
 export default function ContentBlocker({
   children,
 }: FeatureFlagsProviderProps) {
+  const [showContent, setShowContent] = useState(false);
   const dvcClient = useDVCClient();
+  const dvcReady = useIsDVCInitialized();
   const { session, fetched } = useSession();
   const user = session?.user;
 
@@ -21,9 +23,19 @@ export default function ContentBlocker({
     dvcClient.identifyUser({ user_id: user.id }).then();
   }, [user, dvcClient]);
 
-  const dvcReady = useIsDVCInitialized();
+  useEffect(() => {
+    if (!fetched || !dvcReady) return;
+    setTimeout(() => {
+      setShowContent(true);
+    }, 600);
+  }, [fetched, dvcReady]);
 
-  if (!dvcReady || !fetched) return <div>Loading</div>;
+  if (showContent) return <>{children}</>;
 
-  return <>{children}</>;
+  return (
+    <div className="flex h-screen w-screen flex-col content-center items-center justify-center">
+      <h2 className="mb-4 text-2xl">Loading</h2>
+      <progress className="progress progress-primary h-8 w-56"></progress>
+    </div>
+  );
 }
