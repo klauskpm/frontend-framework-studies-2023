@@ -1,8 +1,22 @@
+import { useEffect } from "react";
 import { useSession } from "../features/supabase/useSession";
+
+function reloadOnFeatureFlagUpdate(event: any) {
+  const wasSaved = event?.data?.type === "DVC.optIn.saved";
+  if (!wasSaved) return;
+  location.reload();
+}
 
 export default function FeatureFlags() {
   const { session } = useSession();
   const user = session?.user;
+
+  useEffect(() => {
+    window.addEventListener("message", reloadOnFeatureFlagUpdate, !1);
+
+    return () =>
+      window.removeEventListener("message", reloadOnFeatureFlagUpdate);
+  }, []);
 
   return (
     <iframe
