@@ -11,18 +11,12 @@ export default function CreateFoods() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const canSeeFoods = useVariableValue("foods", false);
   const handleSubmit = async (fields: any) => {
     setLoading(true);
     await createFood(fields);
     setLoading(false);
     setMessage("Food created successfully");
   };
-
-  if (!canSeeFoods) {
-    navigate("/");
-    return null;
-  }
 
   return (
     <div className="m-8">

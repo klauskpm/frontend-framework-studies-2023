@@ -12,7 +12,6 @@ export default function EditFood() {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const canSeeFoods = useVariableValue("foods", false);
 
   const handleSubmit = async (fields: any) => {
     setLoading(true);
@@ -20,11 +19,6 @@ export default function EditFood() {
     setLoading(false);
     setMessage("Food updated successfully");
   };
-
-  if (!canSeeFoods) {
-    navigate("/");
-    return null;
-  }
 
   return (
     <div className="m-8">

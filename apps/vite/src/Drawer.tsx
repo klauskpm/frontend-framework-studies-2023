@@ -2,10 +2,8 @@ import { Link } from "react-router-dom";
 import { useVariableValue } from "@devcycle/devcycle-react-sdk";
 
 export default function Drawer({ children, toggleRef }: any) {
-  const canSeeFoods = useVariableValue("foods", false);
-
   return (
-    <div className="drawer">
+    (<div className="drawer">
       <input
         id="my-drawer-3"
         type="checkbox"
@@ -21,13 +19,11 @@ export default function Drawer({ children, toggleRef }: any) {
           <li>
             <Link to={"/"}>Home</Link>
           </li>
-          {canSeeFoods && (
-            <li>
-              <Link to={"/foods"}>Foods</Link>
-            </li>
-          )}
+          {(<li>
+            <Link to={"/foods"}>Foods</Link>
+          </li>)}
         </ul>
       </div>
-    </div>
+    </div>)
   );
 }
