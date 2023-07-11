@@ -8,10 +8,10 @@ export function getProfiles(options?: SelectOptions) {
   return supabase.from("profiles").select("*", options);
 }
 
-export function getProfile(id: number) {
+export async function getProfile(id: string) {
   return getProfiles().eq("id", id).single();
 }
 
-export function updateProfile(id: number, fields: any) {
+export async function updateProfile(id: string, fields: any) {
   return supabase.from("profiles").update(fields).eq("id", id);
 }

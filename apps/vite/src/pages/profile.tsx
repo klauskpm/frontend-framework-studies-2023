@@ -1,15 +1,12 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 
 import { supabase } from "../features/supabase/supabaseClient";
-import {
-  getProfile,
-  Profile as ProfileType,
-  updateProfile,
-} from "../features/profiles/data/database";
+import { getProfile, updateProfile } from "../features/profiles/data/database";
 import { downloadImage, uploadAvatar } from "../features/profiles/data/storage";
 import { AvatarInput, Card } from "@shared/react-ui";
 import { useSession } from "../features/supabase/useSession";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const profileLoader = async () => {
   const session = await supabase.auth.getSession().then(({ data }) => {
@@ -24,20 +21,37 @@ export const profileLoader = async () => {
   return redirect("/login");
 };
 
-type ChangeableProfile = Pick<
-  ProfileType,
-  "username" | "website" | "avatar_url"
->;
-
 export default function Profile() {
   const { session } = useSession();
-  const [loading, setLoading] = useState(true);
-  const [profile, setProfile] = useState<ChangeableProfile>();
+  const queryClient = useQueryClient();
+  const usernameRef = useRef<any>();
+  const websiteRef = useRef<any>();
+
   const [isUploading, setUploading] = useState<boolean>(false);
   const navigate = useNavigate();
   const user = session?.user;
 
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  const profileQueryKey = ["profile", user?.id];
+  const invalidateProfileQuery = () =>
+    queryClient.invalidateQueries(profileQueryKey);
+  const profileQuery = useQuery({
+    queryKey: profileQueryKey,
+    queryFn: () => getProfile(user?.id),
+    enabled: !!user,
+  });
+  const loading = profileQuery.isLoading;
+  const profile = {
+    username: profileQuery.data?.data?.username,
+    website: profileQuery.data?.data?.website,
+    avatar_url: profileQuery.data?.data?.avatar_url,
+  };
+
+  const updateProfileMutation = useMutation({
+    mutationFn: ({ id, fields }: any) => updateProfile(id, fields),
+    onSuccess: () => invalidateProfileQuery(),
+  });
 
   useEffect(() => {
     if (!profile?.avatar_url) return;
@@ -46,42 +60,17 @@ export default function Profile() {
     );
   }, [profile?.avatar_url]);
 
-  useEffect(() => {
-    if (!user) return;
-
-    setLoading(true);
-
-    getProfile(user.id).then(({ data, error }) => {
-      if (error) {
-        console.warn(error);
-      } else if (data) {
-        setProfile({
-          username: data.username,
-          website: data.website,
-          avatar_url: data.avatar_url,
-        });
-      }
-      setLoading(false);
-    });
-  }, [user]);
-
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (!profile) return;
+    if (!profile || !user?.id) return;
 
-    setLoading(true);
-
-    const fields = {
-      username: profile.username,
-      website: profile.website,
-    };
-
-    const { error } = await updateProfile(user.id, fields);
-
-    if (error) {
-      alert(error.message);
-    }
-    setLoading(false);
+    updateProfileMutation.mutate({
+      id: user.id,
+      fields: {
+        username: usernameRef.current.value,
+        website: websiteRef.current.value,
+      },
+    });
   };
 
   const handleUploadAvatar = async (filePath: string) => {
@@ -91,7 +80,7 @@ export default function Profile() {
       alert(error.message);
     }
 
-    handleFieldChange({ avatar_url: filePath });
+    invalidateProfileQuery();
   };
 
   const handleImageChange = async (file: File) => {
@@ -112,13 +101,7 @@ export default function Profile() {
     }
   };
 
-  const handleFieldChange = (fields: any) => {
-    setProfile((currentProfile) => {
-      return { ...currentProfile, ...fields };
-    });
-  };
-
-  if (!session && loading) return <div>Loading...</div>;
+  if (!session) return <div>Loading...</div>;
 
   if (!session?.user) {
     navigate("/login");
@@ -144,7 +127,7 @@ export default function Profile() {
               <input
                 type="text"
                 id="email"
-                value={session.user.email}
+                defaultValue={session.user.email}
                 disabled
                 className="input-bordered input"
               />
@@ -158,10 +141,8 @@ export default function Profile() {
                 type="text"
                 className="input-bordered input"
                 required
-                value={profile?.username || ""}
-                onChange={(e) =>
-                  handleFieldChange({ username: e.target.value })
-                }
+                ref={usernameRef}
+                defaultValue={profile?.username || ""}
               />
             </div>
             <div className="form-control">
@@ -172,8 +153,8 @@ export default function Profile() {
                 id="website"
                 type="url"
                 className="input-bordered input"
-                value={profile?.website || ""}
-                onChange={(e) => handleFieldChange({ website: e.target.value })}
+                ref={websiteRef}
+                defaultValue={profile?.website || ""}
               />
             </div>
 
