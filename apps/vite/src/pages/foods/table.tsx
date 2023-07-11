@@ -1,24 +1,39 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useVariableValue } from "@devcycle/devcycle-react-sdk";
 
 import {
-  Food,
   deleteFood,
   getPaginatedFoods,
 } from "../../features/foods/data/database";
 import { Card, PaginationButtons } from "@shared/react-ui";
 import { useSession } from "../../features/supabase/useSession";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function FoodTable() {
+  const queryClient = useQueryClient();
   const { session } = useSession();
-  const [count, setCount] = useState(0);
-  const [foods, setFoods] = useState<Food[]>([]);
   const [page, setPage] = useState(0);
   const [itemsPerPage] = useState(5);
 
   const canCreateEditFood = useVariableValue("food-create-edit", false);
   const canDeleteFood = useVariableValue("food-delete", false);
+
+  const paginatedFoodsKey = ["foods", page, itemsPerPage];
+  const foodsQuery = useQuery({
+    queryKey: paginatedFoodsKey,
+    queryFn: () => getPaginatedFoods({ page, itemsPerPage }),
+    keepPreviousData: true,
+  });
+  const foods = foodsQuery.data?.data ?? [];
+  const count = foodsQuery.data?.count ?? 0;
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deleteFood(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: paginatedFoodsKey });
+    },
+  });
 
   const handlePageChange = (page: number) => {
     setPage(page);
@@ -26,18 +41,8 @@ export default function FoodTable() {
 
   const handleClickDelete = (id: number) => {
     if (!canDeleteFood) return;
-    deleteFood(id).then(() => {
-      setFoods(foods.filter((food) => food.id !== id));
-    });
+    deleteMutation.mutate(id);
   };
-
-  useEffect(() => {
-    getPaginatedFoods({ page, itemsPerPage }).then(({ data, count }) => {
-      if (!data || count === null) return;
-      setFoods(data);
-      setCount(count);
-    });
-  }, [page, itemsPerPage]);
 
   return (
     <div className="space-y-4">
