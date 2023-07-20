@@ -1,8 +1,8 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import {
-  useDVCClient,
-  useIsDVCInitialized,
-} from "@devcycle/devcycle-react-sdk";
+  useDevCycleClient,
+  useIsDevCycleInitialized,
+} from "@devcycle/react-client-sdk";
 import { useSession } from "./features/supabase/useSession";
 
 interface FeatureFlagsProviderProps {
@@ -13,8 +13,8 @@ export default function ContentBlocker({
   children,
 }: FeatureFlagsProviderProps) {
   const [showContent, setShowContent] = useState(false);
-  const dvcClient = useDVCClient();
-  const dvcReady = useIsDVCInitialized();
+  const dvcClient = useDevCycleClient();
+  const dvcReady = useIsDevCycleInitialized();
   const { session, fetched } = useSession();
   const user = session?.user;
 

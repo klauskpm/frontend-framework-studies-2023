@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useVariableValue } from "@devcycle/devcycle-react-sdk";
+import { useVariableValue } from "@devcycle/react-client-sdk";
 import { useNavigate } from "react-router-dom";
 
 import { Card, ToastSuccess } from "@shared/react-ui";

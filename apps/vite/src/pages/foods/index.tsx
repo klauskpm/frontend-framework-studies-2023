@@ -1,7 +1,7 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import * as Tabs from "@radix-ui/react-tabs";
 import { useEffect } from "react";
-import { useVariableValue } from "@devcycle/devcycle-react-sdk";
+import { useVariableValue } from "@devcycle/react-client-sdk";
 
 import { Card } from "@shared/react-ui";
 import { useSession } from "../../features/supabase/useSession";

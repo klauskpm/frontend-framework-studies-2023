@@ -1,12 +1,13 @@
-import { DVCVariable, DVCVariableValue } from '@devcycle/devcycle-js-sdk'
+import { DVCVariable, DVCVariableValue } from '@devcycle/js-client-sdk'
 import {
     useVariable as originalUseVariable,
     useVariableValue as originalUseVariableValue
-} from '@devcycle/devcycle-react-sdk'
+} from '@devcycle/react-client-sdk'
 
 type DVCJSON = { [key: string]: string | boolean | number }
 
 export type DVCVariableTypes = {
+    'my-feature-flag': boolean
     'food-create-edit': boolean
     'food-delete': boolean
     'food-graph': boolean

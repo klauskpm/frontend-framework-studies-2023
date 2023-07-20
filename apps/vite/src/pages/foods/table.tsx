@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useVariableValue } from "@devcycle/devcycle-react-sdk";
+import { useVariableValue } from "@devcycle/react-client-sdk";
 
 import {
   deleteFood,

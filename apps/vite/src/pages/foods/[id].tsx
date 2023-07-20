@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
-import { useVariableValue } from "@devcycle/devcycle-react-sdk";
+import { useVariableValue } from "@devcycle/react-client-sdk";
 
 import { Card, ToastSuccess } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
