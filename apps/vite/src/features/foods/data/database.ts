@@ -4,12 +4,16 @@ import { SelectOptions } from "../../supabase/types";
 
 export type Food = Database["public"]["Tables"]["foods"]["Row"];
 
-export function getFoods(options?: SelectOptions) {
+function baseGetFoods(options?: SelectOptions) {
   return supabase.from("foods").select("*", options);
 }
 
-export function getFood(id: number) {
-  return getFoods().eq("id", id).single();
+export async function getFoods(options?: SelectOptions) {
+  return baseGetFoods(options);
+}
+
+export async function getFood(id: number) {
+  return baseGetFoods().eq("id", id).single();
 }
 
 export async function getPaginatedFoods({
@@ -22,7 +26,7 @@ export async function getPaginatedFoods({
   const initialItem = page * itemsPerPage;
   const finalItem = initialItem + itemsPerPage - 1;
   const countResponse = await getFoods({ count: "exact", head: true });
-  const paginatedFoodsResponse = await getFoods()
+  const paginatedFoodsResponse = await baseGetFoods()
     .order("id")
     .range(initialItem, finalItem);
 

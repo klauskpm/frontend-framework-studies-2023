@@ -36,10 +36,11 @@ const options = {
 export default function FoodGraph() {
   const foodsQuery = useQuery({
     queryKey: ["foods"],
-    queryFn: async () => getFoods().then((res) => res.data),
+    queryFn: () => getFoods().then((res) => res.data ?? []),
+    initialData: [],
   });
 
-  const foods = useMemo(() => foodsQuery?.data ?? [], [foodsQuery.data]);
+  const foods = foodsQuery.data;
 
   const data = useMemo(() => {
     const labels: string[] = foods.map((food) => food.title);

@@ -16,7 +16,7 @@
     "@radix-ui/react-toast": "^1.1.4",
     "@shared/react-ui": "*",
     "@supabase/supabase-js": "^2.17.0",
-    "@tanstack/react-query": "^4.29.19",
+    "@tanstack/react-query": "^4.29.25",
     "@tanstack/react-virtual": "^3.0.0-beta.54",
     "chart.js": "^4.3.0",
     "react": "^18.2.0",
