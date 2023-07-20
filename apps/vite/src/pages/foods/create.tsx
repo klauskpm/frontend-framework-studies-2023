@@ -5,18 +5,23 @@ import { useNavigate } from "react-router-dom";
 import { Card, ToastSuccess } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
 import { createFood } from "../../features/foods/data/database";
+import { useMutation } from "@tanstack/react-query";
 
 export default function CreateFoods() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const canSeeFoods = useVariableValue("foods", false);
+
+  const createMutation = useMutation({
+    mutationFn: (fields: any) => createFood(fields),
+    onSuccess: () => {
+      setMessage("Food created successfully");
+    },
+  });
+
   const handleSubmit = async (fields: any) => {
-    setLoading(true);
-    await createFood(fields);
-    setLoading(false);
-    setMessage("Food created successfully");
+    createMutation.mutate(fields);
   };
 
   if (!canSeeFoods) {
@@ -32,7 +37,7 @@ export default function CreateFoods() {
           <FoodForm
             onSubmit={handleSubmit}
             buttonText="Create food"
-            loading={loading}
+            loading={createMutation.isLoading}
           />
           <ToastSuccess
             open={!!message}
