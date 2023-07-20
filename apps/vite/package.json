@@ -11,7 +11,7 @@
     "update-types": "npx supabase gen types typescript --project-id \"eikzucowzxcedzyckglx\" > ./src/features/supabase/generated-types.ts"
   },
   "dependencies": {
-    "@devcycle/devcycle-react-sdk": "^1.10.2",
+    "@devcycle/devcycle-react-sdk": "^1.11.1",
     "@radix-ui/react-tabs": "1.0.3",
     "@radix-ui/react-toast": "^1.1.4",
     "@shared/react-ui": "*",
