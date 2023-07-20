@@ -5,20 +5,25 @@ import { useVariableValue } from "@devcycle/devcycle-react-sdk";
 import { Card, ToastSuccess } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
 import { Food, getFood, updateFood } from "../../features/foods/data/database";
+import { useMutation } from "@tanstack/react-query";
 
 export default function EditFood() {
   const navigate = useNavigate();
   const food = useLoaderData() as Food | null;
   const { id } = useParams<{ id: string }>();
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const canSeeFoods = useVariableValue("foods", false);
 
+  const updateMutation = useMutation({
+    mutationFn: ({ id, fields }: { id: number; fields: any }) =>
+      updateFood(id, fields),
+    onSuccess: () => {
+      setMessage("Food updated successfully");
+    },
+  });
+
   const handleSubmit = async (fields: any) => {
-    setLoading(true);
-    await updateFood(Number(id), fields);
-    setLoading(false);
-    setMessage("Food updated successfully");
+    updateMutation.mutate({ id: Number(id), fields });
   };
 
   if (!canSeeFoods) {
@@ -35,7 +40,7 @@ export default function EditFood() {
             onSubmit={handleSubmit}
             buttonText="Update food"
             food={food}
-            loading={loading}
+            loading={updateMutation.isLoading}
           />
           <ToastSuccess
             open={!!message}
