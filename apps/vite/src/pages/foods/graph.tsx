@@ -10,8 +10,9 @@ import {
 } from "chart.js";
 
 import colors from "tailwindcss/colors";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Food, getFoods } from "../../features/foods/data/database";
+import { useQuery } from "@tanstack/react-query";
 
 ChartJS.register(
   CategoryScale,
@@ -33,14 +34,14 @@ const options = {
 };
 
 export default function FoodGraph() {
-  const [foods, setFoods] = useState<Food[]>([]);
+  const foodsQuery = useQuery({
+    queryKey: ["foods"],
+    queryFn: () => getFoods(),
+    select: (data: any): Food[] => data.data,
+    initialData: { data: [] },
+  });
 
-  useEffect(() => {
-    getFoods().then(({ data }) => {
-      if (!data) return;
-      setFoods(data);
-    });
-  }, []);
+  const foods = foodsQuery.data;
 
   const data = useMemo(() => {
     const labels: string[] = foods.map((food) => food.title);

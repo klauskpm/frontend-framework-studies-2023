@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function FoodList() {
   const multipleFoodsQuery = useQuery({
-    queryKey: ["foods"],
+    queryKey: ["foods", "list"],
     queryFn: async () => {
       const { data } = await getFoods();
       if (!data?.length) return [];
