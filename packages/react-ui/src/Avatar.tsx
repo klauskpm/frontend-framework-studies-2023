@@ -2,7 +2,7 @@ import RoundedSkeleton from "./RoundedSkeleton";
 
 interface AvatarProps {
   loading?: boolean;
-  avatarUrl?: string | null;
+  avatarUrl?: string;
   size?: "small" | "medium" | "big";
 }
 
