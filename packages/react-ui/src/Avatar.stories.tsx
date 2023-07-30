@@ -11,10 +11,15 @@ export default {
   },
 };
 
-export const Default = {
+export const WithImage = {
   args: {
-    // @dan github's photo
     avatarUrl: "https://avatars.githubusercontent.com/u/9525299?v=4",
+    size: "medium",
+  },
+};
+
+export const WithoutImage = {
+  args: {
     size: "medium",
   },
 };
