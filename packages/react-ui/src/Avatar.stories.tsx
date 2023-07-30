@@ -12,8 +12,8 @@ export default {
 
 export const Default = {
   args: {
-    // @klauskpm GitBub's photo
-    avatarUrl: "https://avatars.githubusercontent.com/u/1024025?v=4",
+    // @dan github's photo
+    avatarUrl: "https://avatars.githubusercontent.com/u/9525299?v=4",
     size: "medium",
   },
 };
