@@ -3,7 +3,7 @@ import { ChangeEvent, useRef } from "react";
 import Avatar from "./Avatar";
 
 interface AvatarInputProps {
-  avatarUrl: string | null;
+  avatarUrl?: string;
   onChange: (file: File) => void;
   isUploading?: boolean;
 }

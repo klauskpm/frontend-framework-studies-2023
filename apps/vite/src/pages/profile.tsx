@@ -31,7 +31,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const user = session?.user;
 
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string>();
 
   const profileQueryKey = ["profile", user?.id];
   const invalidateProfileQuery = () =>
