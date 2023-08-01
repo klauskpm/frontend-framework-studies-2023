@@ -8,11 +8,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Go to package
-        run: cd packages/react-ui
-
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Publish to Chromatic
-        run: npm run chromatic
+        run:
+          cd packages/react-ui
+          npm run chromatic
