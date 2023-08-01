@@ -1,3 +1,5 @@
+name: DevCycle Code Usages
+
 on:
   push:
     branches: [main]
