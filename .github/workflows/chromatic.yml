@@ -14,4 +14,4 @@ jobs:
       - name: Publish to Chromatic
         run: |
             cd packages/react-ui
-            npm run chromatic
+            npm run chromatic -- --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
