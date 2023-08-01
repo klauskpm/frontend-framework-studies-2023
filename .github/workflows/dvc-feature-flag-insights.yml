@@ -1,3 +1,5 @@
+name: DevCycle Flag Insights
+
 on: pull_request
 
 jobs:
