@@ -32,7 +32,7 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=chpt_a18a36c2ee0ee5d --exit-zero-on-changes"
+    "chromatic": "npx chromatic --exit-zero-on-changes"
   },
   "readme": "ERROR: No README data found!",
   "_id": "@shared/react-ui@0.0.0"
