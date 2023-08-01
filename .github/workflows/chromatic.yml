@@ -13,5 +13,5 @@ jobs:
 
       - name: Publish to Chromatic
         run: |
-          cd packages/react-ui \
-          npm run chromatic
+            cd packages/react-ui
+            npm run chromatic
