@@ -1,4 +1,3 @@
-export * from "./src/MyComponent";
 export { default as LoginPage } from "./src/LoginPage";
 export { default as Avatar } from "./src/Avatar";
 export { default as AvatarInput } from "./src/AvatarInput";
