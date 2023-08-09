@@ -38,11 +38,7 @@ function Login() {
   return (
     <>
       <LoginPage onSubmit={onSubmit} sent={sent} loading={loading} />
-      <ToastError
-        open={!!error}
-        errorMessage={error}
-        onClose={() => setError("")}
-      />
+      <ToastError open={!!error} message={error} onClose={() => setError("")} />
     </>
   );
 }

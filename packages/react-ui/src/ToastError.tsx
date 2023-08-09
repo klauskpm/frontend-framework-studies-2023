@@ -3,14 +3,14 @@ import * as Toast from "@radix-ui/react-toast";
 interface ToastErrorProps {
   open: boolean;
   onClose?: () => void;
-  errorMessage: string;
+  message: string;
   duration?: number;
 }
 
 export default function ToastError({
   open,
   onClose = () => null,
-  errorMessage,
+  message,
   duration = 5000,
   ...props
 }: ToastErrorProps) {
@@ -41,7 +41,7 @@ export default function ToastError({
               <h3 className="font-bold">Error!</h3>
             </Toast.Title>
             <Toast.Description asChild>
-              <div className="text-xs">{errorMessage}</div>
+              <div className="text-xs">{message}</div>
             </Toast.Description>
           </div>
         </div>
