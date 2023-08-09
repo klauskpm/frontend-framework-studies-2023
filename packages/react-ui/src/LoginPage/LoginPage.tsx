@@ -18,7 +18,7 @@ export default function LoginPage({ onSubmit, sent, loading }: LoginPageProps) {
   };
 
   return (
-    <div className="hero min-h-full bg-base-200">
+    <div className="hero min-h-full">
       <div className="hero-content flex-col lg:flex-row-reverse">
         {sent && (
           <div className="text-center">
@@ -45,13 +45,13 @@ export default function LoginPage({ onSubmit, sent, loading }: LoginPageProps) {
                       name="email"
                       type="text"
                       placeholder="email"
-                      className="input-bordered input data-[error=true]:input-error"
+                      className="input input-bordered data-[error=true]:input-error"
                       disabled={loading}
                     />
                   </div>
                   <div className="form-control mt-6">
                     <button
-                      className="btn-primary btn data-[loading=true]:loading"
+                      className="btn btn-primary data-[loading=true]:loading"
                       data-loading={loading}
                     >
                       {loading ? "Sending..." : "Send magic link"}

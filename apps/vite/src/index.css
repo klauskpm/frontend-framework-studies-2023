@@ -7,5 +7,5 @@ html {
 }
 
 body {
-  @apply bg-base-300 min-h-full;
+  @apply bg-base-200 min-h-full;
 }
