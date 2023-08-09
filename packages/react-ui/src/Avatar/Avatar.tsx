@@ -1,4 +1,4 @@
-import RoundedSkeleton from "./RoundedSkeleton";
+import RoundedSkeleton from "../RoundedSkeleton/RoundedSkeleton.tsx";
 
 interface AvatarProps {
   loading?: boolean;

@@ -1,4 +1,4 @@
-import Avatar from "./Avatar";
+import Avatar from "./Avatar.tsx";
 import { Meta, StoryObj } from "@storybook/react";
 
 type StoryDef = Meta<typeof Avatar>;
