@@ -1,25 +1,32 @@
 import { action } from "@storybook/addon-actions";
 import PaginationButtons from "./PaginationButtons.tsx";
+import { Meta, StoryObj } from "@storybook/react";
 
-export default {
+type StoryDef = Meta<typeof PaginationButtons>;
+type Story = StoryObj<typeof PaginationButtons>;
+
+const meta: StoryDef = {
   component: PaginationButtons,
   tags: ["autodocs"],
-};
-
-export const Default = {
   args: {
-    count: 100,
-    currentPage: 0,
-    itemsPerPage: 10,
     onClick: (i: number) => action("clicked")(i),
   },
 };
 
-export const DifferentCurrentPage = {
+export default meta;
+
+export const Default: Story = {
+  args: {
+    count: 100,
+    currentPage: 0,
+    itemsPerPage: 10,
+  },
+};
+
+export const DifferentCurrentPage: Story = {
   args: {
     count: 100,
     itemsPerPage: 10,
     currentPage: 5,
-    onClick: (i: number) => action("clicked")(i),
   },
 };

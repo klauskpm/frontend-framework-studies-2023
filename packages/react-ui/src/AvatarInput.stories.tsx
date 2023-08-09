@@ -1,5 +1,5 @@
 import { action } from "@storybook/addon-actions";
-import type { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import AvatarInput from "./AvatarInput.tsx";
 
 type StoryDef = Meta<typeof AvatarInput>;

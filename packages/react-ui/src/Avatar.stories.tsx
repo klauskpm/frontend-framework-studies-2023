@@ -1,6 +1,10 @@
 import Avatar from "./Avatar";
+import { Meta, StoryObj } from "@storybook/react";
 
-export default {
+type StoryDef = Meta<typeof Avatar>;
+type Story = StoryObj<typeof Avatar>;
+
+const meta: StoryDef = {
   title: "Avatar",
   component: Avatar,
   tags: ["autodocs"],
@@ -11,14 +15,16 @@ export default {
   },
 };
 
-export const WithImage = {
+export default meta;
+
+export const WithImage: Story = {
   args: {
     avatarUrl: "https://avatars.githubusercontent.com/u/9525299?v=4",
     size: "medium",
   },
 };
 
-export const WithoutImage = {
+export const WithoutImage: Story = {
   args: {
     size: "medium",
   },
