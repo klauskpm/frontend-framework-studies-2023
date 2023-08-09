@@ -3,6 +3,7 @@ import Card from "./Card.tsx";
 export default {
   title: "Card",
   component: Card,
+  tags: ["autodocs"],
 };
 
 export const JustText = {

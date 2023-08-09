@@ -3,6 +3,7 @@ import PaginationButtons from "./PaginationButtons.tsx";
 
 export default {
   component: PaginationButtons,
+  tags: ["autodocs"],
 };
 
 export const Default = {
