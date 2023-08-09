@@ -34,6 +34,7 @@ export default function AvatarInput({
         className="btn-secondary btn-circle btn h-40 w-40"
         type="button"
         onClick={handleClick}
+        disabled={isUploading}
       >
         <Avatar size="big" avatarUrl={avatarUrl} />
       </button>
