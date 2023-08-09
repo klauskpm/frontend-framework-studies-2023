@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef } from "react";
 
-import Avatar from "../Avatar/Avatar.tsx";
+import Avatar from "../Avatar/Avatar";
 
 interface AvatarInputProps {
   avatarUrl?: string;

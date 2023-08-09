@@ -1,5 +1,5 @@
 import { action } from "@storybook/addon-actions";
-import PaginationButtons from "./PaginationButtons.tsx";
+import PaginationButtons from "./PaginationButtons";
 import { Meta, StoryObj } from "@storybook/react";
 
 type StoryDef = Meta<typeof PaginationButtons>;

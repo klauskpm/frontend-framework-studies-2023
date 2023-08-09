@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
-import ToastProvider from "./ToastProvider.tsx";
-import ToastSuccess from "./ToastSuccess.tsx";
-import ToastError from "./ToastError.tsx";
+import ToastProvider from "./ToastProvider";
+import ToastSuccess from "./ToastSuccess";
+import ToastError from "./ToastError";
 
 type StoryDef = Meta<typeof ToastSuccess>;
 type Story = StoryObj<typeof ToastSuccess>;

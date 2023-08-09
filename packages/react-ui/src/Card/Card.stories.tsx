@@ -1,4 +1,4 @@
-import Card from "./Card.tsx";
+import Card from "./Card";
 import { Meta, StoryObj } from "@storybook/react";
 
 type StoryDef = Meta<typeof Card>;

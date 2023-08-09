@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import LoginPage from "./LoginPage.tsx";
+import LoginPage from "./LoginPage";
 
 type StoryDef = Meta<typeof LoginPage>;
 type Story = StoryObj<typeof LoginPage>;

@@ -1,4 +1,4 @@
-import RoundedSkeleton from "./RoundedSkeleton.tsx";
+import RoundedSkeleton from "./RoundedSkeleton";
 import { Meta, StoryObj } from "@storybook/react";
 
 type StoryDef = Meta<typeof RoundedSkeleton>;

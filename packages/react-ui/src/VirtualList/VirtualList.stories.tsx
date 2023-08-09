@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import VirtualList from "./VirtualList.tsx";
+import VirtualList from "./VirtualList";
 import { BrowserRouter } from "react-router-dom";
 
 type StoryDef = Meta<typeof VirtualList>;
