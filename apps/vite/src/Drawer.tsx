@@ -11,12 +11,12 @@ export default function Drawer({ children, toggleRef }: any) {
         className="drawer-toggle"
         ref={toggleRef}
       />
-      <div className="drawer-content flex h-screen min-h-screen flex-col">
+      <div className="drawer-content flex h-full min-h-screen flex-col">
         {children}
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-        <ul className="menu w-80 bg-base-100 p-4">
+        <ul className="menu h-full w-80 bg-base-100 p-4">
           <li>
             <Link to={"/"}>Home</Link>
           </li>
