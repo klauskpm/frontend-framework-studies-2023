@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { Card, ToastSuccess } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
 import { createFood } from "../../features/foods/data/database";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { foodsKeys } from "../../features/foods/data/queries";
 
 export default function CreateFoods() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [message, setMessage] = useState("");
 
   const canSeeFoods = useVariableValue("foods", false);
@@ -17,6 +19,7 @@ export default function CreateFoods() {
     mutationFn: (fields: any) => createFood(fields),
     onSuccess: () => {
       setMessage("Food created successfully");
+      queryClient.invalidateQueries({ queryKey: foodsKeys.list() });
     },
   });
 

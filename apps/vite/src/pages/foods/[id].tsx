@@ -5,10 +5,12 @@ import { useVariableValue } from "@devcycle/react-client-sdk";
 import { Card, ToastSuccess } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
 import { Food, getFood, updateFood } from "../../features/foods/data/database";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { foodsKeys } from "../../features/foods/data/queries";
 
 export default function EditFood() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const food = useLoaderData() as Food | null;
   const { id } = useParams<{ id: string }>();
   const [message, setMessage] = useState("");
@@ -19,6 +21,7 @@ export default function EditFood() {
       updateFood(id, fields),
     onSuccess: () => {
       setMessage("Food updated successfully");
+      queryClient.invalidateQueries({ queryKey: foodsKeys.list() });
     },
   });
 
