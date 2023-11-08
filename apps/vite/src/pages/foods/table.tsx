@@ -9,6 +9,7 @@ import {
 import { Card, PaginationButtons } from "@shared/react-ui";
 import { useSession } from "../../features/supabase/useSession";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { DEFAULT_CACHE_TIME } from "../../config";
 
 export default function FoodTable() {
   const queryClient = useQueryClient();
@@ -24,6 +25,7 @@ export default function FoodTable() {
     queryKey: paginatedFoodsKey,
     queryFn: () => getPaginatedFoods({ page, itemsPerPage }),
     keepPreviousData: true,
+    staleTime: DEFAULT_CACHE_TIME,
   });
   const foods = foodsQuery.data?.data ?? [];
   const count = foodsQuery.data?.count ?? 0;
@@ -74,7 +76,7 @@ export default function FoodTable() {
                 <td>{food.quantity}</td>
                 <td>
                   <button
-                    className="btn-error btn-sm btn"
+                    className="btn btn-error btn-sm"
                     disabled={!session?.user || !canDeleteFood}
                     onClick={() => handleClickDelete(food.id)}
                   >

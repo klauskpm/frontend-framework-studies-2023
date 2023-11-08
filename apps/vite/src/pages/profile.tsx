@@ -56,7 +56,7 @@ export default function Profile() {
   useEffect(() => {
     if (!profile?.avatar_url) return;
     downloadImage(profile.avatar_url).then((imageURL: string) =>
-      setAvatarUrl(imageURL)
+      setAvatarUrl(imageURL),
     );
   }, [profile?.avatar_url]);
 
@@ -129,7 +129,7 @@ export default function Profile() {
                 id="email"
                 defaultValue={session.user.email}
                 disabled
-                className="input-bordered input"
+                className="input input-bordered"
               />
             </div>
             <div className="form-control">
@@ -139,7 +139,7 @@ export default function Profile() {
               <input
                 id="username"
                 type="text"
-                className="input-bordered input"
+                className="input input-bordered"
                 required
                 ref={usernameRef}
                 defaultValue={profile?.username || ""}
@@ -152,7 +152,7 @@ export default function Profile() {
               <input
                 id="website"
                 type="url"
-                className="input-bordered input"
+                className="input input-bordered"
                 ref={websiteRef}
                 defaultValue={profile?.website || ""}
               />
@@ -160,7 +160,7 @@ export default function Profile() {
 
             <div className="mt-6">
               <button
-                className="btn-primary btn"
+                className="btn btn-primary"
                 type="submit"
                 disabled={loading}
               >
