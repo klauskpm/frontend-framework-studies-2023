@@ -11,9 +11,8 @@ import {
 
 import colors from "tailwindcss/colors";
 import { useMemo } from "react";
-import { Food, getFoods } from "../../features/foods/data/database";
-import { useQuery } from "@tanstack/react-query";
-import { DEFAULT_CACHE_TIME } from "../../config";
+import { Food } from "../../features/foods/data/database";
+import { useFoodsQuery } from "../../features/foods/data/queries";
 
 ChartJS.register(
   CategoryScale,
@@ -35,12 +34,7 @@ const options = {
 };
 
 export default function FoodGraph() {
-  const foodsQuery = useQuery({
-    queryKey: ["foods", "list"],
-    queryFn: () => getFoods().then((res) => res.data ?? []),
-    placeholderData: [],
-    staleTime: DEFAULT_CACHE_TIME,
-  });
+  const foodsQuery = useFoodsQuery({ placeholderData: [] });
 
   const foods = foodsQuery.data as Food[];
 

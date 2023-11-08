@@ -1,18 +1,13 @@
-import { getFoods } from "../../features/foods/data/database";
+import { Food } from "../../features/foods/data/database";
 import { VirtualList } from "@shared/react-ui";
-import { useQuery } from "@tanstack/react-query";
-import { DEFAULT_CACHE_TIME } from "../../config";
+import { useFoodsQuery } from "../../features/foods/data/queries";
 
 export default function FoodList() {
-  const multipleFoodsQuery = useQuery({
-    queryKey: ["foods", "list", "infinite"],
-    queryFn: async () => {
-      const { data } = await getFoods();
-      if (!data?.length) return [];
-      return Array.from({ length: 1000 }, (_, i) => data[i % data.length]);
+  const multipleFoodsQuery = useFoodsQuery({
+    select: (foods: Food[]) => {
+      if (!foods?.length) return [];
+      return Array.from({ length: 1000 }, (_, i) => foods[i % foods.length]);
     },
-    placeholderData: [],
-    staleTime: DEFAULT_CACHE_TIME,
   });
 
   return (

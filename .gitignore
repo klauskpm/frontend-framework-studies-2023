@@ -32,3 +32,4 @@ build-storybook.log*
 
 # turbo
 .turbo
+/.idea/codeStyles/codeStyleConfig.xml

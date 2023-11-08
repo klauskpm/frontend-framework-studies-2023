@@ -2,14 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useVariableValue } from "@devcycle/react-client-sdk";
 
-import {
-  deleteFood,
-  getPaginatedFoods,
-} from "../../features/foods/data/database";
+import { deleteFood } from "../../features/foods/data/database";
 import { Card, PaginationButtons } from "@shared/react-ui";
 import { useSession } from "../../features/supabase/useSession";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { DEFAULT_CACHE_TIME } from "../../config";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  foodsKeys,
+  useFoodsPaginatedQuery,
+} from "../../features/foods/data/queries";
 
 export default function FoodTable() {
   const queryClient = useQueryClient();
@@ -20,21 +20,14 @@ export default function FoodTable() {
   const canCreateEditFood = useVariableValue("food-create-edit", false);
   const canDeleteFood = useVariableValue("food-delete", false);
 
-  const paginatedFoodsKey = ["foods", page, itemsPerPage];
-  const foodsQuery = useQuery({
-    queryKey: paginatedFoodsKey,
-    queryFn: () => getPaginatedFoods({ page, itemsPerPage }),
-    keepPreviousData: true,
-    staleTime: DEFAULT_CACHE_TIME,
-  });
+  const foodsQuery = useFoodsPaginatedQuery({ page, itemsPerPage });
   const foods = foodsQuery.data?.data ?? [];
   const count = foodsQuery.data?.count ?? 0;
 
   const deleteMutation = useMutation({
     mutationFn: (id: number) => deleteFood(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: paginatedFoodsKey });
-    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: foodsKeys.list() }),
   });
 
   const handlePageChange = (page: number) => {
