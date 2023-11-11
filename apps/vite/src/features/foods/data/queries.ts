@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 export const foodsKeys = {
   all: () => ["foods"],
   list: () => [...foodsKeys.all(), "list"],
+  detail: (id: number) => [...foodsKeys.all(), "detail", id],
   paginated: (page: number, itemsPerPage: number) => [
     ...foodsKeys.list(),
     { page, itemsPerPage },

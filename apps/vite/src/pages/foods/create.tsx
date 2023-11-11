@@ -4,27 +4,23 @@ import { useNavigate } from "react-router-dom";
 
 import { Card, ToastSuccess } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
-import { createFood } from "../../features/foods/data/database";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { foodsKeys } from "../../features/foods/data/queries";
+import { useCreateFood } from "../../features/foods/data/mutations";
+import { Food } from "../../features/foods/data/database";
 
 export default function CreateFoods() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const [message, setMessage] = useState("");
 
   const canSeeFoods = useVariableValue("foods", false);
-
-  const createMutation = useMutation({
-    mutationFn: (fields: any) => createFood(fields),
-    onSuccess: () => {
+  const createFood = useCreateFood({
+    onSuccess: (response: Food) => {
       setMessage("Food created successfully");
-      queryClient.invalidateQueries({ queryKey: foodsKeys.list() });
+      navigate(`/foods/${response.id}`);
     },
   });
 
   const handleSubmit = async (fields: any) => {
-    createMutation.mutate(fields);
+    createFood.mutate(fields);
   };
 
   if (!canSeeFoods) {
@@ -40,7 +36,7 @@ export default function CreateFoods() {
           <FoodForm
             onSubmit={handleSubmit}
             buttonText="Create food"
-            loading={createMutation.isLoading}
+            loading={createFood.isLoading}
           />
           <ToastSuccess
             open={!!message}

@@ -38,7 +38,7 @@ export async function getPaginatedFoods({
 }
 
 export async function createFood(fields: any) {
-  return supabase.from("foods").insert([fields]);
+  return supabase.from("foods").insert([fields]).select().single();
 }
 
 export async function updateFood(id: number, fields: any) {
