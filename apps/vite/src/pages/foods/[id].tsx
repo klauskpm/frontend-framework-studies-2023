@@ -43,7 +43,7 @@ export default function EditFood() {
             onSubmit={handleSubmit}
             buttonText="Update food"
             food={food}
-            loading={updateMutation.isLoading}
+            loading={updateMutation.isPending}
           />
           <ToastSuccess
             open={!!message}

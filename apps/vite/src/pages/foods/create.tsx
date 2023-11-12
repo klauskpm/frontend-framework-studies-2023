@@ -36,7 +36,7 @@ export default function CreateFoods() {
           <FoodForm
             onSubmit={handleSubmit}
             buttonText="Create food"
-            loading={createFood.isLoading}
+            loading={createFood.isPending}
           />
           <ToastSuccess
             open={!!message}

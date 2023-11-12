@@ -35,7 +35,7 @@ export default function Profile() {
 
   const profileQueryKey = ["profile", user?.id];
   const invalidateProfileQuery = () =>
-    queryClient.invalidateQueries(profileQueryKey);
+    queryClient.invalidateQueries({ queryKey: profileQueryKey });
   const profileQuery = useQuery({
     queryKey: profileQueryKey,
     queryFn: () => getProfile(user?.id),
