@@ -42,7 +42,7 @@ export async function createFood(fields: any) {
 }
 
 export async function updateFood(id: number, fields: any) {
-  return supabase.from("foods").update(fields).eq("id", id);
+  return supabase.from("foods").update(fields).eq("id", id).select().single();
 }
 
 export async function deleteFood(id: number) {

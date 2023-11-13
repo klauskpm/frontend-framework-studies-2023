@@ -1,32 +1,31 @@
 import { useState } from "react";
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { useVariableValue } from "@devcycle/react-client-sdk";
 
 import { Card, ToastSuccess } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
-import { Food, updateFood } from "../../features/foods/data/database";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { foodsKeys } from "../../features/foods/data/queries";
+import { Food } from "../../features/foods/data/database";
+import {
+  FoodUpdateInput,
+  useUpdateFood,
+} from "../../features/foods/data/mutations";
 
 export default function EditFood() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const food = useLoaderData() as Food | null;
-  const { id } = useParams<{ id: string }>();
   const [message, setMessage] = useState("");
   const canSeeFoods = useVariableValue("foods", false);
 
-  const updateMutation = useMutation({
-    mutationFn: ({ id, fields }: { id: number; fields: any }) =>
-      updateFood(id, fields),
-    onSuccess: () => {
+  const updateMutation = useUpdateFood({
+    onAfterSuccess: () => {
       setMessage("Food updated successfully");
-      queryClient.invalidateQueries({ queryKey: foodsKeys.list() });
     },
   });
 
   const handleSubmit = async (fields: any) => {
-    updateMutation.mutate({ id: Number(id), fields });
+    if (!food) return;
+    const input: FoodUpdateInput = { id: food?.id, fields };
+    updateMutation.mutate(input);
   };
 
   if (!canSeeFoods) {

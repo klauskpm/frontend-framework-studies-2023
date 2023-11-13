@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { Card, ToastSuccess } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
 import { useCreateFood } from "../../features/foods/data/mutations";
-import { Food } from "../../features/foods/data/database";
 
 export default function CreateFoods() {
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ export default function CreateFoods() {
 
   const canSeeFoods = useVariableValue("foods", false);
   const createFood = useCreateFood({
-    onSuccess: (response: Food) => {
+    onAfterSuccess: (response) => {
       setMessage("Food created successfully");
       navigate(`/foods/${response.id}`);
     },
