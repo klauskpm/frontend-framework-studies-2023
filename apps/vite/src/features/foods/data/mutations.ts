@@ -1,24 +1,10 @@
 import {
-  DefaultError,
-  MutationOptions,
   QueryClient,
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
 import { createFood, Food, updateFood } from "./database";
 import { foodsKeys } from "./queries";
-
-type CustomMutationOptions<TData, TVariables> = MutationOptions<
-  TData | null,
-  DefaultError,
-  TVariables
-> & {
-  onAfterSuccess?: (
-    data: TData,
-    variables: TVariables,
-    context: unknown,
-  ) => void;
-};
 
 export type CreateFoodInput = Exclude<Food, "id">;
 
@@ -31,26 +17,20 @@ const upsertFoodDetail = (queryClient: QueryClient, food?: Food) => {
   });
 };
 
-export const useCreateFood = (
-  options: CustomMutationOptions<Food, CreateFoodInput> = {},
-) => {
+export const useCreateFood = () => {
   const queryClient = useQueryClient();
-  const { onAfterSuccess, ...opts } = options;
 
-  return useMutation({
+  return useMutation<Food | null, Error, CreateFoodInput>({
     mutationFn: async (fields) => {
       const response = await createFood(fields);
       return response?.data;
     },
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data) => {
       if (!data) return;
 
       queryClient.invalidateQueries({ queryKey: foodsKeys.list() });
       upsertFoodDetail(queryClient, data);
-
-      onAfterSuccess && onAfterSuccess(data, variables, context);
     },
-    ...opts,
   });
 };
 
@@ -59,25 +39,19 @@ export type FoodUpdateInput = {
   fields: Partial<Food>;
 };
 
-export function useUpdateFood(
-  options: CustomMutationOptions<Food, FoodUpdateInput> = {},
-) {
+export function useUpdateFood() {
   const queryClient = useQueryClient();
-  const { onAfterSuccess, ...opts } = options;
 
-  return useMutation({
+  return useMutation<Food | null, Error, FoodUpdateInput>({
     mutationFn: async ({ id, fields }) => {
       const response = await updateFood(id, fields);
       return response?.data;
     },
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data) => {
       if (!data) return;
 
       queryClient.invalidateQueries({ queryKey: foodsKeys.list() });
       upsertFoodDetail(queryClient, data);
-
-      onAfterSuccess && onAfterSuccess(data, variables, context);
     },
-    ...opts,
   });
 }

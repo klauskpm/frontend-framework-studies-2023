@@ -16,16 +16,16 @@ export default function EditFood() {
   const [message, setMessage] = useState("");
   const canSeeFoods = useVariableValue("foods", false);
 
-  const updateMutation = useUpdateFood({
-    onAfterSuccess: () => {
-      setMessage("Food updated successfully");
-    },
-  });
+  const updateMutation = useUpdateFood();
 
   const handleSubmit = async (fields: any) => {
     if (!food) return;
     const input: FoodUpdateInput = { id: food?.id, fields };
-    updateMutation.mutate(input);
+    updateMutation.mutate(input, {
+      onSuccess: () => {
+        setMessage("Food updated successfully");
+      },
+    });
   };
 
   if (!canSeeFoods) {

@@ -1,25 +1,23 @@
-import { useState } from "react";
 import { useVariableValue } from "@devcycle/react-client-sdk";
 import { useNavigate } from "react-router-dom";
 
-import { Card, ToastSuccess } from "@shared/react-ui";
+import { Card } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
 import { useCreateFood } from "../../features/foods/data/mutations";
 
 export default function CreateFoods() {
   const navigate = useNavigate();
-  const [message, setMessage] = useState("");
 
   const canSeeFoods = useVariableValue("foods", false);
-  const createFood = useCreateFood({
-    onAfterSuccess: (response) => {
-      setMessage("Food created successfully");
-      navigate(`/foods/${response.id}`);
-    },
-  });
+  const createFood = useCreateFood();
 
   const handleSubmit = async (fields: any) => {
-    createFood.mutate(fields);
+    createFood.mutate(fields, {
+      onSuccess: (response) => {
+        if (!response) return;
+        navigate(`/foods/${response.id}`);
+      },
+    });
   };
 
   if (!canSeeFoods) {
@@ -36,11 +34,6 @@ export default function CreateFoods() {
             onSubmit={handleSubmit}
             buttonText="Create food"
             loading={createFood.isPending}
-          />
-          <ToastSuccess
-            open={!!message}
-            message={message}
-            onClose={() => setMessage("")}
           />
         </div>
       </Card>
