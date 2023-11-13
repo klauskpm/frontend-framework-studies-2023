@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useVariableValue } from "@devcycle/react-client-sdk";
 
 import { Card, ToastSuccess } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
-import { Food } from "../../features/foods/data/database";
 import {
   FoodUpdateInput,
   useUpdateFoodMutation,
 } from "../../features/foods/data/mutations";
+import { useFoodDetailQuery } from "../../features/foods/data/queries";
 
 export default function EditFood() {
   const navigate = useNavigate();
-  const food = useLoaderData() as Food | null;
+  const { id } = useParams();
+  const { data: food } = useFoodDetailQuery({ id: Number(id) });
   const [message, setMessage] = useState("");
   const canSeeFoods = useVariableValue("foods", false);
 

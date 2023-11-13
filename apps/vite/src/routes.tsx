@@ -9,7 +9,6 @@ import { loginLoader, profileLoader } from "./features/profiles/data/loaders";
 import Foods from "./pages/foods";
 import CreateFoods from "./pages/foods/create";
 import EditFood from "./pages/foods/[id]";
-import { foodLoader } from "./features/foods/data/loaders";
 import FoodTable from "./pages/foods/table";
 import FoodList from "./pages/foods/list";
 import FoodGraph from "./pages/foods/graph";
@@ -34,7 +33,7 @@ const router = createBrowserRouter([
         ],
       },
       { path: "foods/create", element: <CreateFoods /> },
-      { path: "foods/:id", element: <EditFood />, loader: foodLoader },
+      { path: "foods/:id", element: <EditFood /> },
     ],
   },
 ]);

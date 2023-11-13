@@ -1,5 +1,5 @@
 import { DEFAULT_CACHE_TIME } from "../../../config";
-import { getFoods, getPaginatedFoods } from "./database";
+import { Food, getFood, getFoods, getPaginatedFoods } from "./database";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 export const foodsKeys = {
@@ -36,6 +36,20 @@ export const useFoodsPaginatedQuery = (options = defaultPaginationOptions) => {
     queryFn: () => getPaginatedFoods({ page, itemsPerPage }),
     staleTime: DEFAULT_CACHE_TIME,
     placeholderData: keepPreviousData,
+    ...opts,
+  });
+};
+
+export const useFoodDetailQuery = (options: any = {}) => {
+  const { id, ...opts } = options;
+  return useQuery<Food | null>({
+    queryKey: foodsKeys.detail(id),
+    queryFn: async () => {
+      const response = await getFood(id);
+      return response.data;
+    },
+    staleTime: DEFAULT_CACHE_TIME,
+    placeholderData: null,
     ...opts,
   });
 };
