@@ -17,7 +17,7 @@ const upsertFoodDetail = (queryClient: QueryClient, food?: Food) => {
   });
 };
 
-export const useCreateFood = () => {
+export const useCreateFoodMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation<Food | null, Error, CreateFoodInput>({
@@ -39,7 +39,7 @@ export type FoodUpdateInput = {
   fields: Partial<Food>;
 };
 
-export function useUpdateFood() {
+export function useUpdateFoodMutation() {
   const queryClient = useQueryClient();
 
   return useMutation<Food | null, Error, FoodUpdateInput>({

@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import { Card } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
-import { useCreateFood } from "../../features/foods/data/mutations";
+import { useCreateFoodMutation } from "../../features/foods/data/mutations";
 
 export default function CreateFoods() {
   const navigate = useNavigate();
 
   const canSeeFoods = useVariableValue("foods", false);
-  const createFood = useCreateFood();
+  const createFood = useCreateFoodMutation();
 
   const handleSubmit = async (fields: any) => {
     createFood.mutate(fields, {

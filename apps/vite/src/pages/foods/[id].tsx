@@ -7,7 +7,7 @@ import FoodForm from "../../features/foods/components/FoodForm";
 import { Food } from "../../features/foods/data/database";
 import {
   FoodUpdateInput,
-  useUpdateFood,
+  useUpdateFoodMutation,
 } from "../../features/foods/data/mutations";
 
 export default function EditFood() {
@@ -16,7 +16,7 @@ export default function EditFood() {
   const [message, setMessage] = useState("");
   const canSeeFoods = useVariableValue("foods", false);
 
-  const updateMutation = useUpdateFood();
+  const updateMutation = useUpdateFoodMutation();
 
   const handleSubmit = async (fields: any) => {
     if (!food) return;
