@@ -1,25 +1,11 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { supabase } from "../features/supabase/supabaseClient";
 import { getProfile, updateProfile } from "../features/profiles/data/database";
 import { downloadImage, uploadAvatar } from "../features/profiles/data/storage";
 import { AvatarInput, Card } from "@shared/react-ui";
 import { useSession } from "../features/supabase/useSession";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
-export const profileLoader = async () => {
-  const session = await supabase.auth.getSession().then(({ data }) => {
-    return data?.session;
-  });
-  const hasUser = !!session?.user;
-
-  if (hasUser) {
-    return null;
-  }
-
-  return redirect("/login");
-};
 
 export default function Profile() {
   const { session } = useSession();

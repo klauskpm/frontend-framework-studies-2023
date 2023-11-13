@@ -3,11 +3,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CommonPage from "./CommonPage";
 
 import Home from "./pages";
-import Login, { loginLoader } from "./pages/login";
-import Profile, { profileLoader } from "./pages/profile";
+import Login from "./pages/login";
+import Profile from "./pages/profile";
+import { loginLoader, profileLoader } from "./features/profiles/data/loaders";
 import Foods from "./pages/foods";
 import CreateFoods from "./pages/foods/create";
-import EditFood, { foodLoader } from "./pages/foods/[id]";
+import EditFood from "./pages/foods/[id]";
+import { foodLoader } from "./features/foods/data/loaders";
 import FoodTable from "./pages/foods/table";
 import FoodList from "./pages/foods/list";
 import FoodGraph from "./pages/foods/graph";

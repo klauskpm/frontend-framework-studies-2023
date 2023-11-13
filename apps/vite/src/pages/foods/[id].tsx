@@ -4,7 +4,7 @@ import { useVariableValue } from "@devcycle/react-client-sdk";
 
 import { Card, ToastSuccess } from "@shared/react-ui";
 import FoodForm from "../../features/foods/components/FoodForm";
-import { Food, getFood, updateFood } from "../../features/foods/data/database";
+import { Food, updateFood } from "../../features/foods/data/database";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { foodsKeys } from "../../features/foods/data/queries";
 
@@ -55,10 +55,3 @@ export default function EditFood() {
     </div>
   );
 }
-
-export const foodLoader = async ({ params }: any): Promise<Food | null> => {
-  const { id } = params;
-  const { data } = await getFood(Number(id));
-
-  return data;
-};

@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { LoginPage } from "@shared/react-ui";
 
 import { magicLoginUser } from "../auth";
-import { supabase } from "../features/supabase/supabaseClient";
 import { ToastError } from "@shared/react-ui";
 import { useSession } from "../features/supabase/useSession";
 
@@ -42,17 +41,5 @@ function Login() {
     </>
   );
 }
-
-export const loginLoader = async () => {
-  const session = await supabase.auth.getSession().then(({ data }) => {
-    return data?.session;
-  });
-
-  if (!session?.user) {
-    return null;
-  }
-
-  return redirect("/");
-};
 
 export default Login;
