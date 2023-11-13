@@ -1,6 +1,6 @@
 import { DEFAULT_CACHE_TIME } from "../../../config";
 import { Food, getFood, getFoods, getPaginatedFoods } from "./database";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, QueryClient, useQuery } from "@tanstack/react-query";
 
 export const foodsKeys = {
   all: () => ["foods"],
@@ -40,16 +40,29 @@ export const useFoodsPaginatedQuery = (options = defaultPaginationOptions) => {
   });
 };
 
+const getFoodDetails = async (id: number) => {
+  const response = await getFood(id);
+  return response.data;
+};
+
 export const useFoodDetailQuery = (options: any = {}) => {
   const { id, ...opts } = options;
   return useQuery<Food | null>({
     queryKey: foodsKeys.detail(id),
-    queryFn: async () => {
-      const response = await getFood(id);
-      return response.data;
-    },
+    queryFn: () => getFoodDetails(id),
     staleTime: DEFAULT_CACHE_TIME,
     placeholderData: null,
     ...opts,
+  });
+};
+
+export const prefetchFoodDetailQuery = (
+  queryClient: QueryClient,
+  id: number,
+) => {
+  queryClient.prefetchQuery({
+    queryKey: foodsKeys.detail(id),
+    queryFn: () => getFoodDetails(id),
+    staleTime: 30 * 1000,
   });
 };

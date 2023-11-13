@@ -8,6 +8,7 @@ import { useSession } from "../../features/supabase/useSession";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   foodsKeys,
+  prefetchFoodDetailQuery,
   useFoodsPaginatedQuery,
 } from "../../features/foods/data/queries";
 
@@ -59,6 +60,12 @@ export default function FoodTable() {
                     <Link
                       to={`/foods/${food.id}`}
                       className="link-primary link"
+                      onMouseEnter={() =>
+                        prefetchFoodDetailQuery(queryClient, food.id)
+                      }
+                      onFocus={() =>
+                        prefetchFoodDetailQuery(queryClient, food.id)
+                      }
                     >
                       {food.title}
                     </Link>
